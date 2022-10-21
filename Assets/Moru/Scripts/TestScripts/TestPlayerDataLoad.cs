@@ -10,7 +10,19 @@ public class TestPlayerDataLoad : MonoBehaviour
     {
         data = PlayerData.instance;
         PlayerData.Load_GameData();
+        PlayerData.Load_PlayerAchieve();
     }
+    public void TestAchieve()
+    {
+        //업적 시스템의 밸류 업데이트 델리게이트 메서드
+        //(목표치에 도달하면 자동으로 업적이 달성됩니다.
+        PlayerData.onUpdateAchieve(ACHEIVE_INDEX.TEST_ACHIEVE, 5);
+    }
+    public void TestClear()
+    {
+        PlayerData.onClearAchieve(ACHEIVE_INDEX.ALL_CLEAR);
+    }
+    
 
     // Update is called once per frame
     void Update()

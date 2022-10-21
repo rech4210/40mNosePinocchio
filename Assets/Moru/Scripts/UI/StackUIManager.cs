@@ -13,7 +13,7 @@ public class StackUIManager : SingleToneMono<StackUIManager>
     public delegate void StackUI_Event(StackUIComponent stackUI);
     public event StackUI_Event pop_n_Push_Event;
 
-
+    public PlayerData playerData;
 
     protected override void Awake()
     {
@@ -27,6 +27,10 @@ public class StackUIManager : SingleToneMono<StackUIManager>
         }
         start_UIComponent?.Show();
 
+        //플레이어 데이터 로드
+        playerData = PlayerData.instance;
+        PlayerData.Load_GameData();
+        PlayerData.Load_PlayerAchieve();
     }
 
 
