@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public enum GAME_INDEX
@@ -24,7 +25,8 @@ public class PlayerData
         {
             if (m_instance == null)
             {
-                m_instance = new PlayerData();
+                int[] initValue = new int[6] { 10, 10, 10, 10, 10, 10 };
+                m_instance = new PlayerData(initValue);
             }
             return m_instance;
         }
@@ -32,24 +34,27 @@ public class PlayerData
     #endregion
 
     #region Events
-    public delegate void OnClearGame(GAME_INDEX index);
+    public delegate void OnClearGame(GAME_INDEX index, int StageNum);
     public static OnClearGame onClearGame;
     #endregion
 
     #region Field
     [SerializeField] private GameObject PopUpUI;
-    [SerializeField] private Dictionary<GAME_INDEX, int> saveData;
+    [ShowInInspector] private Dictionary<GAME_INDEX, Dictionary<int, int>> saveData;
+    [SerializeField] private int[] stageCountPerGames;
     #endregion
 
     #region Properties
-    public Dictionary<GAME_INDEX, int> SaveData => saveData;
+    public Dictionary<GAME_INDEX, Dictionary<int, int>> SaveData => saveData;
+
     #endregion
 
 
-    public PlayerData()
+    public PlayerData(int[] stageCountPerGames)
     {
         onClearGame += ClearGame;
-        saveData = new Dictionary<GAME_INDEX, int>();
+        this.stageCountPerGames = stageCountPerGames;
+        saveData = new Dictionary<GAME_INDEX, Dictionary<int, int>>();
     }
 
     #region Methods
@@ -57,49 +62,106 @@ public class PlayerData
     /// 게임을 클리어하면 콜백됩니다.
     /// </summary>
     /// <param name="index"></param>
-    private void ClearGame(GAME_INDEX index)
+    private void ClearGame(GAME_INDEX index, int stageNum)
     {
         //게임을 클리어했으므로 UI팝업시키기
-        PlayerPrefs.SetInt(index.ToString(), 1);
-        saveData[index] = 1;
-        Debug.Log($"{PlayerPrefs.GetInt(index.ToString())} // {saveData[index] }");
+        PlayerPrefs.SetInt(index.ToString() + stageNum.ToString(), 1);
+        saveData[index][stageNum] = 1;
+        Debug.Log($"{PlayerPrefs.GetInt(index.ToString() + stageNum.ToString())} // {saveData[index][stageNum] }");
     }
 
     /// <summary>
     /// 게임을 초기화합니다.
     /// </summary>
-    public void Initialize_GameData()
+    public static void Initialize_GameData()
     {
+        var instacne = PlayerData.instance;
         for (int i = 0; i < (int)GAME_INDEX.None; i++)
         {
             var key = (GAME_INDEX)i;
-            PlayerPrefs.SetInt(key.ToString(), 0);
-            saveData.Add((GAME_INDEX)i, 0);
+            Dictionary<int, int> stageSaveDic = new Dictionary<int, int>();
+            for (int stageNum = 0; stageNum < instance.stageCountPerGames[i]; stageNum++)
+            {
+                PlayerPrefs.SetInt(key.ToString() + stageNum.ToString(), 0);
+                stageSaveDic.Add(stageNum, 0);
+            }
+            instacne.saveData[(GAME_INDEX)i] = stageSaveDic;
         }
     }
 
     /// <summary>
     /// 플레이어 게임데이터를 불러옵니다.
     /// </summary>
-    public void Load_GameData()
+    public static void Load_GameData()
     {
+        var instacne = PlayerData.instance;
         for (int i = 0; i < (int)GAME_INDEX.None; i++)
         {
             var key = (GAME_INDEX)i;
-            if (
-                !PlayerPrefs.HasKey(key.ToString())
-               )
+            Dictionary<int, int> stageSaveDic = new Dictionary<int, int>();
+            for (int stageNum = 0; stageNum < instacne.stageCountPerGames[i]; stageNum++)
             {
-                PlayerPrefs.SetInt(key.ToString(), 0);
-                saveData.Add((GAME_INDEX)i, 0);
+                if (
+                    !PlayerPrefs.HasKey(key.ToString() + stageNum.ToString())
+                   )
+                {
+                    PlayerPrefs.SetInt(key.ToString() + stageNum.ToString(), 0);
+                    stageSaveDic.Add(stageNum, 0);
+                }
+                else
+                {
+                    int value = PlayerPrefs.GetInt(key.ToString() + stageNum.ToString());
+                    stageSaveDic.Add(stageNum, value);
+                }
             }
+            instacne.saveData.Add((GAME_INDEX)i, stageSaveDic);
+        }
+    }
 
+    /// <summary>
+    /// 해당게임에서 해당 스테이지의 클리어 여부를 받아옵니다.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="stageNum"></param>
+    public static bool GetStageClearDataPerGame(GAME_INDEX index, int stageNum)
+    {
+        var instacne = PlayerData.instance;
+        int value = instance.saveData[index][stageNum];
+        bool retVal = false;
+        if(value > 0)
+        {
+            retVal = true;
+        }
+        else
+        {
+            retVal = false;
+        }
+        return retVal;
+    }
+
+    /// <summary>
+    /// 해당 게임의 모든 스테이지의 클리어 여부를 배열로 받아옵니다.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public static bool[] GetStageClearDataPerGame(GAME_INDEX index)
+    {
+        var instacne = PlayerData.instance;
+        int count = instacne.saveData[index].Count;
+        bool[] retVal = new bool[count];
+        for (int i = 0; i < retVal.Length; i++)
+        {
+            int value = instance.saveData[index][i];
+            if (value > 0)
+            {
+                retVal[i] = true;
+            }
             else
             {
-                int value = PlayerPrefs.GetInt(key.ToString());
-                saveData.Add((GAME_INDEX)i, value);
+                retVal[i] = false;
             }
         }
+        return retVal;
     }
     #endregion
 }
