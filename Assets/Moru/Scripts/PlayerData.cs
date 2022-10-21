@@ -36,9 +36,17 @@ public class PlayerData
     #region Events
     public delegate void OnClearGame(GAME_INDEX index, int StageNum);
     public static OnClearGame onClearGame;
+
+    public delegate void OnValueChange();
+    public OnValueChange onPlayerNameChange;
+    public OnValueChange onPlayerTitleChange;
+
     #endregion
 
     #region Field
+    [SerializeField] private string playerName;
+    [SerializeField] private string playerTitle;
+
     [SerializeField] private GameObject PopUpUI;
     [ShowInInspector] private Dictionary<GAME_INDEX, Dictionary<int, int>> saveData;
     [SerializeField] private int[] stageCountPerGames;
@@ -46,7 +54,8 @@ public class PlayerData
 
     #region Properties
     public Dictionary<GAME_INDEX, Dictionary<int, int>> SaveData => saveData;
-
+    public string PlayerName { get { return playerName; } set { playerName = value; onPlayerNameChange?.Invoke(); } }
+    public string PlayerTitle { get { return playerTitle; } set { playerTitle = value; onPlayerTitleChange?.Invoke(); } }
     #endregion
 
 
