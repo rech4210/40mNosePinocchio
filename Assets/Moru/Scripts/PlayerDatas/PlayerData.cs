@@ -14,8 +14,10 @@ public enum GAME_INDEX
     None
 }
 
+
+
 [System.Serializable]
-public class PlayerData
+public partial class PlayerData
 {
     #region instance
     private static PlayerData m_instance;
@@ -64,6 +66,14 @@ public class PlayerData
         onClearGame += ClearGame;
         this.stageCountPerGames = stageCountPerGames;
         saveData = new Dictionary<GAME_INDEX, Dictionary<int, int>>();
+
+
+        ///업적 관련///
+        isAchievement = new Dictionary<ACHEIVE_INDEX, int>();
+        cur_AchievementValue = new Dictionary<ACHEIVE_INDEX, AchieveResult>();
+        onClearAchieve += onClearAchieveCallBack;
+        onUpdateAchieve += onUpdateAchieveCallBack;
+
     }
 
     #region Methods
@@ -99,7 +109,7 @@ public class PlayerData
     }
 
     /// <summary>
-    /// 플레이어 게임데이터를 불러옵니다.
+    /// 플레이어 게임별 스테이지 데이터를 불러옵니다.
     /// </summary>
     public static void Load_GameData()
     {
