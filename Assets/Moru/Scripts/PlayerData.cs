@@ -15,7 +15,7 @@ public enum GAME_INDEX
 }
 
 [System.Serializable]
-public class PlayerData
+public partial class PlayerData
 {
     #region instance
     private static PlayerData m_instance;
