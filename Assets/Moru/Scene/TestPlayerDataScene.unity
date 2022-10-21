@@ -221,7 +221,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
+    playerName: 
+    playerTitle: 
     PopUpUI: {fileID: 0}
+    stageCountPerGames: 
 --- !u!4 &1413443882
 Transform:
   m_ObjectHideFlags: 0
@@ -272,7 +275,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!114 &1930826201
 MonoBehaviour:
   m_ObjectHideFlags: 0
