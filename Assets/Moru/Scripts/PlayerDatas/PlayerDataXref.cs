@@ -112,6 +112,14 @@ public class PlayerDataXref
         return (PlayerData.instance.TargetStage[(int)index])-1;
     }
 
-
+    /// <summary>
+    /// 해당 게임의 최대스테이지값을 받아옵니다.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public int GetMaxStageNumber(GAME_INDEX index)
+    {
+        return PlayerData.instance.StageCountPerGames[(int)index];
+    }
     #endregion
 }
