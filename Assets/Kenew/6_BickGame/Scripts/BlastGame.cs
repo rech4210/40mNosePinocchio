@@ -40,15 +40,6 @@ public class BlastGame : MonoBehaviour
         blastManager = this;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            InitGame(currentStage);
-            StageClear();
-        }
-    }
-
     public void StarHelp()
     {
         for (int i = 0; i < height; i++)
@@ -124,7 +115,7 @@ public class BlastGame : MonoBehaviour
     }
     private KeyValuePair<int, int> PopBlock(List<GameObject> list)
     {
-        SoundManagers.Instance.PlaySFX("BlockPop");
+        SoundManagers.Instance.PlayBGM("BlockPop");
         
         int count = 0;
         int color = -1;
@@ -378,11 +369,12 @@ public class BlastGame : MonoBehaviour
 
     public void StageFailed()
     {
-        Debug.Log("게임오버");
+        WSceneManager.instance.OpenGameFailUI();
     }
     
     public void InitGame(int stageLevel)
     {
+        SoundManager.PlaySFX(Shake);
         CameraController.Instance.OnShake(2.5f, 2.5f, false, true);
         
         if (blockArray != null)
@@ -423,8 +415,6 @@ public class BlastGame : MonoBehaviour
             }
         }
 
-        SoundManagers.Instance.PlaySFX("ReRoll");
-        
         if (!AllLinkedBlocksFind())
         {
             // 현재 스테이지 새로고침
@@ -436,7 +426,6 @@ public class BlastGame : MonoBehaviour
             {
                 RequireItemInit();
                 RequireItemListUIUpdate();
-                Debug.Log("인잇");
 
                 isRequireInit = true;
             }
@@ -451,13 +440,14 @@ public class BlastGame : MonoBehaviour
 
         if (currentStage > 6)
         {
-            Time.timeScale = 0;
+            PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.TREE_LITTLE_PIGS_ALL_CLEAR);
         }
         else
         {
             currentStage++;
             stageText.text = currentStage + " STAGE";
             limite_time = 60;
+            PlayerDataXref.instance.OpenChapter(GAME_INDEX.Tree_Little_Pigs + 1);
             InitGame(currentStage);
         }
     }
@@ -488,10 +478,9 @@ public class BlastGame : MonoBehaviour
 
     private List<GameObject> requireListObjs = new List<GameObject>();
     
-    // 필요한 아이템 리스트 UI 업데이트s
+    // 필요한 아이템 리스트 UI 업데이트
     private void RequireItemListUIUpdate()
     {
-        Debug.Log("UI업데이트");
         if (requireListObjs.Count > 0)
         {
             foreach (var requireListObj in requireListObjs)
@@ -513,10 +502,15 @@ public class BlastGame : MonoBehaviour
 
     public List<StageDifficultyBlast> stageDifficultyBlastDesign;
     
+    [SerializeField] private AudioClip BGM;
+    [SerializeField] private AudioClip PuzzleOn;
+    [SerializeField] private AudioClip Shake;
+    
     private void Start()
     {
-        stageDifficultyBlastDesign = new List<StageDifficultyBlast>();
         // 난이도 조절
+        stageDifficultyBlastDesign = new List<StageDifficultyBlast>();
+        
         stageDifficultyBlastDesign.Add(new StageDifficultyBlast(10, 15, 1, 60));
         stageDifficultyBlastDesign.Add(new StageDifficultyBlast(20, 30, 1, 55));
         stageDifficultyBlastDesign.Add(new StageDifficultyBlast(20, 25, 2, 50));
@@ -526,8 +520,13 @@ public class BlastGame : MonoBehaviour
         stageDifficultyBlastDesign.Add(new StageDifficultyBlast(20, 25, 4, 40));
         stageDifficultyBlastDesign.Add(new StageDifficultyBlast(25, 30, 4, 40));
 
+        currentStage = PlayerDataXref.instance.GetCurrentStage().StageNum;
+        
         stageText.text = currentStage + " STAGE";
         
+        // SoundManager.PlayBGM(BGM);
+        SoundManagers.Instance.PlayBGM("BGM6");
+
         InitGame(currentStage);
     }
 

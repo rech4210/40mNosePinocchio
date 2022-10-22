@@ -100,6 +100,7 @@ public class PinocchioGame : MonoSingleton<PinocchioGame>
         stageDifficultyDesign.Add(new StageDifficulty(12, 170));
 
         computerInfo = new PinocchioComputerInfo(1, 0.1f);
+        currentStage = PlayerDataXref.instance.GetCurrentStage().StageNum;
         
         enemy = FindObjectOfType<PinocchioEnemy>();
         player = FindObjectOfType<PinocchioPlayer>();
@@ -124,12 +125,14 @@ public class PinocchioGame : MonoSingleton<PinocchioGame>
     {
         if (currentStage > 9)
         {
-            
+            PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.PINOCCHIO_ALL_CLEAR);
         }
         else
         {
             currentStage++;
             stageText.text = currentStage + " STAGE";
+            limite_time = 60;
+            PlayerDataXref.instance.OpenChapter(GAME_INDEX.Pinocchio + 1);
             StageInit(currentStage);
             SoundManagers.Instance.PlaySFX("StageClear");
         }
