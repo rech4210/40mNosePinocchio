@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,89 +6,89 @@ using UnityEngine;
 
 public enum GAME_INDEX
 {
-    Snow_White,         //¹é¼³°øÁÖ
-    Cinderella,         //½Åµ¥·¼¶ó
-    Pinocchio,          //ÇÇ³ëÅ°¿À
-    Little_Mermaid,     //ÀÎ¾î°øÁÖ
-    Jack_And_Beanstalk, //Àè°ú Äá³ª¹«
-    Tree_Little_Pigs,    //¾Æ±â µÅÁö »ïÇüÁ¦
+    Snow_White,         //ë°±ì„¤ê³µì£¼
+    Cinderella,         //ì‹ ë°ë ë¼
+    Pinocchio,          //í”¼ë…¸í‚¤ì˜¤
+    Little_Mermaid,     //ì¸ì–´ê³µì£¼
+    Jack_And_Beanstalk, //ìž­ê³¼ ì½©ë‚˜ë¬´
+    Tree_Little_Pigs,    //ì•„ê¸° ë¼ì§€ ì‚¼í˜•ì œ
     None
 }
 
 public enum ACHEIVE_INDEX
 {
     /// <summary>
-    /// ÅéÁúÀåÀÎ : ÇÇ³ëÅ°¿À ¿ÃÅ¬¸®¾î
+    /// í†±ì§ˆìž¥ì¸ : í”¼ë…¸í‚¤ì˜¤ ì˜¬í´ë¦¬ì–´
     /// </summary>
     PINOCCHIO_ALL_CLEAR,
 
     /// <summary>
-    /// À¯¸®°ø¿¹ÀåÀÎ : ½Åµ¥·¼¶ó ¿ÃÅ¬¸®¾î
+    /// ìœ ë¦¬ê³µì˜ˆìž¥ì¸ : ì‹ ë°ë ë¼ ì˜¬í´ë¦¬ì–´
     /// </summary>
     CINDERELLA_ALL_CLEAR,
 
     /// <summary>
-    /// »ç°ú°¨º°»ç : ¹é¼³°øÁÖ ¿ÃÅ¬¸®¾î
+    /// ì‚¬ê³¼ê°ë³„ì‚¬ : ë°±ì„¤ê³µì£¼ ì˜¬í´ë¦¬ì–´
     /// </summary>
     SNOW_WHITE_ALL_CLEAR,
 
     /// <summary>
-    /// ¾àÀïÀÌ : ÀÎ¾î°øÁÖ ¿ÃÅ¬¸®¾î
+    /// ì•½ìŸì´ : ì¸ì–´ê³µì£¼ ì˜¬í´ë¦¬ì–´
     /// </summary>
     LITTLE_MERMAID_ALL_CLEAR,
 
     /// <summary>
-    /// ÀÚ¶ó³ª¶ó³ª¹«³ª¹« : Àè°ú Äá³ª¹« ¿ÃÅ¬¸®¾î
+    /// ìžë¼ë‚˜ë¼ë‚˜ë¬´ë‚˜ë¬´ : ìž­ê³¼ ì½©ë‚˜ë¬´ ì˜¬í´ë¦¬ì–´
     /// </summary>
     JACK_AND_BEANSTALK_ALL_CLEAR,
 
     /// <summary>
-    /// º®µ¹ÀÎ, ¾Æ±âµÅÁö»ïÇüÁ¦ ¿ÃÅ¬¸®¾î
+    /// ë²½ëŒì¸, ì•„ê¸°ë¼ì§€ì‚¼í˜•ì œ ì˜¬í´ë¦¬ì–´
     /// </summary>
     TREE_LITTLE_PIGS_ALL_CLEAR,
 
     /// <summary>
-    /// ¿£µù ¸ÞÀÌÄ¿ : ¸ðµç ½ºÅä¸® ¿£µù ÇØ±Ý
+    /// ì—”ë”© ë©”ì´ì»¤ : ëª¨ë“  ìŠ¤í† ë¦¬ ì—”ë”© í•´ê¸ˆ
     /// </summary>
     END_MAKER,
 
     /// <summary>
-    /// The End : ¸ðµç ½ºÅ×ÀÌÁö ¿ÃÅ¬¸®¾î
+    /// The End : ëª¨ë“  ìŠ¤í…Œì´ì§€ ì˜¬í´ë¦¬ì–´
     /// </summary>
     ALL_CLEAR,
 
     /// <summary>
-    /// ÆÛÁñÀåÀÎ : ½Åµ¥·¼¶ó ÇÃ·¹ÀÌ Áß 1È¸µµ ÆÐ¹èÇÏÁö ¾Ê´Â °æ¿ì
+    /// í¼ì¦ìž¥ì¸ : ì‹ ë°ë ë¼ í”Œë ˆì´ ì¤‘ 1íšŒë„ íŒ¨ë°°í•˜ì§€ ì•ŠëŠ” ê²½ìš°
     /// </summary>
     PUZZLE_MASTER,
 
     /// <summary>
-    /// ÅéÁú ¸¶½ºÅÍ : ÇÇ³ëÅ°¿À ÇÃ·¹ÀÌ Áß 1È¸µµ ÆÐ¹èÇÏÁö ¾Ê´Â °æ¿ì
+    /// í†±ì§ˆ ë§ˆìŠ¤í„° : í”¼ë…¸í‚¤ì˜¤ í”Œë ˆì´ ì¤‘ 1íšŒë„ íŒ¨ë°°í•˜ì§€ ì•ŠëŠ” ê²½ìš°
     /// </summary>
     SAWING_MASTER,
 
     /// <summary>
-    /// »ç°ú ¼Ò¹É¸®¿¡ : ¹é¼³°øÁÖ ÇÃ·¹ÀÌ Áß 1È¸µµ ÆÐ¹èÇÏÁö ¾Ê´Â °æ¿ì
+    /// ì‚¬ê³¼ ì†Œë¯ˆë¦¬ì— : ë°±ì„¤ê³µì£¼ í”Œë ˆì´ ì¤‘ 1íšŒë„ íŒ¨ë°°í•˜ì§€ ì•ŠëŠ” ê²½ìš°
     /// </summary>
     APPLE_SOMMELIER,
 
     /// <summary>
-    /// ¾à¿Õ : ÀÎ¾î°øÁÖ ÇÃ·¹ÀÌ Áß 1È¸µµ ÆÐ¹èÇÏÁö ¾Ê´Â °æ¿ì
+    /// ì•½ì™• : ì¸ì–´ê³µì£¼ í”Œë ˆì´ ì¤‘ 1íšŒë„ íŒ¨ë°°í•˜ì§€ ì•ŠëŠ” ê²½ìš°
     /// </summary>
     DRUG_KING,
 
     /// <summary>
-    /// °Å¸ñ : Àè°ú Äá³ª¹« ÇÃ·¹ÀÌ Áß 1È¸µµ ÆÐ¹èÇÏÁö ¾Ê´Â °æ¿ì
+    /// ê±°ëª© : ìž­ê³¼ ì½©ë‚˜ë¬´ í”Œë ˆì´ ì¤‘ 1íšŒë„ íŒ¨ë°°í•˜ì§€ ì•ŠëŠ” ê²½ìš°
     /// </summary>
     GAINT_BEANSTALK,
 
     /// <summary>
-    /// ÀÎ°£º®µ¹ : ¾Æ±âµÅÁö»ïÇüÁ¦ ÇÃ·¹ÀÌ Áß 1È¸µµ ÆÐ¹èÇÏÁö ¾Ê´Â °æ¿ì
+    /// ì¸ê°„ë²½ëŒ : ì•„ê¸°ë¼ì§€ì‚¼í˜•ì œ í”Œë ˆì´ ì¤‘ 1íšŒë„ íŒ¨ë°°í•˜ì§€ ì•ŠëŠ” ê²½ìš°
     /// </summary>
     HUMAN_BRICK,
 
     /// <summary>
-    /// °¡Àå ¸¶Áö¸· ÀÎµ¦½º ¹øÈ£ÀÔ´Ï´Ù.
+    /// ê°€ìž¥ ë§ˆì§€ë§‰ ì¸ë±ìŠ¤ ë²ˆí˜¸ìž…ë‹ˆë‹¤.
     /// </summary>
     NONE,
 

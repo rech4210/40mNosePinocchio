@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -39,13 +39,13 @@ public class AchieveAndTitle : ScriptableObject
 public struct AchieveResult
 {
 
-    [SerializeField, ReadOnly, LabelText("¾÷Àû ÀÎµ¦½º")] private ACHEIVE_INDEX myIndex;
-    [SerializeField, LabelText("ÇöÀç ¾÷Àû¼öÄ¡")] private int cur_achievementConditon;
-    [SerializeField, LabelText("¸ñÇ¥ ¾÷Àû¼öÄ¡")] private int target_achievementConditon;
-    [SerializeField, LabelText("¾÷Àû ÀÌ¸§")] private string achieveName;
-    [SerializeField, LabelText("¾÷Àû ³»¿ë")] private string achieveDesc;
-    [SerializeField, LabelText("º¸»ó ÄªÈ£")] private string title;
-    [SerializeField, LabelText("¾ÆÀÌÄÜ")] private Sprite icon;
+    [SerializeField, ReadOnly, LabelText("ì—…ì  ì¸ë±ìŠ¤")] private ACHEIVE_INDEX myIndex;
+    [SerializeField, LabelText("í˜„ì¬ ì—…ì ìˆ˜ì¹˜")] private int cur_achievementConditon;
+    [SerializeField, LabelText("ëª©í‘œ ì—…ì ìˆ˜ì¹˜")] private int target_achievementConditon;
+    [SerializeField, LabelText("ì—…ì  ì´ë¦„")] private string achieveName;
+    [SerializeField, LabelText("ì—…ì  ë‚´ìš©")] private string achieveDesc;
+    [SerializeField, LabelText("ë³´ìƒ ì¹­í˜¸")] private string title;
+    [SerializeField, LabelText("ì•„ì´ì½˜")] private Sprite icon;
     public AchieveResult(ACHEIVE_INDEX index)
     {
         myIndex = index;

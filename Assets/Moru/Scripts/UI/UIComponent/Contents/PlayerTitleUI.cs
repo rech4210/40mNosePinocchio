@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,8 +15,8 @@ namespace Moru.UI
         //bool isOpen = false;
 
         private Button originBtn;
-        [BoxGroup("¾Õ¸é"), LabelText("¾÷Àû ÀÌ¸§"), SerializeField] private Text playerTitleText;
-        //Âø¿ëÁß ÀÌ¹ÌÁö È¿°ú
+        [BoxGroup("ì•ë©´"), LabelText("ì—…ì  ì´ë¦„"), SerializeField] private Text playerTitleText;
+        //ì°©ìš©ì¤‘ ì´ë¯¸ì§€ íš¨ê³¼
         private AchieveResult myResult;
         public void Init(AchieveResult result, StackUIComponent targetComp)
         {
@@ -26,13 +26,13 @@ namespace Moru.UI
 
             PlayerData.onGetReward += GetReward;
 
-            //¾÷Àû´Ş¼ºÇÔ ¿©ºÎ ÆÄ¾Ç
+            //ì—…ì ë‹¬ì„±í•¨ ì—¬ë¶€ íŒŒì•…
             if (PlayerData.instance.IsGetReward[result.MyIndex] > 0)
             {
                 originBtn.interactable = true;
                 playerTitleText.text = result.Title;
-                //¾÷ÀûÀ» ¸Ô¾ú³Ä ¾È¸Ô¾ú³Ä Ã¼Å©
-                //ÆË¾÷Ã¢ ¿­±â
+                //ì—…ì ì„ ë¨¹ì—ˆëƒ ì•ˆë¨¹ì—ˆëƒ ì²´í¬
+                //íŒì—…ì°½ ì—´ê¸°
                 originBtn.onClick.AddListener(
                     () =>
                     {
@@ -42,7 +42,7 @@ namespace Moru.UI
                     }
                     );
             }
-            //¾÷Àû ¸ø¸ÔÀ½
+            //ì—…ì  ëª»ë¨¹ìŒ
             else
             {
                 originBtn.interactable = false;

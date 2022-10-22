@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -10,8 +10,8 @@ namespace Moru.UI
 {
     public class StackUIManager : SingleToneMono<StackUIManager>
     {
-        [LabelText("½ºÅ×ÀÌÁö ¼ö")] public int[] StageCount = new int[6];
-        [LabelText("´ÙÀ½Ã©ÅÍ ÇØ±İ Å¸°Ù ½ºÅ×ÀÌÁö")] public int[] targetStage = new int[6];
+        [LabelText("ìŠ¤í…Œì´ì§€ ìˆ˜")] public int[] StageCount = new int[6];
+        [LabelText("ë‹¤ìŒì±•í„° í•´ê¸ˆ íƒ€ê²Ÿ ìŠ¤í…Œì´ì§€")] public int[] targetStage = new int[6];
 
         [ShowInInspector] private Stack<StackUIComponent> ui_Stack = new Stack<StackUIComponent>();
         public StackUIComponent cur_UIComponent;
@@ -56,14 +56,14 @@ namespace Moru.UI
             }
             start_UIComponent?.Show();
 
-            //ÇÃ·¹ÀÌ¾î µ¥ÀÌÅÍ ·Îµå
+            //í”Œë ˆì´ì–´ ë°ì´í„° ë¡œë“œ
             playerData = PlayerData.instance;
-            PlayerData.Load_GameData();             //ÇÃ·¹ÀÌ¾îÀÇ °¢ Ã©ÅÍº° ½ºÅ×ÀÌÁö Á¤º¸ ¸®µå
-            PlayerData.Load_PlayerAchieve();        //ÇÃ·¹ÀÌ¾îÀÇ ¾÷Àû Á¤º¸ ¸®µå
-            PlayerData.Load_ChapterData();           //ÇÃ·¹ÀÌ¾îÀÇ Ã©ÅÍÁ¤º¸ ¸®µå
+            PlayerData.Load_GameData();             //í”Œë ˆì´ì–´ì˜ ê° ì±•í„°ë³„ ìŠ¤í…Œì´ì§€ ì •ë³´ ë¦¬ë“œ
+            PlayerData.Load_PlayerAchieve();        //í”Œë ˆì´ì–´ì˜ ì—…ì  ì •ë³´ ë¦¬ë“œ
+            PlayerData.Load_ChapterData();           //í”Œë ˆì´ì–´ì˜ ì±•í„°ì •ë³´ ë¦¬ë“œ
 
 
-            //Å×½ºÆ®¼ÂÆÃ
+            //í…ŒìŠ¤íŠ¸ì…‹íŒ…
             //playerData.SaveData[GAME_INDEX.Cinderella][0] = 1;
             //playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][0] = 1;
             //playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][1] = 1;
@@ -78,10 +78,10 @@ namespace Moru.UI
             //playerData.onClearChapter?.Invoke(GAME_INDEX.Little_Mermaid);
 
 
-            PlayerData.CheckChapterPoint();     //½ºÅ×ÀÌÁö ¹× Ã©ÅÍ Á¡°Ë
+            PlayerData.CheckChapterPoint();     //ìŠ¤í…Œì´ì§€ ë° ì±•í„° ì ê²€
 
 
-            //±ŞÇÑ´ë·Î ÀÌ·¸°Ô
+            //ê¸‰í•œëŒ€ë¡œ ì´ë ‡ê²Œ
             var objs = FindObjectsOfType<ChapterBtn>(true);
             foreach (var comp in objs)
             {

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -7,20 +7,20 @@ namespace Moru.UI
 {
     public class StackUIComponent : MonoBehaviour
     {
-        [ContextMenu("º¸¿©Áö±â")]
+        [ContextMenu("ë³´ì—¬ì§€ê¸°")]
         /// <summary>
-        /// ÇØ´ç ÄÄÆ÷³ÍÆ®¸¦ °¡Áø ¿ÀºêÁ§Æ®¸¦ SetActive(true)´ë½Å Show()¸¦ ½ÇÇà½ÃÄÑÁÖ¾î¾ß ÇÕ´Ï´Ù.
+        /// í•´ë‹¹ ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ë¥¼ SetActive(true)ëŒ€ì‹  Show()ë¥¼ ì‹¤í–‰ì‹œì¼œì£¼ì–´ì•¼ í•©ë‹ˆë‹¤.
         /// </summary>
         public void Show()
         {
-            //°ÔÀÓ¿ÀºêÁ§Æ®¸¦ È°¼ºÈ­½ÃÅµ´Ï´Ù.
+            //ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ í™œì„±í™”ì‹œí‚µë‹ˆë‹¤.
             this.gameObject.SetActive(true);
             StackUIManager.Instance.Push(this);
         }
 
-        [ContextMenu("¼û°ÜÁö±â")]
+        [ContextMenu("ìˆ¨ê²¨ì§€ê¸°")]
         /// <summary>
-        /// ÇØ´ç ÄÄÆ÷³ÍÆ®¸¦ °¡Áø ¿ÀºêÁ§Æ®¸¦ SetActive(false)´ë½Å Hide()¸¦ ½ÇÇà½ÃÄÑÁÖ¾î¾ß ÇÕ´Ï´Ù.
+        /// í•´ë‹¹ ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ë¥¼ SetActive(false)ëŒ€ì‹  Hide()ë¥¼ ì‹¤í–‰ì‹œì¼œì£¼ì–´ì•¼ í•©ë‹ˆë‹¤.
         /// </summary>
         public void Hide()
         {

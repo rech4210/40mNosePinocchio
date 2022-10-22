@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PD;
@@ -15,8 +15,8 @@ public class TestPlayerDataLoad : MonoBehaviour
     }
     public void TestAchieve()
     {
-        //¾÷Àû ½Ã½ºÅÛÀÇ ¹ë·ù ¾÷µ¥ÀÌÆ® µ¨¸®°ÔÀÌÆ® ¸Ş¼­µå
-        //(¸ñÇ¥Ä¡¿¡ µµ´ŞÇÏ¸é ÀÚµ¿À¸·Î ¾÷ÀûÀÌ ´Ş¼ºµË´Ï´Ù.
+        //ì—…ì  ì‹œìŠ¤í…œì˜ ë°¸ë¥˜ ì—…ë°ì´íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸ ë©”ì„œë“œ
+        //(ëª©í‘œì¹˜ì— ë„ë‹¬í•˜ë©´ ìë™ìœ¼ë¡œ ì—…ì ì´ ë‹¬ì„±ë©ë‹ˆë‹¤.
         PlayerData.onUpdateAchieve(target, 5);
     }
     public void TestClear()
@@ -31,38 +31,38 @@ public class TestPlayerDataLoad : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //»ç¿ë¹æ¹ı
-            //½Åµ¥·¼¶ó °ÔÀÓ¸ğµå¿¡¼­ 0¹øÂ° ½ºÅ×ÀÌÁö¸¦ Å¬¸®¾îÇß½À´Ï´Ù!
+            //ì‚¬ìš©ë°©ë²•
+            //ì‹ ë°ë ë¼ ê²Œì„ëª¨ë“œì—ì„œ 0ë²ˆì§¸ ìŠ¤í…Œì´ì§€ë¥¼ í´ë¦¬ì–´í–ˆìŠµë‹ˆë‹¤!
             PlayerData.onClearGame?.Invoke(GAME_INDEX.Cinderella, 0);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //»ç¿ë¹æ¹ı
-            //Àè°ú Äá³ª¹° °ÔÀÓ¸ğµå¿¡¼­ 1¹øÂ° ½ºÅ×ÀÌÁö¸¦ Å¬¸®¾îÇß½À´Ï´Ù!
+            //ì‚¬ìš©ë°©ë²•
+            //ì­ê³¼ ì½©ë‚˜ë¬¼ ê²Œì„ëª¨ë“œì—ì„œ 1ë²ˆì§¸ ìŠ¤í…Œì´ì§€ë¥¼ í´ë¦¬ì–´í–ˆìŠµë‹ˆë‹¤!
             PlayerData.onClearGame?.Invoke(GAME_INDEX.Jack_And_Beanstalk, 1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            //»ç¿ë¹æ¹ı
-            //ÀÎ¾î°øÁÖ °ÔÀÓ¸ğµå¿¡¼­ 2¹øÂ° ½ºÅ×ÀÌÁö¸¦ Å¬¸®¾îÇß½À´Ï´Ù!
+            //ì‚¬ìš©ë°©ë²•
+            //ì¸ì–´ê³µì£¼ ê²Œì„ëª¨ë“œì—ì„œ 2ë²ˆì§¸ ìŠ¤í…Œì´ì§€ë¥¼ í´ë¦¬ì–´í–ˆìŠµë‹ˆë‹¤!
             PlayerData.onClearGame?.Invoke(GAME_INDEX.Little_Mermaid, 2);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            //»ç¿ë¹æ¹ı
-            //½Åµ¥·¼¶ó °ÔÀÓ¸ğµå¿¡¼­ 3¹øÂ° ½ºÅ×ÀÌÁö¸¦ Å¬¸®¾îÇß½À´Ï´Ù!
+            //ì‚¬ìš©ë°©ë²•
+            //ì‹ ë°ë ë¼ ê²Œì„ëª¨ë“œì—ì„œ 3ë²ˆì§¸ ìŠ¤í…Œì´ì§€ë¥¼ í´ë¦¬ì–´í–ˆìŠµë‹ˆë‹¤!
             PlayerData.onClearGame?.Invoke(GAME_INDEX.Cinderella, 3);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //½Åµ¥·¼¶ó °ÔÀÓ¸ğµåÀÇ ¸ğµç ½ºÅ×ÀÌÁöÀÇ Å¬¸®¾î ¿©ºÎ¸¦ ¹Ş¾Æ¿É´Ï´Ù.
+            //ì‹ ë°ë ë¼ ê²Œì„ëª¨ë“œì˜ ëª¨ë“  ìŠ¤í…Œì´ì§€ì˜ í´ë¦¬ì–´ ì—¬ë¶€ë¥¼ ë°›ì•„ì˜µë‹ˆë‹¤.
             var value = PlayerData.GetStageClearDataPerGame(GAME_INDEX.Cinderella);
             for (int i = 0; i < value.Length; i++)
             {
                 Debug.Log($"{value[i]}");
             }
-            //Àè°ú Äá³ª¹° °ÔÀÓ¸ğµåÀÇ 0¹øÂ° ½ºÅ×ÀÌÁöÀÇ Å¬¸®¾î ¿©ºÎ¸¦ ¹Ş¾Æ¿É´Ï´Ù.
+            //ì­ê³¼ ì½©ë‚˜ë¬¼ ê²Œì„ëª¨ë“œì˜ 0ë²ˆì§¸ ìŠ¤í…Œì´ì§€ì˜ í´ë¦¬ì–´ ì—¬ë¶€ë¥¼ ë°›ì•„ì˜µë‹ˆë‹¤.
             bool result = PlayerData.GetStageClearDataPerGame(GAME_INDEX.Cinderella, 0);
             Debug.Log($"{result}");
         

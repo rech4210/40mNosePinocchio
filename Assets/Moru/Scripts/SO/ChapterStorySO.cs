@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -26,10 +26,10 @@ public class ChapterStorySO : ScriptableObject
 [System.Serializable]
 public struct ChapterStroy
 {
-    [SerializeField, ReadOnly, LabelText("∞‘¿” ¿Œµ¶Ω∫")] private GAME_INDEX myIndex;
-    [SerializeField, LabelText("√©≈Õ ¿Ã∏ß")] private string chapterName;
-    [SerializeField, LabelText("√©≈Õ ∞£¥‹Ω∫≈‰∏Æ")] private string chapterDesc;
-    [SerializeField, LabelText("√©≈Õ ¿ÃπÃ¡ˆ")] private Sprite backGround;
+    [SerializeField, ReadOnly, LabelText("Í≤åÏûÑ Ïù∏Îç±Ïä§")] private GAME_INDEX myIndex;
+    [SerializeField, LabelText("Ï±ïÌÑ∞ Ïù¥Î¶Ñ")] private string chapterName;
+    [SerializeField, LabelText("Ï±ïÌÑ∞ Í∞ÑÎã®Ïä§ÌÜ†Î¶¨")] private string chapterDesc;
+    [SerializeField, LabelText("Ï±ïÌÑ∞ Ïù¥ÎØ∏ÏßÄ")] private Sprite backGround;
     public ChapterStroy(GAME_INDEX index)
     {
         myIndex = index;

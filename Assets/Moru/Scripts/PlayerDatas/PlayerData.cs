@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -31,7 +31,7 @@ namespace PD
         #region Events
         public delegate void OnClearGame(GAME_INDEX index, int StageNum);
         /// <summary>
-        /// °ÔÀÓÀ» Å¬¸®¾îÇßÀ» °æ¿ì °ÔÀÓ ÀÎµ¦½º¿Í ½ºÅ×ÀÌÁö ³Ñ¹ö¸¦ ÀÎÀÚ·Î ³Ö¾î Invoke
+        /// ê²Œì„ì„ í´ë¦¬ì–´í–ˆì„ ê²½ìš° ê²Œì„ ì¸ë±ìŠ¤ì™€ ìŠ¤í…Œì´ì§€ ë„˜ë²„ë¥¼ ì¸ìë¡œ ë„£ì–´ Invoke
         /// </summary>
         public static OnClearGame onClearGame;
 
@@ -81,7 +81,7 @@ namespace PD
 
         public PlayerData(int[] stageCountPerGames, int[] targetStage)
         {
-            //½ºÅ×ÀÌÁö Á¤º¸ °ü·Ã
+            //ìŠ¤í…Œì´ì§€ ì •ë³´ ê´€ë ¨
             onClearGame += ClearGame;
             this.stageCountPerGames = stageCountPerGames;
             this.targetStage = targetStage;
@@ -93,12 +93,12 @@ namespace PD
                 curStageSeletedNum = stageNum;
             };
 
-            //¸®¼Ò½º ·Îµå
+            //ë¦¬ì†ŒìŠ¤ ë¡œë“œ
             PopUpUI = Resources.Load<GameObject>("AchieveCanvas");
             chapterStorySO = Resources.Load<ChapterStorySO>("ChapterStorySO");
 
 
-            ///¾÷Àû °ü·Ã///
+            ///ì—…ì  ê´€ë ¨///
             isAchievement = new Dictionary<ACHEIVE_INDEX, int>();
             cur_AchievementValue = new Dictionary<ACHEIVE_INDEX, AchieveResult>();
             isGetReward = new Dictionary<ACHEIVE_INDEX, int>();
@@ -106,25 +106,25 @@ namespace PD
             onUpdateAchieve += onUpdateAchieveCallBack;
 
 
-            //Ã©ÅÍ °ü·Ã
+            //ì±•í„° ê´€ë ¨
             openChapter = new Dictionary<GAME_INDEX, int>();
             clearChapter = new Dictionary<GAME_INDEX, int>();
             onOpenChapter += OnOpenChapter;
             onClearChapter += OnClearChapter;
 
-            //ÄÆ¾À °ü·Ã
+            //ì»·ì”¬ ê´€ë ¨
             dic_CutSceneOpen = new Dictionary<CUTSCENE_INDEX, int>();
 
         }
 
         #region Methods
         /// <summary>
-        /// °ÔÀÓÀ» Å¬¸®¾îÇÏ¸é Äİ¹éµË´Ï´Ù.
+        /// ê²Œì„ì„ í´ë¦¬ì–´í•˜ë©´ ì½œë°±ë©ë‹ˆë‹¤.
         /// </summary>
         /// <param name="index"></param>
         private void ClearGame(GAME_INDEX index, int stageNum)
         {
-            //°ÔÀÓÀ» Å¬¸®¾îÇßÀ¸¹Ç·Î UIÆË¾÷½ÃÅ°±â
+            //ê²Œì„ì„ í´ë¦¬ì–´í–ˆìœ¼ë¯€ë¡œ UIíŒì—…ì‹œí‚¤ê¸°
             PlayerPrefs.SetInt(index.ToString() + stageNum.ToString(), 1);
             saveData[index][stageNum] = 1;
             if(stageNum >= targetStage[(int)index])
@@ -136,7 +136,7 @@ namespace PD
         }
 
         /// <summary>
-        /// °ÔÀÓÀ» ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        /// ê²Œì„ì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
         /// </summary>
         public static void Initialize_GameData()
         {
@@ -155,7 +155,7 @@ namespace PD
         }
 
         /// <summary>
-        /// ÇÃ·¹ÀÌ¾î °ÔÀÓº° ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ¸¦ ºÒ·¯¿É´Ï´Ù.
+        /// í”Œë ˆì´ì–´ ê²Œì„ë³„ ìŠ¤í…Œì´ì§€ ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤.
         /// </summary>
         public static void Load_GameData()
         {
@@ -191,7 +191,7 @@ namespace PD
         }
 
         /// <summary>
-        /// ÇØ´ç°ÔÀÓ¿¡¼­ ÇØ´ç ½ºÅ×ÀÌÁöÀÇ Å¬¸®¾î ¿©ºÎ¸¦ ¹Ş¾Æ¿É´Ï´Ù.
+        /// í•´ë‹¹ê²Œì„ì—ì„œ í•´ë‹¹ ìŠ¤í…Œì´ì§€ì˜ í´ë¦¬ì–´ ì—¬ë¶€ë¥¼ ë°›ì•„ì˜µë‹ˆë‹¤.
         /// </summary>
         /// <param name="index"></param>
         /// <param name="stageNum"></param>
@@ -212,7 +212,7 @@ namespace PD
         }
 
         /// <summary>
-        /// ÇØ´ç °ÔÀÓÀÇ ¸ğµç ½ºÅ×ÀÌÁöÀÇ Å¬¸®¾î ¿©ºÎ¸¦ ¹è¿­·Î ¹Ş¾Æ¿É´Ï´Ù.
+        /// í•´ë‹¹ ê²Œì„ì˜ ëª¨ë“  ìŠ¤í…Œì´ì§€ì˜ í´ë¦¬ì–´ ì—¬ë¶€ë¥¼ ë°°ì—´ë¡œ ë°›ì•„ì˜µë‹ˆë‹¤.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
