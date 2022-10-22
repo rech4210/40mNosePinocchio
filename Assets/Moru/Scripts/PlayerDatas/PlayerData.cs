@@ -72,7 +72,7 @@ namespace PD
                 return GetWholeClearRate();
             }
         }
-        public GAME_INDEX Cur_Game_Index => cur_Game_Index;
+        public GAME_INDEX Cur_Game_Index { get => cur_Game_Index; set => cur_Game_Index = value; }
         public int CurStageSelectedNum { get => curStageSeletedNum; set => curStageSeletedNum = value; }
 
 

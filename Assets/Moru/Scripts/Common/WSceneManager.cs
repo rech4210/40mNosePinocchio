@@ -57,6 +57,8 @@ public class WSceneManager : MonoBehaviour
         }
     }
 
+
+
     public void Awake()
     {
         if (!this.GetComponent<SoundManager>())

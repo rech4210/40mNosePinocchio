@@ -30,12 +30,14 @@ public struct ChapterStroy
     [SerializeField, LabelText("챕터 이름")] private string chapterName;
     [SerializeField, LabelText("챕터 간단스토리")] private string chapterDesc;
     [SerializeField, LabelText("챕터 이미지")] private Sprite backGround;
+    [SerializeField, LabelText("게임 설명 이미지")] private Sprite explainSprite;
     public ChapterStroy(GAME_INDEX index)
     {
         myIndex = index;
         chapterName = "";
         chapterDesc = "";
         backGround = null;
+        explainSprite = null;
     }
 
 
@@ -43,4 +45,6 @@ public struct ChapterStroy
     public string ChapterName { get => chapterName; }
     public string ChapterDesc { get => chapterDesc; }
     public Sprite BackGround { get => backGround; }
+    public Sprite ExplainSprite { get => explainSprite; }
+
 }
