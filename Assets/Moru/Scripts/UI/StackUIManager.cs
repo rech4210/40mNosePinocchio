@@ -12,6 +12,9 @@ namespace Moru.UI
     {
         [LabelText("스테이지 수")] public int[] StageCount = new int[6];
         [LabelText("다음챕터 해금 타겟 스테이지")] public int[] targetStage = new int[6];
+        [LabelText("브금")] public AudioClip BGM;
+        [LabelText("클릭성공")] public AudioClip clickSFX;
+        [LabelText("클릭실패")] public AudioClip clickFailSFX;
 
         [ShowInInspector] private Stack<StackUIComponent> ui_Stack = new Stack<StackUIComponent>();
         public StackUIComponent cur_UIComponent;
@@ -95,6 +98,7 @@ namespace Moru.UI
         {
             onLoadEvent?.Invoke();
             onLoadEvent = null;
+            SoundManager.PlayBGM(BGM);
         }
 
         public void Pop()

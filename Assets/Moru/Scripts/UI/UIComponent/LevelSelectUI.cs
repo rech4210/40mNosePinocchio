@@ -11,6 +11,7 @@ namespace Moru.UI
     {
         [SerializeField, LabelText("왼쪽 버튼")] Button LeftBtn;
         [SerializeField, LabelText("오른쪽 버튼")] Button RightBtn;
+        [SerializeField, LabelText("설명 버튼")] Button ExplainBtn;
         [SerializeField, LabelText("콘텐츠")] Transform contents;
         GAME_INDEX cur_Index;
         int maxStageInt;
@@ -31,12 +32,22 @@ namespace Moru.UI
             PlayerData.instance.onSelectStage += SetUp;
             LeftBtn.onClick.AddListener
                 (
-                    () => SetUp(PlayerData.GetStageClearDataPerGame(cur_Index - 1), cur_Index - 1)
+                    () =>
+                    {
+                        SetUp(PlayerData.GetStageClearDataPerGame(cur_Index - 1), cur_Index - 1);
+                        PlayerData.instance.Cur_Game_Index--;
+                    }
                 );
             RightBtn.onClick.AddListener
                 (
-                    () => SetUp(PlayerData.GetStageClearDataPerGame(cur_Index + 1), cur_Index + 1)
+                    () =>
+                    {
+                        SetUp(PlayerData.GetStageClearDataPerGame(cur_Index + 1), cur_Index + 1);
+                        PlayerData.instance.Cur_Game_Index++;
+                    }
                 );
+
+
         }
         private void Start()
         {
@@ -123,6 +134,11 @@ namespace Moru.UI
             }
 
             //게임설명창 팝업 이미지 업데이트
+            var ExplainSprite = PlayerData.instance.ChapterStorySO._ChapterStroy[(int)cur_Index].ExplainSprite;
+            ExplainBtn.GetComponent<PopNPush>().Push_comp.GetComponent<GameExplainPopUp>().Init(ExplainSprite);
+            //ExplainBtn.onClick.AddListener(
+            //    () => ExplainBtn.GetComponent<PopNPush>().Push_comp.GetComponent<GameExplainPopUp>().Init(ExplainSprite)
+            //    );
         }
     }
 }
