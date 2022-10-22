@@ -35,12 +35,14 @@ namespace Moru.UI
             achieveDesc.text = result.AchieveDesc;
             achieveImg.gameObject.SetActive(false);
 
+
+            originBtn.onClick.AddListener(OnClick);
             PlayerData.onGetReward += GetReward;
 
             //업적달성함 여부 파악
             if (PlayerData.instance.IsAchievement[result.MyIndex] > 0)
             {
-                originBtn.interactable = true;
+                //originBtn.interactable = true;
                 //업적을 먹었냐 안먹었냐 체크
                 if (PlayerData.instance.IsGetReward[result.MyIndex] > 0)
                 {
@@ -66,7 +68,7 @@ namespace Moru.UI
             //달성 못함
             else
             {
-                originBtn.interactable = false;
+                //originBtn.interactable = false;
             }
         }
 
