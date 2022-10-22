@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using PD;
 
 namespace Moru.Cinderella
 {
@@ -66,7 +67,7 @@ namespace Moru.Cinderella
         {
             if (!isTest)
             {
-                GameStageNum = PlayerData.instance.CurStaggSelectedNum;
+                GameStageNum = PlayerData.instance.CurStageSelectedNum;
             }
             if (GameStageNum < 0) { Debug.Log($"잘못된 스테이지 넘버, 기능종료"); return; }
             else if (GameStageNum < 4)
