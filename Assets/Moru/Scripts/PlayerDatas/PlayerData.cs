@@ -54,7 +54,7 @@ namespace PD
 
         public delegate void OnSetToStage(GAME_INDEX index, int stageNum);
         public OnSetToStage SetStage;
-            
+
 
         #endregion
 
@@ -81,7 +81,7 @@ namespace PD
             }
         }
         public GAME_INDEX Cur_Game_Index => cur_Game_Index;
-        public int CurStageSelectedNum => curStageSeletedNum;
+        public int CurStageSelectedNum { get => curStageSeletedNum; set => curStageSeletedNum = value; }
 
 
         #endregion
@@ -178,7 +178,14 @@ namespace PD
                         stageSaveDic.Add(stageNum, value);
                     }
                 }
-                instacne.saveData.Add((GAME_INDEX)i, stageSaveDic);
+                if (instance.saveData.ContainsKey((GAME_INDEX)i))
+                {
+                    instance.saveData[(GAME_INDEX)i] = stageSaveDic;
+                }
+                else
+                {
+                    instacne.saveData.Add((GAME_INDEX)i, stageSaveDic);
+                }
             }
         }
 

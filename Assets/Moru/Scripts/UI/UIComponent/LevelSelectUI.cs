@@ -18,6 +18,7 @@ namespace Moru.UI
         // Start is called before the first frame update
         void Awake()
         {
+            
             PlayerData.instance.onSelectStage += SetUp;
             LeftBtn.onClick.AddListener
                 (
@@ -27,6 +28,10 @@ namespace Moru.UI
                 (
                     () => SetUp(PlayerData.GetStageClearDataPerGame(cur_Index + 1), cur_Index + 1)
                 );
+        }
+        private void Start()
+        {
+            SetUp(PlayerData.GetStageClearDataPerGame(PlayerData.instance.Cur_Game_Index), PlayerData.instance.Cur_Game_Index);
         }
 
         public void SetUp(bool[] stageArr, GAME_INDEX index)

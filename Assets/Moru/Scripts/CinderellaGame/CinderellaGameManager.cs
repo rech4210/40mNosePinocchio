@@ -68,7 +68,7 @@ namespace Moru.Cinderella
         {
             if (!isTest)
             {
-                GameStageNum = PlayerData.instance.CurStageSelectedNum;
+                GameStageNum = PlayerDataXref.instance.GetCurrentStage().StageNum;
             }
             if (GameStageNum < 0) { Debug.Log($"잘못된 스테이지 넘버, 기능종료"); return; }
             else if (GameStageNum < 4)

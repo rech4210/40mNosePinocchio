@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using Sirenix.OdinInspector;
 using PD;
+using UnityEngine.Events;
 
 namespace Moru.UI
 {
@@ -13,10 +14,32 @@ namespace Moru.UI
         public StackUIComponent cur_UIComponent;
         public StackUIComponent start_UIComponent;
         public StackUIComponent close_UIComponent;
+
+        [ShowInInspector]
+        public StackUIComponent chapterPage;
+        public static StackUIComponent ChapterPage
+        {
+            get
+            {
+                return StackUIManager.Instance.chapterPage;
+            }
+        }
+        public StackUIComponent lobbyPage;
+        [ShowInInspector] public static StackUIComponent LobbyPage
+        {
+            get
+            {
+                return StackUIManager.Instance.lobbyPage;
+            }
+        }
+
         public delegate void StackUI_Event(StackUIComponent stackUI);
         public event StackUI_Event pop_n_Push_Event;
 
         public PlayerData playerData;
+
+        public class OnLoadEvent : UnityEvent { }
+        public static OnLoadEvent onLoadEvent;
 
         protected override void Awake()
         {
@@ -61,8 +84,15 @@ namespace Moru.UI
             {
                 comp.UpdateChapterButton(comp.MyIndex);
             }
+
+            
         }
 
+        void Start()
+        {
+            onLoadEvent?.Invoke();
+            onLoadEvent = null;
+        }
 
         public void Pop()
         {
@@ -88,14 +118,15 @@ namespace Moru.UI
 
         }
 
-        public void GoToTargetUIComponent(StackUIComponent target)
+        public static void GoToTargetUIComponent(StackUIComponent target)
         {
+            var instance = StackUIManager.Instance;
             if (target == null) return;
-            if (ui_Stack.Peek() != start_UIComponent)
+            if (instance.ui_Stack.Peek() != instance.start_UIComponent)
             {
-                while (ui_Stack.Peek() == start_UIComponent)
+                while (instance.ui_Stack.Peek() == instance.start_UIComponent)
                 {
-                    ui_Stack.Pop().Hide();
+                    instance.ui_Stack.Pop().Hide();
                 }
             }
             var comps = target.transform.GetComponentsInParent<StackUIComponent>(true);

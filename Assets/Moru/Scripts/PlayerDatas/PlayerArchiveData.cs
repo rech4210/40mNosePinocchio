@@ -139,25 +139,54 @@ namespace PD
                     PlayerPrefs.SetInt(
                         resultList[i].MyIndex.ToString() + isAchieve, 0
                         );
-                    instance.isAchievement.Add(resultList[i].MyIndex, 0);
+                    if (instance.isAchievement.ContainsKey(resultList[i].MyIndex))
+                    {
+                        instance.isAchievement[resultList[i].MyIndex] = 0;
+                    }
+                    else
+                    {
+                        instance.isAchievement.Add(resultList[i].MyIndex, 0);
+                    }
                 }
                 else
                 {
                     int value2 = PlayerPrefs.GetInt(
                         resultList[i].MyIndex.ToString() + isAchieve
                         );
-                    instance.isAchievement.Add(resultList[i].MyIndex, value2);
+                    if (instance.isAchievement.ContainsKey(resultList[i].MyIndex))
+                    {
+                        instance.isAchievement[resultList[i].MyIndex] = value2;
+                    }
+                    else
+                    {
+                        instance.isAchievement.Add(resultList[i].MyIndex, value2);
+                    }
                 }
 
                 //현재 밸류 체크
-                instance.cur_AchievementValue.Add(resultList[i].MyIndex, resultList[i]);
+                if (instance.cur_AchievementValue.ContainsKey(resultList[i].MyIndex))
+                {
+                    instance.cur_AchievementValue[resultList[i].MyIndex] = resultList[i];
+                }
+                else
+                {
+                    instance.cur_AchievementValue.Add(resultList[i].MyIndex, resultList[i]);
+                }
                 var resultList_Value = resultList[i].Cur_AchievementCondition;
                 resultList_Value = PlayerPrefs.GetInt(resultList[i].MyIndex.ToString() + curValue, 0);
+                //업적들의 밸류 업데이트
 
 
                 //보상 받음 체크
                 int value = PlayerPrefs.GetInt(resultList[i].MyIndex.ToString() + isReward, 0);
-                instance.isGetReward.Add(resultList[i].MyIndex, value);
+                if (instance.isGetReward.ContainsKey(resultList[i].MyIndex))
+                {
+                    instance.isGetReward[resultList[i].MyIndex] = value;
+                }
+                else
+                {
+                    instance.isGetReward.Add(resultList[i].MyIndex, value);
+                }
             }
         }
 
