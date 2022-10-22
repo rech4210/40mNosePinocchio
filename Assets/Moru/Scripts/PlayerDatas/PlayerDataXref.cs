@@ -18,6 +18,9 @@ public class PlayerDataXref
             return m_instance;
         }
     }
+
+    
+
     #endregion
 
     #region Methods
@@ -79,8 +82,24 @@ public class PlayerDataXref
     {
         PlayerData.onUpdateAchieve(index, addValue);
     }
+    /// <summary>
+    /// 컷씬을 읽었는지 여부를 받아옵니다.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public bool IsGetCutScene(CUTSCENE_INDEX index)
+    {
+        return PlayerData.GetCutScene(index);
+    }
 
-
+    /// <summary>
+    /// 컷씬을 읽은 상태로 저장합니다.
+    /// </summary>
+    /// <param name="index"></param>
+    public void SetToCutSceneRead(CUTSCENE_INDEX index)
+    {
+        PlayerData.SetCutScene(index);
+    }
 
     #endregion
 }

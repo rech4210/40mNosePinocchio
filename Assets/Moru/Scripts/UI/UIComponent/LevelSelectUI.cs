@@ -15,10 +15,19 @@ namespace Moru.UI
         GAME_INDEX cur_Index;
         int maxStageInt;
 
+        //string isFail, isSuccess;
+        //Animator anim;
+
+        //void AA()
+        //{
+        //    anim.SetBool(isFail, true);
+        //}
+
+
         // Start is called before the first frame update
         void Awake()
         {
-            
+
             PlayerData.instance.onSelectStage += SetUp;
             LeftBtn.onClick.AddListener
                 (
@@ -45,8 +54,8 @@ namespace Moru.UI
                 var comp = contents.GetChild(i).GetComponent<Button>();
                 comp.onClick.RemoveAllListeners();
                 comp.onClick.AddListener(
-                    () => 
-                    { 
+                    () =>
+                    {
                         PlayerData.instance.SetStage?.Invoke(index, i);
                         //////////////
                         //¾À ÀüÈ¯ÀÛ¾÷//
