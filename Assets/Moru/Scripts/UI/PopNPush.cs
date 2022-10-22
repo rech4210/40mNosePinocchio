@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
@@ -27,7 +27,7 @@ namespace Moru.UI
 
         private void PopAndPush()
         {
-            if (push_comp == null) Debug.Log($"push´ë»óÀÌ ¾ø½À´Ï´Ù. ±â´É Á¾·á");
+            if (push_comp == null) Debug.Log($"pushëŒ€ìƒì´ ì—†ìŠµë‹ˆë‹¤. ê¸°ëŠ¥ ì¢…ë£Œ");
             else
             {
                 if (isPopAndPush)

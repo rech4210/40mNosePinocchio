@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,51 +9,51 @@ namespace Moru.Cinderella
 {
     public class CinderellaGameManager : SingleToneMono<CinderellaGameManager>
     {
-        [BoxGroup("Å×½ºÆ®¸ğµå?")] [SerializeField] private bool isTest = true;
-        [BoxGroup("Å×½ºÆ®¸ğµå?"), ShowIf("isTest")] public int GameStageNum;
+        [BoxGroup("í…ŒìŠ¤íŠ¸ëª¨ë“œ?")] [SerializeField] private bool isTest = true;
+        [BoxGroup("í…ŒìŠ¤íŠ¸ëª¨ë“œ?"), ShowIf("isTest")] public int GameStageNum;
 
 
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® Á¶°¢")] [SerializeField] private Sprite[] Atype;
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® Á¶°¢")] [SerializeField] private Sprite[] Btype;
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® Á¶°¢")] [SerializeField] private Sprite[] Ctype;
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® Á¶°¢")] [SerializeField] private Sprite[] Dtype;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ì¡°ê°")] [SerializeField] private Sprite[] Atype;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ì¡°ê°")] [SerializeField] private Sprite[] Btype;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ì¡°ê°")] [SerializeField] private Sprite[] Ctype;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ì¡°ê°")] [SerializeField] private Sprite[] Dtype;
 
 
 
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® ´ä")] [SerializeField] private Transform Atype_parent;
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® ´ä")] [SerializeField] private Transform[] Atype_Answer;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ë‹µ")] [SerializeField] private Transform Atype_parent;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ë‹µ")] [SerializeField] private Transform[] Atype_Answer;
 
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® ´ä")] [SerializeField] private Transform Btype_parent;
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® ´ä")] [SerializeField] private Transform[] Btype_Answer;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ë‹µ")] [SerializeField] private Transform Btype_parent;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ë‹µ")] [SerializeField] private Transform[] Btype_Answer;
 
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® ´ä")] [SerializeField] private Transform Ctype_parent;
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® ´ä")] [SerializeField] private Transform[] Ctype_Answer;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ë‹µ")] [SerializeField] private Transform Ctype_parent;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ë‹µ")] [SerializeField] private Transform[] Ctype_Answer;
 
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® ´ä")] [SerializeField] private Transform Dtype_parent;
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® ´ä")] [SerializeField] private Transform[] Dtype_Answer;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ë‹µ")] [SerializeField] private Transform Dtype_parent;
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ë‹µ")] [SerializeField] private Transform[] Dtype_Answer;
 
-        [BoxGroup("½ºÇÁ¶óÀÌÆ® Á¤´ä ¿ÀÇÁ¼Â")] [SerializeField] private float[] Collect_Offset = new float[4];
+        [BoxGroup("ìŠ¤í”„ë¼ì´íŠ¸ ì •ë‹µ ì˜¤í”„ì…‹")] [SerializeField] private float[] Collect_Offset = new float[4];
 
-        [BoxGroup("Å¸ÀÌ¸Ó")] [SerializeField] private float[] timerList = new float[20];
+        [BoxGroup("íƒ€ì´ë¨¸")] [SerializeField] private float[] timerList = new float[20];
 
-        [BoxGroup("Äµ¹ö½º »çÀÌÁî")] [SerializeField] private float xSize;
-        [BoxGroup("Äµ¹ö½º »çÀÌÁî")] [SerializeField] private float ySize;
+        [BoxGroup("ìº”ë²„ìŠ¤ ì‚¬ì´ì¦ˆ")] [SerializeField] private float xSize;
+        [BoxGroup("ìº”ë²„ìŠ¤ ì‚¬ì´ì¦ˆ")] [SerializeField] private float ySize;
 
-        [BoxGroup("ÇöÀç °ÔÀÓ")]
+        [BoxGroup("í˜„ì¬ ê²Œì„")]
         [SerializeField] Transform PuzzelPivot;
-        [BoxGroup("ÇöÀç °ÔÀÓ")] [SerializeField] Transform[] selectedAnswer;
-        [BoxGroup("ÇöÀç °ÔÀÓ")] [SerializeField] float cur_Offset;
-        [BoxGroup("ÇöÀç °ÔÀÓ")] [SerializeField] float maxTimer;
-        [BoxGroup("ÇöÀç °ÔÀÓ")] [SerializeField] float cur_Timer;
+        [BoxGroup("í˜„ì¬ ê²Œì„")] [SerializeField] Transform[] selectedAnswer;
+        [BoxGroup("í˜„ì¬ ê²Œì„")] [SerializeField] float cur_Offset;
+        [BoxGroup("í˜„ì¬ ê²Œì„")] [SerializeField] float maxTimer;
+        [BoxGroup("í˜„ì¬ ê²Œì„")] [SerializeField] float cur_Timer;
 
-        [BoxGroup("ºÎ°¡ ¿ÀºêÁ§Æ®µé"), SerializeField, LabelText("½Åµ¥·¼¶ó")] private SpriteRenderer Cinderella;
-        [BoxGroup("ºÎ°¡ ¿ÀºêÁ§Æ®µé"), SerializeField, LabelText("°è¸ğ")] private SpriteRenderer StepMom;
-        [BoxGroup("ºÎ°¡ ¿ÀºêÁ§Æ®µé"), SerializeField, LabelText("½ÇÆĞ ½Ã")] private Sprite[] failSprite;
-        [BoxGroup("ºÎ°¡ ¿ÀºêÁ§Æ®µé"), SerializeField, LabelText("¼º°ø UI")] private GameObject ClearUI;
-        [BoxGroup("ºÎ°¡ ¿ÀºêÁ§Æ®µé"), SerializeField, LabelText("½ÇÆĞ UI")] private GameObject FailUI;
-        [BoxGroup("ºÎ°¡ ¿ÀºêÁ§Æ®µé"), SerializeField, LabelText("Å¸ÀÌ¸Ó UI")] private GameObject TimerUI;
+        [BoxGroup("ë¶€ê°€ ì˜¤ë¸Œì íŠ¸ë“¤"), SerializeField, LabelText("ì‹ ë°ë ë¼")] private SpriteRenderer Cinderella;
+        [BoxGroup("ë¶€ê°€ ì˜¤ë¸Œì íŠ¸ë“¤"), SerializeField, LabelText("ê³„ëª¨")] private SpriteRenderer StepMom;
+        [BoxGroup("ë¶€ê°€ ì˜¤ë¸Œì íŠ¸ë“¤"), SerializeField, LabelText("ì‹¤íŒ¨ ì‹œ")] private Sprite[] failSprite;
+        [BoxGroup("ë¶€ê°€ ì˜¤ë¸Œì íŠ¸ë“¤"), SerializeField, LabelText("ì„±ê³µ UI")] private GameObject ClearUI;
+        [BoxGroup("ë¶€ê°€ ì˜¤ë¸Œì íŠ¸ë“¤"), SerializeField, LabelText("ì‹¤íŒ¨ UI")] private GameObject FailUI;
+        [BoxGroup("ë¶€ê°€ ì˜¤ë¸Œì íŠ¸ë“¤"), SerializeField, LabelText("íƒ€ì´ë¨¸ UI")] private GameObject TimerUI;
 
-        [LabelText("°ÔÀÓ ½ÇÆĞ¼ö"), SerializeField] private static int failCount;
+        [LabelText("ê²Œì„ ì‹¤íŒ¨ìˆ˜"), SerializeField] private static int failCount;
         public GameObject selectedPiece;
 
         private int pieceCount;
@@ -64,13 +64,14 @@ namespace Moru.Cinderella
         public event OnValueChange onTimerValueChange;
         #endregion
 
+
         private void Start()
         {
             if (!isTest)
             {
                 GameStageNum = PlayerDataXref.instance.GetCurrentStage().StageNum;
             }
-            if (GameStageNum < 0) { Debug.Log($"Àß¸øµÈ ½ºÅ×ÀÌÁö ³Ñ¹ö, ±â´ÉÁ¾·á"); return; }
+            if (GameStageNum < 0) { Debug.Log($"ì˜ëª»ëœ ìŠ¤í…Œì´ì§€ ë„˜ë²„, ê¸°ëŠ¥ì¢…ë£Œ"); return; }
             else if (GameStageNum < 4)
             {
                 SetInit(Atype);
@@ -170,7 +171,7 @@ namespace Moru.Cinderella
             }
             else if (cur_Timer <= 0 && !isGameOver)
             {
-                //°ÔÀÓ Á¾·á
+                //ê²Œì„ ì¢…ë£Œ
                 isGameOver = true;
                 SetGameOver();
             }
@@ -183,23 +184,29 @@ namespace Moru.Cinderella
 
             if (isGameOver && Input.anyKey)
             {
-                //¸ŞÀÎÆäÀÌÁö·Î µ¹¾Æ°¡±â
+                //ë©”ì¸í˜ì´ì§€ë¡œ ëŒì•„ê°€ê¸°
             }
         }
 
         private void SetGameClear()
         {
-            Debug.Log($"°ÔÀÓ Å¬¸®¾î!");
-            //ÇÃ·¹ÀÌ¾î µ¥ÀÌÅÍ ¹İ¿µ
+            Debug.Log($"ê²Œì„ í´ë¦¬ì–´!");
+            //í”Œë ˆì´ì–´ ë°ì´í„° ë°˜ì˜
             ClearUI?.SetActive(true);
-            if (PlayerData.instance != null)
-            {
-                PlayerData.onClearGame(GAME_INDEX.Cinderella, GameStageNum);
-            }
-            if(GameStageNum == timerList.Length-1)
+            //Old
+            //if (PlayerData.instance != null)
+            //{
+            //    PlayerData.onClearGame(GAME_INDEX.Cinderella, GameStageNum);
+            //}
+            //New
+            //í”Œë ˆì´ì–´ ë°ì´í„°ì— ê²Œì„í´ë¦¬ì–´ë¥¼ ì—…ë°ì´íŠ¸í•©ë‹ˆë‹¤.
+            PlayerDataXref.instance.ClearGame(GAME_INDEX.Cinderella, GameStageNum);
+
+
+            if (GameStageNum == timerList.Length - 1)
             {
                 PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.CINDERELLA_ALL_CLEAR);
-                if(failCount == 0)
+                if (failCount == 0)
                 {
                     PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.PUZZLE_MASTER);
                 }
@@ -208,7 +215,7 @@ namespace Moru.Cinderella
 
         private void SetGameOver()
         {
-            Debug.Log($"°ÔÀÓ ½ÇÆĞ!");
+            Debug.Log($"ê²Œì„ ì‹¤íŒ¨!");
             FailUI?.SetActive(true);
             Cinderella.sprite = failSprite[0];
             StepMom.sprite = failSprite[1];

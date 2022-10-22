@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -32,7 +32,7 @@ namespace PD
         #endregion
 
         /// <summary>
-        /// Ã©ÅÍ µ¥ÀÌÅÍ¸¦ ·ÎµåÇÕ´Ï´Ù.
+        /// ì±•í„° ë°ì´í„°ë¥¼ ë¡œë“œí•©ë‹ˆë‹¤.
         /// </summary>
         public static void Load_ChapterData()
         {
@@ -62,13 +62,13 @@ namespace PD
                     instance.clearChapter.Add((GAME_INDEX)i, value2);
                 }
             }
-            //Ã¹¹øÂ° Ã©ÅÍ´Â Ç×»ó ¿ÀÇÂ
+            //ì²«ë²ˆì§¸ ì±•í„°ëŠ” í•­ìƒ ì˜¤í”ˆ
             PlayerPrefs.SetInt(GAME_INDEX.Snow_White.ToString() + isOpen, 1);
             instance.openChapter[GAME_INDEX.Snow_White] = 1;
         }
 
         /// <summary>
-        /// ÇØ´ç Ã©ÅÍ°¡ ÇØ±İµÇ¾îÀÖ´ÂÁö ¿©ºÎ¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+        /// í•´ë‹¹ ì±•í„°ê°€ í•´ê¸ˆë˜ì–´ìˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -89,7 +89,7 @@ namespace PD
         }
 
         /// <summary>
-        /// ÇØ´ç Ã©ÅÍ°¡ Å¬¸®¾îµÇ¾îÀÖ´ÂÁö ¿©ºÎ¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+        /// í•´ë‹¹ ì±•í„°ê°€ í´ë¦¬ì–´ë˜ì–´ìˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -110,7 +110,7 @@ namespace PD
         }
 
         /// <summary>
-        /// Ã©ÅÍ¿Í ½ºÅ×ÀÌÁö µ¥ÀÌÅÍ¸¦ Ã¼Å©ÇÕ´Ï´Ù.
+        /// ì±•í„°ì™€ ìŠ¤í…Œì´ì§€ ë°ì´í„°ë¥¼ ì²´í¬í•©ë‹ˆë‹¤.
         /// </summary>
         public static void CheckChapterPoint()
         {
@@ -121,12 +121,12 @@ namespace PD
                 var arr = GetStageClearDataPerGame((GAME_INDEX)i);
                 foreach (var ele in arr)
                 {
-                    //ÇÏ³ª¶óµµ false¸é ¸ø±ü°ÅÀÓ
+                    //í•˜ë‚˜ë¼ë„ falseë©´ ëª»ê¹¬ê±°ì„
                     if (!ele)
                     {
                         isClear = false;
                     }
-                    //ÇÏ³ª¶óµµ true¸é
+                    //í•˜ë‚˜ë¼ë„ trueë©´
                     if (ele)
                     {
                         isOpen = true;

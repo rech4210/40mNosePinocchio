@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +14,11 @@ namespace Moru.UI
         bool isOpen = false;
 
         private Button originBtn;
-        [BoxGroup("¾Õ¸é"), LabelText("¾÷Àû ÀÌ¸§"), SerializeField] private Text achieveName;
-        [BoxGroup("µŞ¸é"), LabelText("¾÷Àû ÀÌ¹ÌÁö"), SerializeField] private Image achieveImg;
-        [BoxGroup("µŞ¸é"), LabelText("¾÷Àû ³»¿ë"), SerializeField] private Text achieveDesc;
-        [BoxGroup("µŞ¸é"), LabelText("¾÷Àû ¹Ş±â¹öÆ°"), SerializeField] private Button btn_GetReward;
-        [BoxGroup("µŞ¸é"), LabelText("¾÷Àû ¹Ş±â ÅØ½ºÆ®"), SerializeField] private Text isGetReward;
+        [BoxGroup("ì•ë©´"), LabelText("ì—…ì  ì´ë¦„"), SerializeField] private Text achieveName;
+        [BoxGroup("ë’·ë©´"), LabelText("ì—…ì  ì´ë¯¸ì§€"), SerializeField] private Image achieveImg;
+        [BoxGroup("ë’·ë©´"), LabelText("ì—…ì  ë‚´ìš©"), SerializeField] private Text achieveDesc;
+        [BoxGroup("ë’·ë©´"), LabelText("ì—…ì  ë°›ê¸°ë²„íŠ¼"), SerializeField] private Button btn_GetReward;
+        [BoxGroup("ë’·ë©´"), LabelText("ì—…ì  ë°›ê¸° í…ìŠ¤íŠ¸"), SerializeField] private Text isGetReward;
 
 
 
@@ -39,15 +39,15 @@ namespace Moru.UI
             originBtn.onClick.AddListener(OnClick);
             PlayerData.onGetReward += GetReward;
 
-            //¾÷Àû´Ş¼ºÇÔ ¿©ºÎ ÆÄ¾Ç
+            //ì—…ì ë‹¬ì„±í•¨ ì—¬ë¶€ íŒŒì•…
             if (PlayerData.instance.IsAchievement[result.MyIndex] > 0)
             {
                 //originBtn.interactable = true;
-                //¾÷ÀûÀ» ¸Ô¾ú³Ä ¾È¸Ô¾ú³Ä Ã¼Å©
+                //ì—…ì ì„ ë¨¹ì—ˆëƒ ì•ˆë¨¹ì—ˆëƒ ì²´í¬
                 if (PlayerData.instance.IsGetReward[result.MyIndex] > 0)
                 {
-                    //¾È¸ÔÀº°Ç ÆÄÆ¼Å¬·Î Ãß°¡Ç¥°ú¸¦ ÁÖ´ø°¡.
-                    //ÆË¾÷Ã¢ ¿­±â
+                    //ì•ˆë¨¹ì€ê±´ íŒŒí‹°í´ë¡œ ì¶”ê°€í‘œê³¼ë¥¼ ì£¼ë˜ê°€.
+                    //íŒì—…ì°½ ì—´ê¸°
                     btn_GetReward.onClick.AddListener(
                         () =>
                         {
@@ -56,16 +56,16 @@ namespace Moru.UI
                         }
                         );
                     btn_GetReward.interactable = true;
-                    isGetReward.text = "º¸»ó ¹Ş±â";
+                    isGetReward.text = "ë³´ìƒ ë°›ê¸°";
                 }
-                //ÀÌ¹Ì ¸ÔÀº°Ç ¸Ô¾ú´Ù°í Ç¥½ÃÇØ¾ßÁö
+                //ì´ë¯¸ ë¨¹ì€ê±´ ë¨¹ì—ˆë‹¤ê³  í‘œì‹œí•´ì•¼ì§€
                 else
                 {
                     btn_GetReward.interactable = false;
-                    isGetReward.text = "ÀÌ¹Ì ¹ŞÀº º¸»óÀÔ´Ï´Ù.";
+                    isGetReward.text = "ì´ë¯¸ ë°›ì€ ë³´ìƒì…ë‹ˆë‹¤.";
                 }
             }
-            //´Ş¼º ¸øÇÔ
+            //ë‹¬ì„± ëª»í•¨
             else
             {
                 //originBtn.interactable = false;
@@ -110,7 +110,7 @@ namespace Moru.UI
             if (index == myResult.MyIndex)
             {
                 btn_GetReward.interactable = false;
-                isGetReward.text = "ÀÌ¹Ì ¹ŞÀº º¸»óÀÔ´Ï´Ù.";
+                isGetReward.text = "ì´ë¯¸ ë°›ì€ ë³´ìƒì…ë‹ˆë‹¤.";
             }
         }
     }

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,9 +9,9 @@ namespace Moru.UI
 {
     public class LevelSelectUI : MonoBehaviour
     {
-        [SerializeField, LabelText("¿ŞÂÊ ¹öÆ°")] Button LeftBtn;
-        [SerializeField, LabelText("¿À¸¥ÂÊ ¹öÆ°")] Button RightBtn;
-        [SerializeField, LabelText("ÄÜÅÙÃ÷")] Transform contents;
+        [SerializeField, LabelText("ì™¼ìª½ ë²„íŠ¼")] Button LeftBtn;
+        [SerializeField, LabelText("ì˜¤ë¥¸ìª½ ë²„íŠ¼")] Button RightBtn;
+        [SerializeField, LabelText("ì½˜í…ì¸ ")] Transform contents;
         GAME_INDEX cur_Index;
         int maxStageInt;
 
@@ -47,10 +47,10 @@ namespace Moru.UI
         {
             cur_Index = index;
             bool isinit = false;
-            //½ºÅ×ÀÌÁö ¸®½ºÆ® ¾÷µ¥ÀÌÆ®
+            //ìŠ¤í…Œì´ì§€ ë¦¬ìŠ¤íŠ¸ ì—…ë°ì´íŠ¸
             for (int i = 0; i < contents.childCount; i++)
             {
-                //ÀÌ·±½ÄÀÇ ÂüÁ¶...±ØÇøÇÏÁö¸¸ ³Ê¹« ±ÍÂú´Ù.
+                //ì´ëŸ°ì‹ì˜ ì°¸ì¡°...ê·¹í˜í•˜ì§€ë§Œ ë„ˆë¬´ ê·€ì°®ë‹¤.
                 var comp = contents.GetChild(i).GetComponent<Button>();
                 comp.onClick.RemoveAllListeners();
                 comp.onClick.AddListener(
@@ -58,17 +58,17 @@ namespace Moru.UI
                     {
                         PlayerData.instance.SetStage?.Invoke(index, i);
                         //////////////
-                        //¾À ÀüÈ¯ÀÛ¾÷//
+                        //ì”¬ ì „í™˜ì‘ì—…//
                         //////////////
                     }
 
                     );
-                comp.transform.GetChild(1).GetComponent<Text>().text = $"½ºÅ×ÀÌÁö {i + 1}";
+                comp.transform.GetChild(1).GetComponent<Text>().text = $"ìŠ¤í…Œì´ì§€ {i + 1}";
                 if (i < stageArr.Length)
                 {
 
                     contents.GetChild(i).gameObject.SetActive(true);
-                    //¿ÏÀüÈ÷ Å¬¸®¾îÇÑ ½ºÅ×ÀÌÁö
+                    //ì™„ì „íˆ í´ë¦¬ì–´í•œ ìŠ¤í…Œì´ì§€
                     if (stageArr[i])
                     {
                         comp.interactable = true;
@@ -82,14 +82,14 @@ namespace Moru.UI
                             maxStageInt = i;
                             isinit = true;
                         }
-                        //µµÀüÇÒ ¼ö ÀÖ´Â ½ºÅ×ÀÌÁö
+                        //ë„ì „í•  ìˆ˜ ìˆëŠ” ìŠ¤í…Œì´ì§€
                         if (comp == contents.GetChild(maxStageInt).GetComponent<Button>())
                         {
                             comp.interactable = true;
                             comp.transform.GetChild(0).gameObject.SetActive(false);
                             comp.transform.GetChild(2).gameObject.SetActive(false);
                         }
-                        //µµÀüºÒ°¡´ÉÇÑ ½ºÅ×ÀÌÁö
+                        //ë„ì „ë¶ˆê°€ëŠ¥í•œ ìŠ¤í…Œì´ì§€
                         else
                         {
                             comp.interactable = false;
@@ -104,7 +104,7 @@ namespace Moru.UI
                 }
             }
 
-            //ÁÂ ¿ì ¹öÆ° È°¼ºÈ­
+            //ì¢Œ ìš° ë²„íŠ¼ í™œì„±í™”
             if (index == 0)
             {
 
@@ -122,7 +122,7 @@ namespace Moru.UI
                 RightBtn.interactable = PlayerData.IsOpenChapter((GAME_INDEX)index + 1) ? true : false;
             }
 
-            //°ÔÀÓ¼³¸íÃ¢ ÆË¾÷ ÀÌ¹ÌÁö ¾÷µ¥ÀÌÆ®
+            //ê²Œì„ì„¤ëª…ì°½ íŒì—… ì´ë¯¸ì§€ ì—…ë°ì´íŠ¸
         }
     }
 }

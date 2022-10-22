@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,12 +8,12 @@ using PD;
 public enum SceneIndex
 {
     MainPage = 0,
-    Snow_White,         //¹é¼³°øÁÖ
-    Cinderella,         //½Åµ¥·¼¶ó
-    Pinocchio,          //ÇÇ³ëÅ°¿À
-    Little_Mermaid,     //ÀÎ¾î°øÁÖ
-    Jack_And_Beanstalk, //Àè°ú Äá³ª¹«
-    Tree_Little_Pigs,    //¾Æ±â µÅÁö »ïÇüÁ¦
+    Snow_White,         //ë°±ì„¤ê³µì£¼
+    Cinderella,         //ì‹ ë°ë ë¼
+    Pinocchio,          //í”¼ë…¸í‚¤ì˜¤
+    Little_Mermaid,     //ì¸ì–´ê³µì£¼
+    Jack_And_Beanstalk, //ì­ê³¼ ì½©ë‚˜ë¬´
+    Tree_Little_Pigs,    //ì•„ê¸° ë¼ì§€ ì‚¼í˜•ì œ
     None
 
 }
@@ -33,6 +33,7 @@ public class WSceneManager : MonoBehaviour
             {
                 var obj = new GameObject(typeof(WSceneManager).Name);
                 var comp = obj.AddComponent<WSceneManager>();
+                obj.AddComponent<SoundManager>();
                 DontDestroyOnLoad(comp.gameObject);
                 m_Instacne = comp;
                 
@@ -41,8 +42,11 @@ public class WSceneManager : MonoBehaviour
         }
     }
 
+    [SerializeField] private GameObject optionUI;
+    public GameObject OptionUI;
+
     /// <summary>
-    /// ¾ÀÀ» Àç·ÎµåÇÕ´Ï´Ù.
+    /// ì”¬ì„ ì¬ë¡œë“œí•©ë‹ˆë‹¤.
     /// </summary>
     public void ReLoad_ThisScene()
     {
@@ -50,7 +54,7 @@ public class WSceneManager : MonoBehaviour
         MoveScene(index);
     }
     /// <summary>
-    /// ¾ÀÀ» Àç·ÎµåÇÏ¸ç ½ºÅ×ÀÌÁö¸¦ Áõ°¡½ÃÅµ´Ï´Ù.
+    /// ì”¬ì„ ì¬ë¡œë“œí•˜ë©° ìŠ¤í…Œì´ì§€ë¥¼ ì¦ê°€ì‹œí‚µë‹ˆë‹¤.
     /// </summary>
     public void ReLoad_ThisScene_WtihStageUp()
     {
@@ -72,8 +76,8 @@ public class WSceneManager : MonoBehaviour
         }
         else
         {
-            Debug.Log($"{index} : À¯È¿ÇÏÁö ¾ÊÀº ÀÎµ¦½º, À¯È¿°ªÀ» ³Ö¾îÁÖ¼¼¿ä. \n" +
-                $"ÀÎµ¦½º ¹üÀ§ : {(int)SceneIndex.MainPage } ~ {(int)SceneIndex.None - 1}");
+            Debug.Log($"{index} : ìœ íš¨í•˜ì§€ ì•Šì€ ì¸ë±ìŠ¤, ìœ íš¨ê°’ì„ ë„£ì–´ì£¼ì„¸ìš”. \n" +
+                $"ì¸ë±ìŠ¤ ë²”ìœ„ : {(int)SceneIndex.MainPage } ~ {(int)SceneIndex.None - 1}");
             return;
         }
     }
@@ -98,9 +102,20 @@ public class WSceneManager : MonoBehaviour
             {
                 StackUIManager.GoToTargetUIComponent(StackUIManager.LobbyPage);
                 var boolsArr = PlayerData.GetStageClearDataPerGame(PlayerData.instance.Cur_Game_Index);
-                Debug.Log($"½ÇÇà¿©ºÎ È®ÀÎ");
+                Debug.Log($"ì‹¤í–‰ì—¬ë¶€ í™•ì¸");
                 //StackUIManager.LobbyPage.GetComponent<LevelSelectUI>().SetUp(boolsArr, PlayerData.instance.Cur_Game_Index);
             }
             );
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(SceneManager.GetActiveScene().buildIndex != 0)
+            {
+
+            }
+        }
     }
 }

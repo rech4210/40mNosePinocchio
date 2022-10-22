@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -7,11 +7,11 @@ namespace Moru.UI
 {
     public class HideAndShowIfStackUI : MonoBehaviour
     {
-        //[LabelText("Show°¡ ¾Æ´Ï¸é ¹«Á¶°Ç ¼û±é´Ï´Ù.")]
+        //[LabelText("Showê°€ ì•„ë‹ˆë©´ ë¬´ì¡°ê±´ ìˆ¨ê¹ë‹ˆë‹¤.")]
         //public bool HideElse;
         //[HideIf("HideElse")]
         public List<StackUIComponent> hideTargetUI;
-        //[LabelText("Hide°¡ ¾Æ´Ï¸é ¹«Á¶°Ç º¸¿©Áı´Ï´Ù.")]
+        //[LabelText("Hideê°€ ì•„ë‹ˆë©´ ë¬´ì¡°ê±´ ë³´ì—¬ì§‘ë‹ˆë‹¤.")]
         //public bool ShowElse;
         //[HideIf("ShowElse")]
         public List<StackUIComponent> showTargetUI;

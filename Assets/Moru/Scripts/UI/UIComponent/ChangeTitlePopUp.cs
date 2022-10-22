@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +13,7 @@ namespace Moru.UI
 
         public void Init(AchieveResult result)
         {
-            text.text = $"Īȣ�� \"{result.Title}\"���� �ٲٽðڽ��ϱ�?";
+            text.text = $"칭호를 \"{result.Title}\"으로 바꾸시겠습니까?";
             AcceptBtn.onClick.RemoveAllListeners();
             AcceptBtn.onClick.AddListener(
                 () =>

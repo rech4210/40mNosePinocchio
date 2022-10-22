@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,9 +14,9 @@ namespace Moru.UI
         [SerializeField] private bool isOpen = false;
         [SerializeField] private GAME_INDEX myIndex;
 
-        [BoxGroup("¾Õ¸é"), LabelText(""), SerializeField] Text chapterName;
-        [BoxGroup("µÞ¸é"), LabelText(""), SerializeField] Text chapterDesc;
-        [BoxGroup("µÞ¸é"), LabelText(""), SerializeField] Image chapterImg;
+        [BoxGroup("ì•žë©´"), LabelText(""), SerializeField] Text chapterName;
+        [BoxGroup("ë’·ë©´"), LabelText(""), SerializeField] Text chapterDesc;
+        [BoxGroup("ë’·ë©´"), LabelText(""), SerializeField] Image chapterImg;
 
 
         private ChapterStroy myChapterStory;

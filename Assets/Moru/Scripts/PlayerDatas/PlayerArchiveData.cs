@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -45,7 +45,7 @@ namespace PD
         #region Methods
 
         /// <summary>
-        /// ÇÃ·¹ÀÌ¾î ¾÷ÀûÁ¤º¸¸¦ ºÒ·¯¿É´Ï´Ù.
+        /// í”Œë ˆì´ì–´ ì—…ì ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤.
         /// </summary>
         public static void Load_PlayerAchieve()
         {
@@ -54,7 +54,7 @@ namespace PD
             var resultList = instance.achieveAndTitle.AchieveResults;
             for (int i = 0; i < resultList.Count; i++)
             {
-                //isAchievement Ã¼Å©
+                //isAchievement ì²´í¬
                 if (!PlayerPrefs.HasKey(
                     resultList[i].MyIndex.ToString() + isAchieve)
                     )
@@ -86,7 +86,7 @@ namespace PD
                     }
                 }
 
-                //ÇöÀç ¹ë·ù Ã¼Å©
+                //í˜„ì¬ ë°¸ë¥˜ ì²´í¬
                 if (instance.cur_AchievementValue.ContainsKey(resultList[i].MyIndex))
                 {
                     instance.cur_AchievementValue[resultList[i].MyIndex] = resultList[i];
@@ -97,10 +97,10 @@ namespace PD
                 }
                 var resultList_Value = resultList[i].Cur_AchievementCondition;
                 resultList_Value = PlayerPrefs.GetInt(resultList[i].MyIndex.ToString() + curValue, 0);
-                //¾÷ÀûµéÀÇ ¹ë·ù ¾÷µ¥ÀÌÆ®
+                //ì—…ì ë“¤ì˜ ë°¸ë¥˜ ì—…ë°ì´íŠ¸
 
 
-                //º¸»ó ¹ŞÀ½ Ã¼Å©
+                //ë³´ìƒ ë°›ìŒ ì²´í¬
                 int value = PlayerPrefs.GetInt(resultList[i].MyIndex.ToString() + isReward, 0);
                 if (instance.isGetReward.ContainsKey(resultList[i].MyIndex))
                 {
@@ -114,7 +114,7 @@ namespace PD
         }
 
         /// <summary>
-        /// ¾÷ÀûÀÇ ¹ë·ù¸¦ ¾÷µ¥ÀÌÆ®½ÃÄÑÁÖ´Â Äİ¹é¸Ş¼­µå
+        /// ì—…ì ì˜ ë°¸ë¥˜ë¥¼ ì—…ë°ì´íŠ¸ì‹œì¼œì£¼ëŠ” ì½œë°±ë©”ì„œë“œ
         /// </summary>
         /// <param name="index"></param>
         /// <param name="value"></param>
@@ -137,18 +137,18 @@ namespace PD
             }
             else
             {
-                //¾÷Àû ÁøÇàÁ¤µµ ¶ç¿ì±â
+                //ì—…ì  ì§„í–‰ì •ë„ ë„ìš°ê¸°
             }
 
-            Debug.Log($"¾÷Àû ÁøÇàµµ : µñ¼Å³Ê¸® = {result.Cur_AchievementCondition} / {result.Target_AchievementCondition}" +
-                $"\nÇÃ·¹ÀÌ¾î ÇÁ·¦½º = {PlayerPrefs.GetInt(index.ToString() + curValue)}");
+            Debug.Log($"ì—…ì  ì§„í–‰ë„ : ë”•ì…”ë„ˆë¦¬ = {result.Cur_AchievementCondition} / {result.Target_AchievementCondition}" +
+                $"\ní”Œë ˆì´ì–´ í”„ë©ìŠ¤ = {PlayerPrefs.GetInt(index.ToString() + curValue)}");
         }
 
         private void onClearAchieveCallBack(ACHEIVE_INDEX index)
         {
             isAchievement[index] = 1;
             PlayerPrefs.SetInt(index.ToString() + isAchieve, 1);
-            //¾÷ÀûÀ» ´Ş¼ºÇß½À´Ï´Ù ÆË¾÷¶ç¿ì±â
+            //ì—…ì ì„ ë‹¬ì„±í–ˆìŠµë‹ˆë‹¤ íŒì—…ë„ìš°ê¸°
             if (PopUpUI != null)
             {
                 var obj = MonoBehaviour.Instantiate(PopUpUI);
@@ -156,13 +156,13 @@ namespace PD
             }
             //
 
-            Debug.Log($"¾÷Àû ´Ş¼ºÇöÈ² : {cur_AchievementValue[index].AchieveName} ¾÷ÀûÀ» Å¬¸®¾îÇØ {cur_AchievementValue[index].Title} ÄªÈ£¸¦ È¹µæÇß´Ù!" +
-                $"\nµñ¼Å³Ê¸® = {isAchievement[index]}" +
-        $"\nÇÃ·¹ÀÌ¾î ÇÁ·¦½º = {PlayerPrefs.GetInt(index.ToString() + isAchieve)}");
+            Debug.Log($"ì—…ì  ë‹¬ì„±í˜„í™© : {cur_AchievementValue[index].AchieveName} ì—…ì ì„ í´ë¦¬ì–´í•´ {cur_AchievementValue[index].Title} ì¹­í˜¸ë¥¼ íšë“í–ˆë‹¤!" +
+                $"\në”•ì…”ë„ˆë¦¬ = {isAchievement[index]}" +
+        $"\ní”Œë ˆì´ì–´ í”„ë©ìŠ¤ = {PlayerPrefs.GetInt(index.ToString() + isAchieve)}");
         }
 
         /// <summary>
-        /// º¸»óÀ» ¹ŞÀ½Ã³¸®ÇÕ´Ï´Ù.
+        /// ë³´ìƒì„ ë°›ìŒì²˜ë¦¬í•©ë‹ˆë‹¤.
         /// </summary>
         /// <param name="index"></param>
         public void OnGetReward(ACHEIVE_INDEX index)

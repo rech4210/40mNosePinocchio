@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,12 +39,12 @@ namespace Moru.UI
             if (achieveNameViewer != null)
             {
                 achieveNameViewer.text = $"'{result.AchieveName}'"
-                + " ¾÷ÀûÀ» ´Ş¼ºÇß´Ù!";
+                + " ì—…ì ì„ ë‹¬ì„±í–ˆë‹¤!";
             }
             if (titleViewer != null)
             {
                 titleViewer.text = $"'{result.Title}'"
-                + " ÄªÈ£¸¦ È¹µæÇÏ¿´½À´Ï´Ù.";
+                + " ì¹­í˜¸ë¥¼ íšë“í•˜ì˜€ìŠµë‹ˆë‹¤.";
             }
         }
         private void Destroy()
