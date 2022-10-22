@@ -4,16 +4,6 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Moru.UI;
 
-public enum GAME_INDEX
-{
-    Snow_White,         //백설공주
-    Cinderella,         //신데렐라
-    Pinocchio,          //피노키오
-    Little_Mermaid,     //인어공주
-    Jack_And_Beanstalk, //잭과 콩나무
-    Tree_Little_Pigs,    //아기 돼지 삼형제
-    None
-}
 
 namespace PD
 {
@@ -29,8 +19,9 @@ namespace PD
             {
                 if (m_instance == null)
                 {
-                    int[] initValue = new int[6] { 10, 10, 10, 10, 10, 10 };
-                    m_instance = new PlayerData(initValue);
+                    int[] initValue_StageNum = StackUIManager.Instance.StageCount;
+                    int[] initValue_TargetStage = StackUIManager.Instance.StageCount;
+                    m_instance = new PlayerData(initValue_StageNum, initValue_TargetStage);
                 }
                 return m_instance;
             }
@@ -65,6 +56,7 @@ namespace PD
         [SerializeField] private GameObject PopUpUI;
         [ShowInInspector] private Dictionary<GAME_INDEX, Dictionary<int, int>> saveData;
         [SerializeField] private int[] stageCountPerGames;
+        [SerializeField] private int[] targetStage;
         [SerializeField] private GAME_INDEX cur_Game_Index;
         [SerializeField] private int curStageSeletedNum;
         #endregion
@@ -87,11 +79,12 @@ namespace PD
         #endregion
 
 
-        public PlayerData(int[] stageCountPerGames)
+        public PlayerData(int[] stageCountPerGames, int[] targetStage)
         {
             //스테이지 정보 관련
             onClearGame += ClearGame;
             this.stageCountPerGames = stageCountPerGames;
+            this.targetStage = targetStage;
             saveData = new Dictionary<GAME_INDEX, Dictionary<int, int>>();
 
             SetStage += (index, stageNum) =>
@@ -119,6 +112,9 @@ namespace PD
             onOpenChapter += OnOpenChapter;
             onClearChapter += OnClearChapter;
 
+            //컷씬 관련
+            dic_CutSceneOpen = new Dictionary<CUTSCENE_INDEX, int>();
+
         }
 
         #region Methods
@@ -131,6 +127,11 @@ namespace PD
             //게임을 클리어했으므로 UI팝업시키기
             PlayerPrefs.SetInt(index.ToString() + stageNum.ToString(), 1);
             saveData[index][stageNum] = 1;
+            if(stageNum >= targetStage[(int)index])
+            {
+                onOpenChapter?.Invoke(index+1);
+            }
+
             Debug.Log($"{PlayerPrefs.GetInt(index.ToString() + stageNum.ToString())} // {saveData[index][stageNum] }");
         }
 

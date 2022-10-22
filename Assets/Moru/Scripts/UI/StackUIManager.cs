@@ -10,6 +10,9 @@ namespace Moru.UI
 {
     public class StackUIManager : SingleToneMono<StackUIManager>
     {
+        [LabelText("스테이지 수")] public int[] StageCount = new int[6];
+        [LabelText("다음챕터 해금 타겟 스테이지")] public int[] targetStage = new int[6];
+
         [ShowInInspector] private Stack<StackUIComponent> ui_Stack = new Stack<StackUIComponent>();
         public StackUIComponent cur_UIComponent;
         public StackUIComponent start_UIComponent;
