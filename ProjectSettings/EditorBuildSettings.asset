@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Moru/Scene/MainUI Debug.unity
     guid: 4541dc88644740d46937a6129b48f43b
+  - enabled: 1
+    path: Assets/JungJaeHeon/Scene/SnowWhiteGameScene.unity
+    guid: 43b3c99ff8fdc6d4a9951cdf1c0d606c
+  - enabled: 1
+    path: Assets/Moru/Scene/CinderellaGameScene.unity
+    guid: add9da27778c8f94ab80b1c8ceaab093
   m_configObjects: {}

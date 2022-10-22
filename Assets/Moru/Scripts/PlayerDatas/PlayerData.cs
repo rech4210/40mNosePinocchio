@@ -19,8 +19,8 @@ namespace PD
             {
                 if (m_instance == null)
                 {
-                    int[] initValue_StageNum = StackUIManager.Instance.StageCount;
-                    int[] initValue_TargetStage = StackUIManager.Instance.StageCount;
+                    int[] initValue_StageNum = StackUIManager.Instance? StackUIManager.Instance.StageCount : new int[6] { 10,10,10,10,10,10};
+                    int[] initValue_TargetStage = StackUIManager.Instance? StackUIManager.Instance.targetStage : new int[6] { 5, 5, 5, 5, 5, 5 };
                     m_instance = new PlayerData(initValue_StageNum, initValue_TargetStage);
                 }
                 return m_instance;

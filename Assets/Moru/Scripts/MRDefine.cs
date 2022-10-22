@@ -6,10 +6,10 @@ using UnityEngine;
 
 public enum GAME_INDEX
 {
-    Snow_White,         //백설공주
-    Cinderella,         //신데렐라
     Pinocchio,          //피노키오
+    Snow_White,         //백설공주
     Little_Mermaid,     //인어공주
+    Cinderella,         //신데렐라
     Jack_And_Beanstalk, //잭과 콩나무
     Tree_Little_Pigs,    //아기 돼지 삼형제
     None

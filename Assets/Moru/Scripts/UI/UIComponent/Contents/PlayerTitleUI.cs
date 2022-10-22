@@ -18,6 +18,8 @@ namespace Moru.UI
         [BoxGroup("앞면"), LabelText("업적 이름"), SerializeField] private Text playerTitleText;
         //착용중 이미지 효과
         private AchieveResult myResult;
+        [SerializeField] private Sprite lockSprite;
+        [SerializeField] private Sprite openSprite;
         public void Init(AchieveResult result, StackUIComponent targetComp)
         {
             originBtn = GetComponent<Button>();
@@ -31,6 +33,7 @@ namespace Moru.UI
             {
                 originBtn.interactable = true;
                 playerTitleText.text = result.Title;
+                originBtn.GetComponent<Image>().sprite = openSprite;
                 //업적을 먹었냐 안먹었냐 체크
                 //팝업창 열기
                 originBtn.onClick.AddListener(
@@ -46,6 +49,7 @@ namespace Moru.UI
             else
             {
                 originBtn.interactable = false;
+                originBtn.GetComponent<Image>().sprite = lockSprite;
                 playerTitleText.text = "????";
             }
         }

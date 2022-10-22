@@ -14,32 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterStroy:
   - myIndex: 0
-    chapterName: "\uBC31\uC124\uACF5\uC8FC \uC774\uC57C\uAE30"
-    chapterDesc: "\uC6B0\uC640 \uC9F1\uC2E0\uAE30\uD574"
-    backGround: {fileID: 0}
-    explainSprite: {fileID: 21300000, guid: b13b308665ea6ed409cb1c6f7781340f, type: 3}
-  - myIndex: 1
-    chapterName: "\uC2E0\uB370\uB810\uB77C \uC774\uC57C\uAE30"
-    chapterDesc: "\uC720\uB9AC\uAD6C\uB450~"
-    backGround: {fileID: 0}
-    explainSprite: {fileID: 21300000, guid: 81b2229e0edfee34292f9fadc2d80d65, type: 3}
-  - myIndex: 2
     chapterName: "\uD53C\uB178\uD0A4\uC624 \uC774\uC57C\uAE30"
-    chapterDesc: "\uCF54\uAC00 \uC190\uC774\uB798"
-    backGround: {fileID: 0}
+    chapterDesc: "\uC6B0\uC640 \uC9F1\uC2E0\uAE30\uD574"
+    backGround: {fileID: 21300000, guid: b72f2f6c7f00eb6409322a4db858755e, type: 3}
     explainSprite: {fileID: 21300000, guid: 1063f87be288fca4e8e59050bdb2a9aa, type: 3}
-  - myIndex: 3
+  - myIndex: 1
+    chapterName: "\uBC31\uC124\uACF5\uC8FC \uC774\uC57C\uAE30"
+    chapterDesc: "\uC720\uB9AC\uAD6C\uB450~"
+    backGround: {fileID: 21300000, guid: bf69553e213386b4ea733782ec16f766, type: 3}
+    explainSprite: {fileID: 21300000, guid: b13b308665ea6ed409cb1c6f7781340f, type: 3}
+  - myIndex: 2
     chapterName: "\uC778\uC5B4\uACF5\uC8FC \uC774\uC57C\uAE30"
-    chapterDesc: "\uC194\uC9C1\uD788 \uAD34\uBB3C\uC784"
-    backGround: {fileID: 0}
+    chapterDesc: "\uCF54\uAC00 \uC190\uC774\uB798"
+    backGround: {fileID: 21300000, guid: 92e475ba52ec1944487887790ee1075b, type: 3}
     explainSprite: {fileID: 21300000, guid: 6d50f68e96c5251438f47ef662ed631b, type: 3}
+  - myIndex: 3
+    chapterName: "\uC2E0\uB370\uB810\uB77C \uC774\uC57C\uAE30"
+    chapterDesc: "\uC194\uC9C1\uD788 \uAD34\uBB3C\uC784"
+    backGround: {fileID: 21300000, guid: 3dffa881cba293743ae32ebe9ce8676f, type: 3}
+    explainSprite: {fileID: 21300000, guid: 81b2229e0edfee34292f9fadc2d80d65, type: 3}
   - myIndex: 4
     chapterName: "\uC7AD\uACFC \uCF69\uB098\uBB3C \uC774\uC57C\uAE30"
     chapterDesc: "\uC7AD\uACFC \uCF69\uB098\uBB34\uC784\u314B\u314B"
-    backGround: {fileID: 0}
+    backGround: {fileID: 21300000, guid: 2d995fb19e1bc9b49b9e865fcf5eb41a, type: 3}
     explainSprite: {fileID: 21300000, guid: 9edbfa294cead814982cd9bcf7b6d3ff, type: 3}
   - myIndex: 5
     chapterName: "\uC544\uAE30 \uB3FC\uC9C0 \uC0BC\uD615\uC81C"
     chapterDesc: "\uC81C\uAC00 \uC7A5\uB0A8\uC785\uB2C8\uB2E4."
-    backGround: {fileID: 0}
+    backGround: {fileID: 21300000, guid: 31c7407b279fb6741bef3f8f932ae736, type: 3}
     explainSprite: {fileID: 21300000, guid: 0281b8f34d5e40d45b590245a883b60c, type: 3}
