@@ -1423,12 +1423,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1402608205}
-        m_TargetAssemblyTypeName: StackUIManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: Moru.UI.StackUIManager, Assembly-CSharp
         m_MethodName: GoToTargetUIComponent
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1709759641}
-          m_ObjectArgumentAssemblyTypeName: StackUIComponent, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Moru.UI.StackUIComponent, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15565,6 +15565,7 @@ MonoBehaviour:
     playerTitle: 
     PopUpUI: {fileID: 0}
     stageCountPerGames: 
+    curStageSeletedNum: 0
 --- !u!4 &1402608206
 Transform:
   m_ObjectHideFlags: 0

@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PD;
 
-public class AchievementUI : MonoBehaviour
+namespace Moru.UI
 {
-    [SerializeField] Transform contents;
-    [SerializeField] GameObject prefaps;
-    [SerializeField] StackUIComponent popUpUI;
-
-    private void Start()
+    public class AchievementUI : MonoBehaviour
     {
-        for (int i = 0; i < (int)ACHEIVE_INDEX.NONE; i++)
+        [SerializeField] Transform contents;
+        [SerializeField] GameObject prefaps;
+        [SerializeField] StackUIComponent popUpUI;
+
+        private void Start()
         {
-            var obj = Instantiate(prefaps, contents);
-            obj.GetComponent<AchieveContentUI>().Init(PlayerData.instance.Cur_AchievementValue[(ACHEIVE_INDEX)i], popUpUI);
+            for (int i = 0; i < (int)ACHEIVE_INDEX.NONE; i++)
+            {
+                var obj = Instantiate(prefaps, contents);
+                obj.GetComponent<AchieveContentUI>().Init(PlayerData.instance.Cur_AchievementValue[(ACHEIVE_INDEX)i], popUpUI);
+            }
         }
     }
 }
