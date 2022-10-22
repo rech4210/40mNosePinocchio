@@ -68,9 +68,7 @@ namespace Moru.UI
                     () =>
                     {
                         PlayerData.instance.SetStage?.Invoke(index, i);
-                        //////////////
-                        //씬 전환작업//
-                        //////////////
+                        WSceneManager.instance.MoveScene((SceneIndex)index+1);
                     }
 
                     );

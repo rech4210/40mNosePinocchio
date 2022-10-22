@@ -45,6 +45,11 @@ namespace Moru.Cinderella
         [BoxGroup("현재 게임")] [SerializeField] float cur_Offset;
         [BoxGroup("현재 게임")] [SerializeField] float maxTimer;
         [BoxGroup("현재 게임")] [SerializeField] float cur_Timer;
+        [BoxGroup("현재 게임")] [SerializeField] private AudioClip BGM;
+        [BoxGroup("현재 게임")] [SerializeField] private AudioClip PickUp;
+        [BoxGroup("현재 게임")] [SerializeField] private AudioClip Pull;
+
+
 
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("신데렐라")] private SpriteRenderer Cinderella;
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("계모")] private SpriteRenderer StepMom;
@@ -72,28 +77,28 @@ namespace Moru.Cinderella
                 GameStageNum = PlayerDataXref.instance.GetCurrentStage().StageNum;
             }
             if (GameStageNum < 0) { Debug.Log($"잘못된 스테이지 넘버, 기능종료"); return; }
-            else if (GameStageNum < 4)
+            else if (GameStageNum < 2)
             {
                 SetInit(Atype);
                 Atype_parent.gameObject.SetActive(true);
                 selectedAnswer = Atype_Answer;
                 cur_Offset = Collect_Offset[0];
             }
-            else if (GameStageNum < 8)
+            else if (GameStageNum < 2+3)
             {
                 SetInit(Btype);
                 Btype_parent.gameObject.SetActive(true);
                 selectedAnswer = Btype_Answer;
                 cur_Offset = Collect_Offset[1];
             }
-            else if (GameStageNum < 12)
+            else if (GameStageNum < 2+3+3)
             {
                 SetInit(Ctype);
                 Ctype_parent.gameObject.SetActive(true);
                 selectedAnswer = Ctype_Answer;
                 cur_Offset = Collect_Offset[2];
             }
-            else if (GameStageNum < 20)
+            else if (GameStageNum < 2+3+3+2)
             {
                 SetInit(Dtype);
                 Dtype_parent.gameObject.SetActive(true);
@@ -106,6 +111,7 @@ namespace Moru.Cinderella
             cur_Timer = maxTimer;
             TimerUI.AddComponent<MoruTimer>();
             isGameOver = false;
+            SoundManager.PlayBGM(BGM);
         }
 
         private void SetInit(Sprite[] arr)
@@ -132,15 +138,19 @@ namespace Moru.Cinderella
         // Update is called once per frame
         void Update()
         {
+            if (Time.timeScale == 0) return;
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                if (!hit) return;
-                if (hit.transform.gameObject.TryGetComponent<PuzzelPiece>(out var comp))
+                if (hit)
                 {
-                    if (comp.isCanMoved)
+                    if (hit.transform.gameObject.TryGetComponent<PuzzelPiece>(out var comp))
                     {
-                        selectedPiece = hit.transform.gameObject;
+                        if (comp.isCanMoved)
+                        {
+                            selectedPiece = hit.transform.gameObject;
+                            SoundManager.PlaySFX(PickUp);
+                        }
                     }
                 }
 
@@ -160,6 +170,7 @@ namespace Moru.Cinderella
                     if (comp.CheckCollect(selectedAnswer[comp.myIndex], cur_Offset))
                     {
                         pieceCount--;
+                        SoundManager.PlaySFX(Pull);
                     }
                 }
             }

@@ -14,11 +14,12 @@ public class PlayerDataXref
             if (m_instance == null)
             {
                 m_instance = new PlayerDataXref();
+                m_instance.pl = PlayerData.instance;
             }
             return m_instance;
         }
     }
-
+    private PlayerData pl;
     
 
     #endregion

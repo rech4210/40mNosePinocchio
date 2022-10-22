@@ -30,6 +30,9 @@ namespace Moru.UI
 
         public void UpdateChapterButton(GAME_INDEX myIndex)
         {
+            chapterName.text = 
+               // myIndex.ToString();
+                    "";
             if (!PlayerData.IsOpenChapter(myIndex))
             {
                 btn_Image.enabled = false;
