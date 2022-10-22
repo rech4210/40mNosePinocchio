@@ -4,49 +4,52 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class AchievePopUp : MonoBehaviour
+namespace Moru.UI
 {
-    public float openTime = 1f;
-    public float waitTime = 1f;
-    public float closingTime = 2f;
-
-    [SerializeField] private Image icon;
-    [SerializeField] private Text achieveNameViewer;
-    [SerializeField] private Text titleViewer;
-    [SerializeField]
-    Sequence sq;
-    CanvasGroup canvas;
-
-    // Start is called before the first frame update
-    void Start()
+    public class AchievePopUp : MonoBehaviour
     {
-        DontDestroyOnLoad(this.gameObject);
-        canvas = GetComponent<CanvasGroup>();
-        canvas.alpha = 0;
-        sq.Append(canvas.DOFade(1, openTime));
-        sq.Append(canvas.DOFade(0, closingTime).SetDelay(waitTime+openTime));
-        Invoke("Destroy", openTime + waitTime + closingTime+1);
-    }
+        public float openTime = 1f;
+        public float waitTime = 1f;
+        public float closingTime = 2f;
 
-    public void SetViewer(AchieveResult result)
-    {
-        if (icon != null && result.Icon != null)
+        [SerializeField] private Image icon;
+        [SerializeField] private Text achieveNameViewer;
+        [SerializeField] private Text titleViewer;
+        [SerializeField]
+        Sequence sq;
+        CanvasGroup canvas;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            icon.sprite = result.Icon;
+            DontDestroyOnLoad(this.gameObject);
+            canvas = GetComponent<CanvasGroup>();
+            canvas.alpha = 0;
+            sq.Append(canvas.DOFade(1, openTime));
+            sq.Append(canvas.DOFade(0, closingTime).SetDelay(waitTime + openTime));
+            Invoke("Destroy", openTime + waitTime + closingTime + 1);
         }
-        if (achieveNameViewer != null)
+
+        public void SetViewer(AchieveResult result)
         {
-            achieveNameViewer.text = $"'{result.AchieveName}'"
-            + " 업적을 달성했다!";
+            if (icon != null && result.Icon != null)
+            {
+                icon.sprite = result.Icon;
+            }
+            if (achieveNameViewer != null)
+            {
+                achieveNameViewer.text = $"'{result.AchieveName}'"
+                + " 업적을 달성했다!";
+            }
+            if (titleViewer != null)
+            {
+                titleViewer.text = $"'{result.Title}'"
+                + " 칭호를 획득하였습니다.";
+            }
         }
-        if (titleViewer != null)
+        private void Destroy()
         {
-            titleViewer.text = $"'{result.Title}'"
-            + " 칭호를 획득하였습니다.";
+            Destroy(this.gameObject);
         }
-    }
-    private void Destroy()
-    {
-        Destroy(this.gameObject);
     }
 }

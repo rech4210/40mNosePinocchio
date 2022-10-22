@@ -2,35 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using PD;
 
-public class PlayerInfoUI : MonoBehaviour
+namespace Moru.UI
 {
-    [SerializeField] private Text titleText;
-    [SerializeField] private Text clearRate;
-    [SerializeField] private Image fillAmount;
-    float fillValue;
-
-    void Start()
+    public class PlayerInfoUI : MonoBehaviour
     {
-        UpdatePlayerInfo();
-        PlayerData.instance.onPlayerTitleChange += UpdatePlayerInfo;
-    }
+        [SerializeField] private Text titleText;
+        [SerializeField] private Text clearRate;
+        [SerializeField] private Image fillAmount;
+        float fillValue;
 
-    private void UpdatePlayerInfo()
-    {
-        if(titleText != null)
+        void Start()
         {
-            titleText.text = PlayerData.instance.PlayerTitle;
+            UpdatePlayerInfo();
+            PlayerData.instance.onPlayerTitleChange += UpdatePlayerInfo;
         }
-        if(clearRate != null)
-        {
-            clearRate.text = (PlayerData.instance.WholeClearRate * 100).ToString("F0") + " %";
-        }
-        if(fillAmount != null)
-        {
-            fillAmount.fillAmount = PlayerData.instance.WholeClearRate;
-        }
-        fillValue = PlayerData.instance.WholeClearRate;
-    }
 
+        private void UpdatePlayerInfo()
+        {
+            if (titleText != null)
+            {
+                titleText.text = PlayerData.instance.PlayerTitle;
+            }
+            if (clearRate != null)
+            {
+                clearRate.text = (PlayerData.instance.WholeClearRate * 100).ToString("F0") + " %";
+            }
+            if (fillAmount != null)
+            {
+                fillAmount.fillAmount = PlayerData.instance.WholeClearRate;
+            }
+            fillValue = PlayerData.instance.WholeClearRate;
+        }
+
+    }
 }

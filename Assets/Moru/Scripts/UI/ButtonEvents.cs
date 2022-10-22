@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Moru.UI
+{ 
 public class ButtonEvents : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -15,4 +17,6 @@ public class ButtonEvents : MonoBehaviour
     {
         
     }
+}
+
 }

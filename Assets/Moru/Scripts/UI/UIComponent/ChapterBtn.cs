@@ -2,40 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using PD;
 
-public class ChapterBtn : MonoBehaviour
+namespace Moru.UI
 {
-    [SerializeField] GAME_INDEX myindex;
-    public GAME_INDEX MyIndex { get => myindex; }
-    [SerializeField] Image btn_Image;
-    [SerializeField] Text chapterName;
-
-
-    private void Awake()
+    public class ChapterBtn : MonoBehaviour
     {
-        PlayerData.instance.onOpenChapter += UpdateChapterButton;
-    }
+        [SerializeField] GAME_INDEX myindex;
+        public GAME_INDEX MyIndex { get => myindex; }
+        [SerializeField] Image btn_Image;
+        [SerializeField] Text chapterName;
 
 
-    public void OnClickStage()
-    {
-        PlayerData.instance.onSelectStage?.Invoke
-            (
-                PlayerData.GetStageClearDataPerGame(myindex), myindex
-                );
-    }
-
-    public void UpdateChapterButton(GAME_INDEX myIndex)
-    {
-        if(!PlayerData.IsOpenChapter(myIndex))
+        private void Awake()
         {
-            btn_Image.enabled = false;
-            chapterName.enabled = false;
+            PlayerData.instance.onOpenChapter += UpdateChapterButton;
         }
-        else
+
+
+        public void OnClickStage()
         {
-            btn_Image.enabled = true;
-            chapterName.enabled = true;
+            PlayerData.instance.onSelectStage?.Invoke
+                (
+                    PlayerData.GetStageClearDataPerGame(myindex), myindex
+                    );
+        }
+
+        public void UpdateChapterButton(GAME_INDEX myIndex)
+        {
+            if (!PlayerData.IsOpenChapter(myIndex))
+            {
+                btn_Image.enabled = false;
+                chapterName.enabled = false;
+            }
+            else
+            {
+                btn_Image.enabled = true;
+                chapterName.enabled = true;
+            }
         }
     }
 }

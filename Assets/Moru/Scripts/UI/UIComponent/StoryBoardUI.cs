@@ -3,84 +3,88 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using PD;
 
-public class StoryBoardUI : MonoBehaviour
+namespace Moru.UI
 {
-    private delegate void OnClick_NoRet_NoParam(StoryBoardUI btn);
-    private static event OnClick_NoRet_NoParam onClick;
-    [SerializeField] private bool isOpen = false;
-    [SerializeField] private GAME_INDEX myIndex;
-
-    [BoxGroup("¾Õ¸é"), LabelText(""), SerializeField] Text chapterName;
-    [BoxGroup("µÞ¸é"), LabelText(""), SerializeField] Text chapterDesc;
-    [BoxGroup("µÞ¸é"), LabelText(""), SerializeField] Image chapterImg;
-
-
-    private ChapterStroy myChapterStory;
-
-    private void Awake()
+    public class StoryBoardUI : MonoBehaviour
     {
-        onClick += BroadCast_EventClick;
-    }
+        private delegate void OnClick_NoRet_NoParam(StoryBoardUI btn);
+        private static event OnClick_NoRet_NoParam onClick;
+        [SerializeField] private bool isOpen = false;
+        [SerializeField] private GAME_INDEX myIndex;
 
-    private void Start()
-    {
-        myChapterStory = PlayerData.instance.ChapterStorySO._ChapterStroy[(int)myIndex];
-        chapterName.text = myChapterStory.ChapterName;
-        chapterDesc.text = myChapterStory.ChapterDesc;
-        chapterImg.sprite = myChapterStory.BackGround;
-
+        [BoxGroup("¾Õ¸é"), LabelText(""), SerializeField] Text chapterName;
+        [BoxGroup("µÞ¸é"), LabelText(""), SerializeField] Text chapterDesc;
+        [BoxGroup("µÞ¸é"), LabelText(""), SerializeField] Image chapterImg;
 
 
-        var btn = GetComponent<Button>();
-        btn.onClick.AddListener(OnClick);
-        if (PlayerData.IsClearChapter(myIndex))
+        private ChapterStroy myChapterStory;
+
+        private void Awake()
         {
-            btn.interactable = true;
-            chapterDesc.enabled = false;
-            chapterImg.enabled = false;
+            onClick += BroadCast_EventClick;
         }
-        else
+
+        private void Start()
         {
-            btn.interactable = false;
-            chapterDesc.enabled = false;
-            chapterImg.enabled = false;
-        }
-    }
+            myChapterStory = PlayerData.instance.ChapterStorySO._ChapterStroy[(int)myIndex];
+            chapterName.text = myChapterStory.ChapterName;
+            chapterDesc.text = myChapterStory.ChapterDesc;
+            chapterImg.sprite = myChapterStory.BackGround;
 
 
-    void OnClick()
-    {
-        if(!isOpen)
-        {
-            isOpen = true;
-            chapterName.enabled = false;
-            chapterDesc.enabled = true;
-            chapterImg.enabled = true;
-            onClick?.Invoke(this);
-        }
-        else
-        {
-            Hide();
-            
-        }
-    }
 
-    void Hide()
-    {
-        isOpen = false;
-        chapterName.enabled = true;
-        chapterDesc.enabled = false;
-        chapterImg.enabled = false;
-    }
-    
-    private void BroadCast_EventClick(StoryBoardUI btn)
-    {
-        if(btn != this)
+            var btn = GetComponent<Button>();
+            btn.onClick.AddListener(OnClick);
+            if (PlayerData.IsClearChapter(myIndex))
+            {
+                btn.interactable = true;
+                chapterDesc.enabled = false;
+                chapterImg.enabled = false;
+            }
+            else
+            {
+                btn.interactable = false;
+                chapterDesc.enabled = false;
+                chapterImg.enabled = false;
+            }
+        }
+
+
+        void OnClick()
         {
-            if(isOpen)
+            if (!isOpen)
+            {
+                isOpen = true;
+                chapterName.enabled = false;
+                chapterDesc.enabled = true;
+                chapterImg.enabled = true;
+                onClick?.Invoke(this);
+            }
+            else
             {
                 Hide();
+
+            }
+        }
+
+        void Hide()
+        {
+            isOpen = false;
+            chapterName.enabled = true;
+            chapterDesc.enabled = false;
+            chapterImg.enabled = false;
+        }
+
+        private void BroadCast_EventClick(StoryBoardUI btn)
+        {
+            if (btn != this)
+            {
+                if (isOpen)
+                {
+                    Hide();
+                }
             }
         }
     }

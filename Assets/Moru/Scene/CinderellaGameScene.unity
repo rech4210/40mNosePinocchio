@@ -4792,6 +4792,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2966e4b34b904cb4b9fa012a2ea8e39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTest: 1
+  GameStageNum: 12
   Atype:
   - {fileID: -456677571, guid: 53c72cb606e58c049b3ffad071bc0af4, type: 3}
   - {fileID: 726353285, guid: 53c72cb606e58c049b3ffad071bc0af4, type: 3}
@@ -4934,7 +4936,6 @@ MonoBehaviour:
   FailUI: {fileID: 420504512}
   TimerUI: {fileID: 362255799}
   selectedPiece: {fileID: 0}
-  GameStageNum: 0
   isGameOver: 0
 --- !u!4 &1763933836
 Transform:
