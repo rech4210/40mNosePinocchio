@@ -23,9 +23,18 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text combo_text;
     public TMP_Text combo_bonus_text;
 
+    Clear clear;
+
+    public void CheckEnding()
+    {
+        clear.endingDelegate(score);
+    }
 
     public void Start()
     {
+
+        clear = gameObject.GetComponent<Clear>();
+        
         score_text.text = score + "score";
 
         scoreDel += countUp;

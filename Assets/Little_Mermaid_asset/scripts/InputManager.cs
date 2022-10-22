@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class InputManager : MonoBehaviour
 {
 
-    private Dictionary<KeyCode, string> keyValuePairs = new Dictionary<KeyCode, string>();
+    private Dictionary<KeyCode, string> keyValuePairs = new Dictionary<KeyCode, string>(); // 키 저장한 딕셔너리
 
     public int signNumbers;// 나올 버튼의 개수
 
@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
 
     GameObject[] spritesArray = new GameObject[50]; //생성된 버튼 객체들을 다룰 배열
     public GameObject[] spritesPrefab; // 프리팹 이미지들 넣을 배열
-    public GameObject extention;
+    public GameObject extention; // 노트 갯수에 따라 확장되는 Panel
 
     public GameObject parentPrefab; // 복제할 부모
 
@@ -28,6 +28,7 @@ public class InputManager : MonoBehaviour
 
     Vector3 defaultPos = new Vector3(0,0,0);
 
+    #region 상태 반환
     public enum State //상태 enum
     {
         success,
@@ -41,13 +42,16 @@ public class InputManager : MonoBehaviour
     {
         get { return nowState; } //get 프로퍼티
 
-        set 
+        set
         {
             _nowState = value;
             changeScripts.changeAnimation(_nowState);  // state 값 set 할 시 changeAnimation 메소드 실행
-            
+
         }
     }
+    #endregion
+
+    
 
     void Awake()
     {
@@ -64,6 +68,7 @@ public class InputManager : MonoBehaviour
     }
 
 
+    #region 노트 제어
     void initallize()
     {
         for (int i = 0; i < signNumbers; i++)
@@ -72,17 +77,17 @@ public class InputManager : MonoBehaviour
 
             parent.name = i.ToString();
             spriteParents[i] = parent; // 부모 배열에 객체 넣어주기
-            spriteParents[i].transform.SetParent(this.gameObject.transform,false); // 매니저 아래에 부모 생성
-            
-            spriteParents[i].GetComponent<RectTransform>().anchoredPosition = gameObject.transform.position + new Vector3((i*175)+175, 6,0);
+            spriteParents[i].transform.SetParent(this.gameObject.transform, false); // 매니저 아래에 부모 생성
+
+            spriteParents[i].GetComponent<RectTransform>().anchoredPosition = gameObject.transform.position + new Vector3((i * 175) + 175, 6, 0);
 
             Vector3 tempParentPos = spriteParents[i].GetComponent<RectTransform>().anchoredPosition;
 
-            int randomNumber = Random.Range(0, spritesPrefab.Length-1); //랜덤 이미지 넘버
+            int randomNumber = Random.Range(0, spritesPrefab.Length - 1); //랜덤 이미지 넘버
             var temp_sprite = Instantiate(spritesPrefab[randomNumber]); // 랜덤 이미지 생성
             spritesArray[i] = temp_sprite;
 
-            temp_sprite.transform.SetParent(spriteParents[i].transform,false); // i번째 부모에 이미지 넣어주기
+            temp_sprite.transform.SetParent(spriteParents[i].transform, false); // i번째 부모에 이미지 넣어주기
             temp_sprite.GetComponent<RectTransform>().anchoredPosition = defaultPos;
         }
     }
@@ -98,18 +103,19 @@ public class InputManager : MonoBehaviour
 
     void push(GameObject temp_sprite)
     {
-        temp_sprite.transform.SetParent(spriteParents[signNumbers-1].transform,false);
+        temp_sprite.transform.SetParent(spriteParents[signNumbers - 1].transform, false);
     }
 
     void Scroll() // 작동안될시 method로 변경
     {
         for (int i = 0; i < signNumbers; i++)
         {//삭제후 배열을 한칸씩 당기고, 위치를 바꾼다 그리고 마지막 자리에 push
-            spritesArray[i] = spritesArray[i+1]; // push를 먼저 해줘야함
+            spritesArray[i] = spritesArray[i + 1]; // push를 먼저 해줘야함
             spritesArray[i].transform.SetParent(spriteParents[i].transform, false); //한칸씩 부모에게 당기기 스프라이트 1 -> 0으로
         }
-    }
-
+    } 
+    #endregion
+    #region 키 입력
     private void Update()
     {
         if (Input.anyKeyDown) // 다운
@@ -118,7 +124,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    #region 키 입력
+    
     void isKeyDown()
     {
         foreach (var dic in keyValuePairs)
@@ -144,7 +150,7 @@ public class InputManager : MonoBehaviour
     void isRight(string keyString)
     {
         var temp_sprite = spriteParents[0].transform.GetChild(0);
-        if (keyString == temp_sprite.name)
+        if (keyString == temp_sprite.name && Time.timeScale != 0)
         {
             nowState = State.success; // 성공
             scoreManager.scoreDel(); // 성공시 스코어 점수 증가 델리게이트 실행
@@ -161,5 +167,5 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    //클리어 함수 추가
+
 }
