@@ -29,8 +29,35 @@ public class StackUIManager : SingleToneMono<StackUIManager>
 
         //플레이어 데이터 로드
         playerData = PlayerData.instance;
-        PlayerData.Load_GameData();
-        PlayerData.Load_PlayerAchieve();
+        PlayerData.Load_GameData();             //플레이어의 각 챕터별 스테이지 정보 리드
+        PlayerData.Load_PlayerAchieve();        //플레이어의 업적 정보 리드
+        PlayerData.Load_ChapterData();           //플레이어의 챕터정보 리드
+
+
+        //테스트셋팅
+        //playerData.SaveData[GAME_INDEX.Cinderella][0] = 1;
+        //playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][0] = 1;
+        //playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][1] = 1;
+        //playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][2] = 1;
+        //playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][3] = 1;
+        //playerData.SaveData[GAME_INDEX.Little_Mermaid][0] = 1;
+        //playerData.SaveData[GAME_INDEX.Pinocchio][0] = 1;
+        //playerData.SaveData[GAME_INDEX.Pinocchio][5] = 1;
+        //playerData.SaveData[GAME_INDEX.Pinocchio][7] = 1;
+        //playerData.SaveData[GAME_INDEX.Snow_White][0] = 1;
+        //playerData.onClearChapter?.Invoke(GAME_INDEX.Cinderella);
+        //playerData.onClearChapter?.Invoke(GAME_INDEX.Little_Mermaid);
+
+
+        PlayerData.CheckChapterPoint();     //스테이지 및 챕터 점검
+
+
+        //급한대로 이렇게
+        var objs = FindObjectsOfType<ChapterBtn>(true);
+        foreach(var comp in objs)
+        {
+            comp.UpdateChapterButton(comp.MyIndex);
+        }
     }
 
 

@@ -43,6 +43,10 @@ public partial class PlayerData
     public OnValueChange onPlayerNameChange;
     public OnValueChange onPlayerTitleChange;
 
+
+    public delegate void OnSelectStage(bool[] arr, GAME_INDEX index);
+    public OnSelectStage onSelectStage;
+
     #endregion
 
     #region Field
@@ -58,21 +62,43 @@ public partial class PlayerData
     public Dictionary<GAME_INDEX, Dictionary<int, int>> SaveData => saveData;
     public string PlayerName { get { return playerName; } set { playerName = value; onPlayerNameChange?.Invoke(); } }
     public string PlayerTitle { get { return playerTitle; } set { playerTitle = value; onPlayerTitleChange?.Invoke(); } }
+    public float WholeClearRate
+    {
+        get
+        {
+            return GetWholeClearRate();
+        }
+    }
+
+
     #endregion
 
 
     public PlayerData(int[] stageCountPerGames)
     {
+        //스테이지 정보 관련
         onClearGame += ClearGame;
         this.stageCountPerGames = stageCountPerGames;
         saveData = new Dictionary<GAME_INDEX, Dictionary<int, int>>();
+
+        //리소스 로드
+        PopUpUI = Resources.Load<GameObject>("AchieveCanvas");
+        chapterStorySO = Resources.Load<ChapterStorySO>("ChapterStorySO");
 
 
         ///업적 관련///
         isAchievement = new Dictionary<ACHEIVE_INDEX, int>();
         cur_AchievementValue = new Dictionary<ACHEIVE_INDEX, AchieveResult>();
+        isGetReward = new Dictionary<ACHEIVE_INDEX, int>();
         onClearAchieve += onClearAchieveCallBack;
         onUpdateAchieve += onUpdateAchieveCallBack;
+
+
+        //챕터 관련
+        openChapter = new Dictionary<GAME_INDEX, int>();
+        clearChapter = new Dictionary<GAME_INDEX, int>();
+        onOpenChapter += OnOpenChapter;
+        onClearChapter += OnClearChapter;
 
     }
 
@@ -180,6 +206,41 @@ public partial class PlayerData
                 retVal[i] = false;
             }
         }
+        return retVal;
+    }
+
+    public static float GetGameIndexClearRate(GAME_INDEX index)
+    {
+        var arr = GetStageClearDataPerGame(index);
+        int rate = 0;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if(arr[i])
+            {
+                rate++;
+            }
+        }
+        float retVal = (float)rate / (float)arr.Length;
+        return retVal;
+    }
+
+    private static float GetWholeClearRate()
+    {
+        float stageCount = 0;
+        float clearCount = 0;
+        for (int i = 0; i < (int)GAME_INDEX.None; i++)
+        {
+            var arr = GetStageClearDataPerGame((GAME_INDEX)i);
+            stageCount += arr.Length;
+            for (int j = 0; j < arr.Length; j++)
+            {
+                if (arr[j])
+                {
+                    clearCount++;
+                }
+            }
+        }
+        float retVal = clearCount / stageCount;
         return retVal;
     }
     #endregion
