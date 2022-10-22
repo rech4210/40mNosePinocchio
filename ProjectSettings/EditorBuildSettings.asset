@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Moru/Scene/MainUI Debug.unity
     guid: 4541dc88644740d46937a6129b48f43b
+  - enabled: 1
+    path: Assets/Little_Mermaid_asset/Scenes/CutScene.unity
+    guid: 906a783b799e7ac49af4c6a8cfe7477a
+  - enabled: 1
+    path: Assets/Little_Mermaid_asset/Scenes/Little_Mermaid.unity
+    guid: efa7c69525e9adb47b47343b155d30c7
   m_configObjects: {}

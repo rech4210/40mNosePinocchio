@@ -26,7 +26,6 @@ public class ChangeAnimation : MonoBehaviour
 
     public void changeAnimation(InputManager.State state) //마녀와 인어공주 스프라이트 교체
     {
-        Debug.Log("애니메이션 진입");
         switch (state)
         {
             case InputManager.State.normal: // idle

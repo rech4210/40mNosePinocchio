@@ -24,6 +24,13 @@ public class InputManager : MonoBehaviour
     ChangeAnimation changeScripts;
     ScoreManager scoreManager;
 
+
+    AudioSource audioSource;
+    public AudioClip hit_sound;
+    public AudioClip miss_sound;
+
+
+
     int adjustPanelPos = 10;
 
     Vector3 defaultPos = new Vector3(0,0,0);
@@ -61,7 +68,7 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
         extention.GetComponent<RectTransform>().sizeDelta = new Vector2((extention.GetComponent<RectTransform>().rect.width * (signNumbers / 5f) + (adjustPanelPos * signNumbers)), 1900);
         changeScripts = gameObject.GetComponent<ChangeAnimation>(); // changeAnimation 함수를 실행시킬 인스턴스 객체
         scoreManager = gameObject.GetComponent<ScoreManager>();
@@ -124,7 +131,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    
+
     void isKeyDown()
     {
         foreach (var dic in keyValuePairs)
@@ -155,6 +162,9 @@ public class InputManager : MonoBehaviour
             nowState = State.success; // 성공
             scoreManager.scoreDel(); // 성공시 스코어 점수 증가 델리게이트 실행
 
+            audioSource.clip = hit_sound;
+            audioSource.Play();
+
             Destroy(temp_sprite.gameObject); // 첫번째 노드 삭제안됨 수정
             makeSprite(); // 생성
             Scroll(); // 부모 객체에 넣을 이미지 한칸씩 당기기
@@ -163,6 +173,10 @@ public class InputManager : MonoBehaviour
         }
         else
         {
+            scoreManager.failDel();
+
+            audioSource.clip = miss_sound;
+            audioSource.Play();
             nowState = State.fail; // 실패
         }
     }

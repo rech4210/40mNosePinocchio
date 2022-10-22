@@ -9,11 +9,15 @@ public class Timer : MonoBehaviour
 
     public GameObject score_object;
 
+    public float time;
+
     ScoreManager scoremanager;
     private void Start()
     {
         scoremanager =  score_object.GetComponent<ScoreManager>();
     }
+
+
 
     private void FixedUpdate()
     {

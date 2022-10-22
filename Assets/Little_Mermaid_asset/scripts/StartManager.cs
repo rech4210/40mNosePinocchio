@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class StartManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // 씬 재생시키기, 러프를 활용하여 투명도 조절
+
+    // 씬 이동 시키기
 }

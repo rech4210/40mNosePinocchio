@@ -9,7 +9,10 @@ public class ScoreManager : MonoBehaviour
 {
 
     public delegate int scoreDelegate();
+    public delegate void failDelegate();
+
     public scoreDelegate scoreDel; // 점수 델리게이트
+    public failDelegate failDel;
 
     private int _score = 0;
     private int _combo_bonus = 0;
@@ -39,6 +42,15 @@ public class ScoreManager : MonoBehaviour
 
         scoreDel += countUp;
         scoreDel += comboSystem;
+
+        failDel += fail;
+    }
+
+    void fail()
+    {
+        comboBonus = 0;
+        comboValue = 1;
+        comboCount = 0;
     }
 
     void textChange()
@@ -76,7 +88,7 @@ public class ScoreManager : MonoBehaviour
             comboValue = 1;
             comboBonus = 0;
         }
-        score = (100 * comboValue) + comboBonus; // 점수 = 100* 콤보 배율 + 콤보 보너스
+        score = (100 * comboValue) + comboBonus; // 점수 = 100* 콤보 배율 + 콤보 보너스 점수 손보기
 
         Debug.Log(comboBonus);
         return score;
