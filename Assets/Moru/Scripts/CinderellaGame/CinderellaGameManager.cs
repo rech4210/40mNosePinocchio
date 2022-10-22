@@ -53,6 +53,7 @@ namespace Moru.Cinderella
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("실패 UI")] private GameObject FailUI;
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("타이머 UI")] private GameObject TimerUI;
 
+        [LabelText("게임 실패수"), SerializeField] private static int failCount;
         public GameObject selectedPiece;
 
         private int pieceCount;
@@ -195,6 +196,14 @@ namespace Moru.Cinderella
             {
                 PlayerData.onClearGame(GAME_INDEX.Cinderella, GameStageNum);
             }
+            if(GameStageNum == timerList.Length-1)
+            {
+                PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.CINDERELLA_ALL_CLEAR);
+                if(failCount == 0)
+                {
+                    PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.PUZZLE_MASTER);
+                }
+            }
         }
 
         private void SetGameOver()
@@ -203,6 +212,7 @@ namespace Moru.Cinderella
             FailUI?.SetActive(true);
             Cinderella.sprite = failSprite[0];
             StepMom.sprite = failSprite[1];
+            failCount++;
         }
     }
 

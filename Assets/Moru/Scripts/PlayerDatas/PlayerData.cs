@@ -52,6 +52,10 @@ namespace PD
         public delegate void OnSelectStage(bool[] arr, GAME_INDEX index);
         public OnSelectStage onSelectStage;
 
+        public delegate void OnSetToStage(GAME_INDEX index, int stageNum);
+        public OnSetToStage SetStage;
+            
+
         #endregion
 
         #region Field
@@ -61,6 +65,7 @@ namespace PD
         [SerializeField] private GameObject PopUpUI;
         [ShowInInspector] private Dictionary<GAME_INDEX, Dictionary<int, int>> saveData;
         [SerializeField] private int[] stageCountPerGames;
+        [SerializeField] private GAME_INDEX cur_Game_Index;
         [SerializeField] private int curStageSeletedNum;
         #endregion
 
@@ -75,6 +80,7 @@ namespace PD
                 return GetWholeClearRate();
             }
         }
+        public GAME_INDEX Cur_Game_Index => cur_Game_Index;
         public int CurStageSelectedNum => curStageSeletedNum;
 
 
@@ -87,6 +93,12 @@ namespace PD
             onClearGame += ClearGame;
             this.stageCountPerGames = stageCountPerGames;
             saveData = new Dictionary<GAME_INDEX, Dictionary<int, int>>();
+
+            SetStage += (index, stageNum) =>
+            {
+                cur_Game_Index = index;
+                curStageSeletedNum = stageNum;
+            };
 
             //리소스 로드
             PopUpUI = Resources.Load<GameObject>("AchieveCanvas");

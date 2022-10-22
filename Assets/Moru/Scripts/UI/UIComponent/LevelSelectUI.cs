@@ -38,6 +38,17 @@ namespace Moru.UI
             {
                 //이런식의 참조...극혐하지만 너무 귀찮다.
                 var comp = contents.GetChild(i).GetComponent<Button>();
+                comp.onClick.RemoveAllListeners();
+                comp.onClick.AddListener(
+                    () => 
+                    { 
+                        PlayerData.instance.SetStage?.Invoke(index, i);
+                        //////////////
+                        //씬 전환작업//
+                        //////////////
+                    }
+
+                    );
                 comp.transform.GetChild(1).GetComponent<Text>().text = $"스테이지 {i + 1}";
                 if (i < stageArr.Length)
                 {

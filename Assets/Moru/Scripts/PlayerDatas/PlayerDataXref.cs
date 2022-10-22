@@ -32,12 +32,14 @@ public class PlayerDataXref
     }
 
     /// <summary>
-    /// 플레이어가 현재 선택한 스테이지 넘버를 받아옵니다.
+    /// 플레이어가 현재 선택한 게임과 스테이지 넘버를 받아옵니다.
     /// </summary>
     /// <returns></returns>
-    public int GetStageNum()
+    public (GAME_INDEX index, int StageNum) GetCurrentStage()
     {
-        return PlayerData.instance.CurStageSelectedNum;
+        var index = PlayerData.instance.Cur_Game_Index;
+        var stage = PlayerData.instance.CurStageSelectedNum;
+        return (index, stage);
     }
 
     /// <summary>

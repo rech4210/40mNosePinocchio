@@ -7,14 +7,75 @@ using Moru.UI;
 public enum ACHEIVE_INDEX
 {
     /// <summary>
-    /// 모든 게임들의 모든 스테이지를 클리어할 경우 클리어입니다.
+    /// 톱질장인 : 피노키오 올클리어
+    /// </summary>
+    PINOCCHIO_ALL_CLEAR,
+
+    /// <summary>
+    /// 유리공예장인 : 신데렐라 올클리어
+    /// </summary>
+    CINDERELLA_ALL_CLEAR,
+
+    /// <summary>
+    /// 사과감별사 : 백설공주 올클리어
+    /// </summary>
+    SNOW_WHITE_ALL_CLEAR,
+
+    /// <summary>
+    /// 약쟁이 : 인어공주 올클리어
+    /// </summary>
+    LITTLE_MERMAID_ALL_CLEAR,
+
+    /// <summary>
+    /// 자라나라나무나무 : 잭과 콩나무 올클리어
+    /// </summary>
+    JACK_AND_BEANSTALK_ALL_CLEAR,
+
+    /// <summary>
+    /// 벽돌인, 아기돼지삼형제 올클리어
+    /// </summary>
+    TREE_LITTLE_PIGS_ALL_CLEAR,
+
+    /// <summary>
+    /// 엔딩 메이커 : 모든 스토리 엔딩 해금
+    /// </summary>
+    END_MAKER,
+
+    /// <summary>
+    /// The End : 모든 스테이지 올클리어
     /// </summary>
     ALL_CLEAR,
+
     /// <summary>
-    /// 테스트용으로 하나 생성
+    /// 퍼즐장인 : 신데렐라 플레이 중 1회도 패배하지 않는 경우
     /// </summary>
-    TEST_ACHIEVE,
-    Test2,
+    PUZZLE_MASTER,
+
+    /// <summary>
+    /// 톱질 마스터 : 피노키오 플레이 중 1회도 패배하지 않는 경우
+    /// </summary>
+    SAWING_MASTER,
+
+    /// <summary>
+    /// 사과 소믈리에 : 백설공주 플레이 중 1회도 패배하지 않는 경우
+    /// </summary>
+    APPLE_SOMMELIER,
+
+    /// <summary>
+    /// 약왕 : 인어공주 플레이 중 1회도 패배하지 않는 경우
+    /// </summary>
+    DRUG_KING,
+
+    /// <summary>
+    /// 거목 : 잭과 콩나무 플레이 중 1회도 패배하지 않는 경우
+    /// </summary>
+    GAINT_BEANSTALK,
+
+    /// <summary>
+    /// 인간벽돌 : 아기돼지삼형제 플레이 중 1회도 패배하지 않는 경우
+    /// </summary>
+    HUMAN_BRICK,
+
     /// <summary>
     /// 가장 마지막 인덱스 번호입니다.
     /// </summary>

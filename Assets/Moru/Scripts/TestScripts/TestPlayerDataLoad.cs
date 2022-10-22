@@ -5,6 +5,7 @@ using PD;
 public class TestPlayerDataLoad : MonoBehaviour
 {
     public PlayerData data;
+    public ACHEIVE_INDEX target;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +17,11 @@ public class TestPlayerDataLoad : MonoBehaviour
     {
         //업적 시스템의 밸류 업데이트 델리게이트 메서드
         //(목표치에 도달하면 자동으로 업적이 달성됩니다.
-        PlayerData.onUpdateAchieve(ACHEIVE_INDEX.TEST_ACHIEVE, 5);
+        PlayerData.onUpdateAchieve(target, 5);
     }
     public void TestClear()
     {
-        PlayerData.onClearAchieve(ACHEIVE_INDEX.ALL_CLEAR);
+        PlayerData.onClearAchieve(target);
     }
     
 
