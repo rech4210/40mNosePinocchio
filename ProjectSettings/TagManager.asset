@@ -4,7 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - CorrectApple
+  - DeathLine
+  - ClearLine
+  - SadGrandFatherAnime
+  - GoodGrandFatherAnime
   layers:
   - Default
   - TransparentFX
@@ -41,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: NoseHidden
+    uniqueID: 260840353
     locked: 0
