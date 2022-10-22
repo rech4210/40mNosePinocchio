@@ -54,6 +54,7 @@ namespace Moru.Cinderella
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("신데렐라")] private SpriteRenderer Cinderella;
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("계모")] private SpriteRenderer StepMom;
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("실패 시")] private Sprite[] failSprite;
+        [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("시작타이머")] private Text startText;
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("성공 UI")] private GameObject ClearUI;
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("실패 UI")] private GameObject FailUI;
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("타이머 UI")] private GameObject TimerUI;
@@ -64,6 +65,7 @@ namespace Moru.Cinderella
         private int pieceCount;
 
         public bool isGameOver;
+        public bool isStopAndGoOtherPage;
         #region Events
         public delegate void OnValueChange(float cur, float max);
         public event OnValueChange onTimerValueChange;
@@ -110,8 +112,10 @@ namespace Moru.Cinderella
             maxTimer = timerList[GameStageNum];
             cur_Timer = maxTimer;
             TimerUI.AddComponent<MoruTimer>();
-            isGameOver = false;
+            isGameOver = true;
+            isStopAndGoOtherPage = false;
             SoundManager.PlayBGM(BGM);
+            StartCoroutine(StartTextAnim());
         }
 
         private void SetInit(Sprite[] arr)
@@ -193,7 +197,7 @@ namespace Moru.Cinderella
                 SetGameClear();
             }
 
-            if (isGameOver && Input.anyKey)
+            if (isGameOver && Input.anyKey && isStopAndGoOtherPage)
             {
                 //메인페이지로 돌아가기
             }
@@ -232,6 +236,40 @@ namespace Moru.Cinderella
             StepMom.sprite = failSprite[1];
             failCount++;
         }
+
+        private IEnumerator StartTextAnim()
+        {
+            WaitForSeconds textAnimDelay = new WaitForSeconds(2);
+            var startTextComponent = startText.GetComponent<Text>();
+
+            startTextComponent.fontSize = 120;
+
+            startText.text = "준비..";
+            yield return textAnimDelay;
+
+            for (int nowRepetitionIndex = 3; nowRepetitionIndex >= 1; nowRepetitionIndex--)
+            {
+                startTextComponent.fontSize = 300;
+
+                startText.text = $"{nowRepetitionIndex}";
+
+                while (startTextComponent.fontSize > 2)
+                {
+                    startTextComponent.fontSize -= 1;
+                    yield return null;
+                }
+            }
+
+            startTextComponent.fontSize = 120;
+            startText.text = "시작!";
+            yield return textAnimDelay;
+
+            startText.text = "";
+            isGameOver = false;
+
+            yield return null;
+        }
+
     }
 
     public class PuzzelPiece : MonoBehaviour
