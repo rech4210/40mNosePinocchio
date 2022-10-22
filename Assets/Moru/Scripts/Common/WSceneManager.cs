@@ -59,7 +59,7 @@ public class WSceneManager : MonoBehaviour
 
     public void Awake()
     {
-        if(!this.GetComponent<SoundManager>())
+        if (!this.GetComponent<SoundManager>())
         {
             transform.gameObject.AddComponent<SoundManager>();
         }
@@ -130,14 +130,18 @@ public class WSceneManager : MonoBehaviour
 
     private void Update()
     {
+        Time.timeScale = OptionUI.activeInHierarchy ? 0 : 1;
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-            Time.timeScale = OptionUI.activeInHierarchy ? 0 : 1;
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 bool result = OptionUI.activeInHierarchy ? false : true;
                 OptionUI.SetActive(result);
             }
+        }
+        else
+        {
+            OptionUI.SetActive(false);
         }
     }
 }
