@@ -25,6 +25,18 @@ public class SnowWhiteGameManager : MonoBehaviour
     [Tooltip("정답 오브젝트")]
     private GameObject correctObj;
 
+    [SerializeField]
+    [Tooltip("정답 사과 표시 이미지")]
+    private Image correctAppleImage;
+
+    [SerializeField]
+    [Tooltip("정답 사과 표시 스프라이트들")]
+    private Sprite[] displayCorrectAppleSprits;
+
+    [SerializeField]
+    [Tooltip("정답 사과 스프라이트들")]
+    private Sprite[] correctAppleSprits;
+
     private float limitTime;
 
     private NowGameState nowGameState;
@@ -50,8 +62,16 @@ public class SnowWhiteGameManager : MonoBehaviour
             timerText.text = $"남은 시간 {((int)limitTime / 60):D2} : {((int)limitTime % 60):D2}";
             if (limitTime <= 0)
             {
+                var startTextComponent = startText.GetComponent<Text>();
+
                 limitTime = 0;
+
+                nowGameState = NowGameState.GameEnd;
+
+                startTextComponent.fontSize = 120;
+
                 timerText.text = $"남은 시간 00 : 00";
+                startText.text = "실패...";
             }
         }
     }
@@ -65,13 +85,22 @@ public class SnowWhiteGameManager : MonoBehaviour
 
             if (hit.collider != null && hit.collider.CompareTag("CorrectApple"))
             {
-                print("찾음");
+                var startTextComponent = startText.GetComponent<Text>();
+                nowGameState = NowGameState.GameEnd;
+
+                startTextComponent.fontSize = 120;
+
+                startText.text = "클리어!";
             }
         }
     }
 
     private void StartSetting()
     {
+        int randSpritsIndex = Random.Range(0, correctAppleSprits.Length);
+        correctObj.GetComponent<SpriteRenderer>().sprite = correctAppleSprits[randSpritsIndex];
+        correctAppleImage.sprite = displayCorrectAppleSprits[randSpritsIndex];
+
         limitTime = 120;
 
         correctObj.transform.position = new Vector3(Random.Range(-8, 9), Random.Range(-4, 5));
