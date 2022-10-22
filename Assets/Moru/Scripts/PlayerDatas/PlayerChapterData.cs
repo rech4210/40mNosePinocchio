@@ -42,11 +42,25 @@ namespace PD
             {
                 //OpenChapter;
                 int value = PlayerPrefs.GetInt(((GAME_INDEX)i).ToString() + isOpen, 0);
-                instance.openChapter.Add((GAME_INDEX)i, value);
+                if(instance.openChapter.ContainsKey((GAME_INDEX)i))
+                {
+                    instance.openChapter[(GAME_INDEX)i] = value;
+                }
+                else
+                {
+                    instance.openChapter.Add((GAME_INDEX)i, value);
+                }
 
                 //ClearChapter;
                 int value2 = PlayerPrefs.GetInt(((GAME_INDEX)i).ToString() + isClear, 0);
-                instance.clearChapter.Add((GAME_INDEX)i, value2);
+                if (instance.openChapter.ContainsKey((GAME_INDEX)i))
+                {
+                    instance.clearChapter[(GAME_INDEX)i] = value2;
+                }
+                else
+                {
+                    instance.clearChapter.Add((GAME_INDEX)i, value2);
+                }
             }
             //Ã¹¹øÂ° Ã©ÅÍ´Â Ç×»ó ¿ÀÇÂ
             PlayerPrefs.SetInt(GAME_INDEX.Snow_White.ToString() + isOpen, 1);

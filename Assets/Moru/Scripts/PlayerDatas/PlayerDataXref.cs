@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PD;
@@ -22,7 +22,7 @@ public class PlayerDataXref
 
     #region Methods
     /// <summary>
-    /// ÇØ´ç °ÔÀÓÀÇ ½ºÅ×ÀÌÁöÀ» Å¬¸®¾îÇÕ´Ï´Ù.
+    /// í•´ë‹¹ ê²Œì„ì˜ ìŠ¤í…Œì´ì§€ì„ í´ë¦¬ì–´í•©ë‹ˆë‹¤.
     /// </summary>
     /// <param name="index"></param>
     /// <param name="stageNum"></param>
@@ -32,7 +32,7 @@ public class PlayerDataXref
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î°¡ ÇöÀç ¼±ÅÃÇÑ °ÔÀÓ°ú ½ºÅ×ÀÌÁö ³Ñ¹ö¸¦ ¹Ş¾Æ¿É´Ï´Ù.
+    /// í”Œë ˆì´ì–´ê°€ í˜„ì¬ ì„ íƒí•œ ê²Œì„ê³¼ ìŠ¤í…Œì´ì§€ ë„˜ë²„ë¥¼ ë°›ì•„ì˜µë‹ˆë‹¤.
     /// </summary>
     /// <returns></returns>
     public (GAME_INDEX index, int StageNum) GetCurrentStage()
@@ -43,7 +43,7 @@ public class PlayerDataXref
     }
 
     /// <summary>
-    /// ÇØ´ç Ã©ÅÍ¸¦ ¿±´Ï´Ù. (ÇØ±İÇÕ´Ï´Ù. Å¬¸®¾î°¡ ¾Æ´Õ´Ï´Ù.)
+    /// í•´ë‹¹ ì±•í„°ë¥¼ ì—½ë‹ˆë‹¤. (í•´ê¸ˆí•©ë‹ˆë‹¤. í´ë¦¬ì–´ê°€ ì•„ë‹™ë‹ˆë‹¤.)
     /// </summary>
     /// <param name="index"></param>
     public void OpenChapter(GAME_INDEX index)
@@ -52,7 +52,7 @@ public class PlayerDataXref
     }
 
     /// <summary>
-    /// ÇØ´ç Ã©ÅÍ¸¦ Å¬¸®¾îÇÕ´Ï´Ù.
+    /// í•´ë‹¹ ì±•í„°ë¥¼ í´ë¦¬ì–´í•©ë‹ˆë‹¤.
     /// </summary>
     /// <param name="index"></param>
     public void ClearChapter(GAME_INDEX index)
@@ -62,7 +62,7 @@ public class PlayerDataXref
 
 
     /// <summary>
-    /// ÇØ´ç ¾÷ÀûÀ» Å¬¸®¾î½ÃÄÑ¹ö¸³´Ï´Ù..
+    /// í•´ë‹¹ ì—…ì ì„ í´ë¦¬ì–´ì‹œì¼œë²„ë¦½ë‹ˆë‹¤..
     /// </summary>
     /// <param name="index"></param>
     public void SetAchieveSuccess(ACHEIVE_INDEX index)
@@ -71,7 +71,7 @@ public class PlayerDataXref
     }
 
     /// <summary>
-    /// ÇØ´ç¾÷ÀûÀÇ ÇöÀç°ª¿¡ addValue¸¸Å­ ´õÇÕ´Ï´Ù.
+    /// í•´ë‹¹ì—…ì ì˜ í˜„ì¬ê°’ì— addValueë§Œí¼ ë”í•©ë‹ˆë‹¤.
     /// </summary>
     /// <param name="index"></param>
     /// <param name="addValue"></param>
