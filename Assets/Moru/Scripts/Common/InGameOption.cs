@@ -44,9 +44,9 @@ namespace Moru.UI
 
             var scene = WSceneManager.instance;
             if (Btn_Title != null)
-                Btn_Title.onClick.AddListener(() => scene.MoveScene(SceneIndex.MainPage));
+                Btn_Title.onClick.AddListener(() => this.gameObject.SetActive(false));
             if (Btn_ToLobby != null)
-                Btn_ToLobby.onClick.AddListener(() => scene.MoveChapterSelectPage());
+                Btn_ToLobby.onClick.AddListener(() => scene.ReLoad_ThisScene());
             if (Btn_ToStage != null)
                 Btn_ToStage.onClick.AddListener(() => scene.MoveStageSeletedPage());
             isInit = true;

@@ -61,6 +61,12 @@ public class WSceneManager : MonoBehaviour
     {
         get
         {
+            if (optionUI == null)
+            {
+                var obj = Resources.Load<GameObject>("ClearUI");
+                optionUI = Instantiate(obj, this.transform);
+                optionUI.SetActive(false);
+            }
             return clearUI;
         }
     }
@@ -69,6 +75,12 @@ public class WSceneManager : MonoBehaviour
     {
         get
         {
+            if (optionUI == null)
+            {
+                var obj = Resources.Load<GameObject>("FailUI");
+                optionUI = Instantiate(obj, this.transform);
+                optionUI.SetActive(false);
+            }
             return clearUI;
         }
     }
@@ -144,6 +156,22 @@ public class WSceneManager : MonoBehaviour
                 //StackUIManager.LobbyPage.GetComponent<LevelSelectUI>().SetUp(boolsArr, PlayerData.instance.Cur_Game_Index);
             }
             );
+    }
+
+    /// <summary>
+    /// 게임 클리어 UI를 오픈
+    /// </summary>
+    public void OpenGameClearUI()
+    {
+        ClearUI.SetActive(true);
+    }
+
+    /// <summary>
+    /// 게임 실패 UI를 오픈
+    /// </summary>
+    public void OpenGameFailUI()
+    {
+        FailUI.SetActive(true);
     }
 
     private void Update()
