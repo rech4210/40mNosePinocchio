@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.EditorTools;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
@@ -9,9 +10,10 @@ public class InputManager : MonoBehaviour
 
     private Dictionary<KeyCode, string> keyValuePairs = new Dictionary<KeyCode, string>();
 
-    public int singNumbers;// 나올 버튼의 개수
+    public int signNumbers;// 나올 버튼의 개수
 
-    GameObject sprite = null; // 버튼 객체
+    GameObject makedsprite = null; // 생성 후 버튼 객체
+
     GameObject[] spritesArray = new GameObject[50]; //생성된 버튼 객체들을 다룰 배열
     public GameObject[] spritesPrefab; // 프리팹 이미지들 넣을 배열
     public GameObject extention;
@@ -20,6 +22,9 @@ public class InputManager : MonoBehaviour
 
     GameObject[] spriteParents = new GameObject[10]; //생성된 부모 객체들
     ChangeAnimation changeScripts;
+    ScoreManager scoreManager;
+
+    int adjustPanelPos = 10;
 
     Vector3 defaultPos = new Vector3(0,0,0);
 
@@ -30,13 +35,17 @@ public class InputManager : MonoBehaviour
         normal,
         clear
     }
+    private State _nowState;
+
     public State nowState // enum 생성자
     {
-        get { return nowState; } //^^^ 전체적으로 오버플로우 뜸
+        get { return nowState; } //get 프로퍼티
 
         set 
-        { 
-            changeScripts.changeAnimation(nowState);  // state 값 set 할 시 changeAnimation 메소드 실행
+        {
+            _nowState = value;
+            changeScripts.changeAnimation(_nowState);  // state 값 set 할 시 changeAnimation 메소드 실행
+            
         }
     }
 
@@ -49,32 +58,32 @@ public class InputManager : MonoBehaviour
     private void Start()
     {
 
-        extention.GetComponent<RectTransform>().sizeDelta = new Vector2(0.5f * (singNumbers/5), 0.15f); // 안변함
+        extention.GetComponent<RectTransform>().sizeDelta = new Vector2((extention.GetComponent<RectTransform>().rect.width * (signNumbers / 5f) + (adjustPanelPos * signNumbers)), 1900);
         changeScripts = gameObject.GetComponent<ChangeAnimation>(); // changeAnimation 함수를 실행시킬 인스턴스 객체
+        scoreManager = gameObject.GetComponent<ScoreManager>();
     }
 
 
     void initallize()
     {
-        for (int i = 1; i < singNumbers+1; i++)
+        for (int i = 0; i < signNumbers; i++)
         {
             var parent = Instantiate(parentPrefab); // 부모 객체 생성
 
             parent.name = i.ToString();
-            spriteParents[i - 1] = parent; // 부모 배열에 객체 넣어주기
-            spriteParents[i - 1].transform.SetParent(this.gameObject.transform,false); // 매니저 아래에 부모 생성
+            spriteParents[i] = parent; // 부모 배열에 객체 넣어주기
+            spriteParents[i].transform.SetParent(this.gameObject.transform,false); // 매니저 아래에 부모 생성
             
-            spriteParents[i - 1].GetComponent<RectTransform>().anchoredPosition = gameObject.transform.position + new Vector3(i*175, 6,0); // 부모 위치 지정 값 수정해야함
+            spriteParents[i].GetComponent<RectTransform>().anchoredPosition = gameObject.transform.position + new Vector3((i*175)+175, 6,0);
 
-            Vector3 tempParentPos = spriteParents[i - 1].GetComponent<RectTransform>().anchoredPosition;
+            Vector3 tempParentPos = spriteParents[i].GetComponent<RectTransform>().anchoredPosition;
 
             int randomNumber = Random.Range(0, spritesPrefab.Length-1); //랜덤 이미지 넘버
             var temp_sprite = Instantiate(spritesPrefab[randomNumber]); // 랜덤 이미지 생성
-            sprite = temp_sprite;
-            spritesArray[i - 1] = sprite;
+            spritesArray[i] = temp_sprite;
 
-            sprite.transform.SetParent(spriteParents[i - 1 ].transform,false); // i번째 부모에 이미지 넣어주기
-            sprite.GetComponent<RectTransform>().anchoredPosition = defaultPos;
+            temp_sprite.transform.SetParent(spriteParents[i].transform,false); // i번째 부모에 이미지 넣어주기
+            temp_sprite.GetComponent<RectTransform>().anchoredPosition = defaultPos;
         }
     }
 
@@ -82,29 +91,28 @@ public class InputManager : MonoBehaviour
     {
         int randomNumber = Random.Range(0, spritesPrefab.Length - 1); //랜덤 이미지 넘버
         var temp_sprite = Instantiate(spritesPrefab[randomNumber]); // 랜덤 이미지 생성
-        sprite = temp_sprite;
+        makedsprite = temp_sprite;
+        spritesArray[signNumbers] = makedsprite;
+
     }
 
     void push(GameObject temp_sprite)
     {
-        temp_sprite.transform.SetParent(spriteParents[spriteParents.Length-1].transform,false);
+        temp_sprite.transform.SetParent(spriteParents[signNumbers-1].transform,false);
     }
 
     void Scroll() // 작동안될시 method로 변경
     {
-        for (int i = 1; i < singNumbers; i++)
-        {
-            spritesArray[i].transform.SetParent(spriteParents[i - 1].transform, false); //한칸씩 부모에게 당기기
-            spriteParents[i].transform.position = defaultPos; // 위치값 초기화
+        for (int i = 0; i < signNumbers; i++)
+        {//삭제후 배열을 한칸씩 당기고, 위치를 바꾼다 그리고 마지막 자리에 push
+            spritesArray[i] = spritesArray[i+1]; // push를 먼저 해줘야함
+            spritesArray[i].transform.SetParent(spriteParents[i].transform, false); //한칸씩 부모에게 당기기 스프라이트 1 -> 0으로
         }
-        spritesArray[singNumbers].transform.SetParent(spriteParents[singNumbers - 1].transform); //마지막 칸 할당
-        spriteParents[singNumbers].transform.position = defaultPos; // 위치값 초기화
-
     }
 
     private void Update()
     {
-        if (Input.anyKey)
+        if (Input.anyKeyDown) // 다운
         {
             isKeyDown();
         }
@@ -124,25 +132,27 @@ public class InputManager : MonoBehaviour
 
     public void AddDictionary()
     {
-        keyValuePairs.Add(KeyCode.DownArrow, "Down");
-        keyValuePairs.Add(KeyCode.LeftArrow, "Left");
-        keyValuePairs.Add(KeyCode.RightArrow, "Right");
-        keyValuePairs.Add(KeyCode.UpArrow, "Up");
-        keyValuePairs.Add(KeyCode.Space, "Space");
+        keyValuePairs.Add(KeyCode.DownArrow, "Down(Clone)");
+        keyValuePairs.Add(KeyCode.LeftArrow, "Left(Clone)");
+        keyValuePairs.Add(KeyCode.RightArrow, "Right(Clone)");
+        keyValuePairs.Add(KeyCode.UpArrow, "Up(Clone)");
+        keyValuePairs.Add(KeyCode.Space, "Space(Clone)");
 
     } 
     #endregion
 
     void isRight(string keyString)
     {
-        if(keyString == sprite.name)
+        var temp_sprite = spriteParents[0].transform.GetChild(0);
+        if (keyString == temp_sprite.name)
         {
             nowState = State.success; // 성공
+            scoreManager.scoreDel(); // 성공시 스코어 점수 증가 델리게이트 실행
 
-            Destroy(sprite); // destroy 맞는지?
+            Destroy(temp_sprite.gameObject); // 첫번째 노드 삭제안됨 수정
             makeSprite(); // 생성
             Scroll(); // 부모 객체에 넣을 이미지 한칸씩 당기기
-            push(sprite); // 마지막 부모 객체에 자식 이미지 넣기
+            push(makedsprite); // 마지막 부모 객체에 자식 이미지 넣기
 
         }
         else

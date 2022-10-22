@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class Timer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float limite_time;
+    public TMP_Text text_timer;
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        limite_time -= Time.deltaTime;
+        text_timer.text = Mathf.Round(limite_time).ToString();
     }
 }
