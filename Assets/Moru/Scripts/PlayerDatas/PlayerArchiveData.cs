@@ -35,7 +35,7 @@ public partial class PlayerData
     [ShowInInspector] private Dictionary<ACHEIVE_INDEX, int> isAchievement;
     [ShowInInspector] private Dictionary<ACHEIVE_INDEX, AchieveResult> cur_AchievementValue;
     [ShowInInspector] private Dictionary<ACHEIVE_INDEX, int> isGetReward;
-
+    [SerializeField] private int curStageSeletedNum;
     #endregion
 
     #region Events
@@ -54,6 +54,7 @@ public partial class PlayerData
     public Dictionary<ACHEIVE_INDEX, int> IsAchievement { get => isAchievement; }
     public Dictionary<ACHEIVE_INDEX, AchieveResult> Cur_AchievementValue { get => cur_AchievementValue; }
     public Dictionary<ACHEIVE_INDEX, int> IsGetReward { get => isGetReward; }
+    public int CurStaggSelectedNum => curStageSeletedNum;
     #endregion
 
 
