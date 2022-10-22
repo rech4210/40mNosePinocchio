@@ -61,11 +61,11 @@ public class WSceneManager : MonoBehaviour
     {
         get
         {
-            if (optionUI == null)
+            if (clearUI == null)
             {
                 var obj = Resources.Load<GameObject>("ClearUI");
-                optionUI = Instantiate(obj, this.transform);
-                optionUI.SetActive(false);
+                clearUI = Instantiate(obj, this.transform);
+                clearUI.SetActive(false);
             }
             return clearUI;
         }
@@ -75,13 +75,13 @@ public class WSceneManager : MonoBehaviour
     {
         get
         {
-            if (optionUI == null)
+            if (failUI == null)
             {
                 var obj = Resources.Load<GameObject>("FailUI");
-                optionUI = Instantiate(obj, this.transform);
-                optionUI.SetActive(false);
+                failUI = Instantiate(obj, this.transform);
+                failUI.SetActive(false);
             }
-            return clearUI;
+            return failUI;
         }
     }
 
