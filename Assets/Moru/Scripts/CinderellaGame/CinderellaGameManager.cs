@@ -217,7 +217,8 @@ namespace Moru.Cinderella
             //New
             //플레이어 데이터에 게임클리어를 업데이트합니다.
             PlayerDataXref.instance.ClearGame(GAME_INDEX.Cinderella, GameStageNum);
-
+            WSceneManager.instance.OpenGameClearUI();
+            
 
             //다음챕터을 엽니다. 다른분들도 이렇게 해주시면 되요
             if(GameStageNum == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Cinderella))
@@ -231,7 +232,7 @@ namespace Moru.Cinderella
             }
 
             //올클리어  & 1회도 실패하지 않고 클리어시 업적 이벤트 예시
-            if (GameStageNum == timerList.Length - 1)
+            if (GameStageNum == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Cinderella)- 1)
             {
                 PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.CINDERELLA_ALL_CLEAR);
                 if (failCount == 0)
@@ -248,6 +249,7 @@ namespace Moru.Cinderella
             Cinderella.sprite = failSprite[0];
             StepMom.sprite = failSprite[1];
             failCount++;
+            WSceneManager.instance.OpenGameFailUI();
         }
 
         private IEnumerator StartTextAnim()
