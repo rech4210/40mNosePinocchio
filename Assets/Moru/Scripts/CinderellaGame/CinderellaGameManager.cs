@@ -58,6 +58,7 @@ namespace Moru.Cinderella
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("성공 UI")] private GameObject ClearUI;
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("실패 UI")] private GameObject FailUI;
         [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("타이머 UI")] private GameObject TimerUI;
+        [BoxGroup("부가 오브젝트들"), SerializeField, LabelText("타겟성공 UI")] private Image targetClearUI;
 
         [LabelText("게임 실패수"), SerializeField] private static int failCount;
         public GameObject selectedPiece;
@@ -218,6 +219,18 @@ namespace Moru.Cinderella
             PlayerDataXref.instance.ClearGame(GAME_INDEX.Cinderella, GameStageNum);
 
 
+            //다음챕터을 엽니다. 다른분들도 이렇게 해주시면 되요
+            if(GameStageNum == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Cinderella))
+            {
+                targetClearUI.gameObject.SetActive(true);
+                PlayerDataXref.instance.OpenChapter(GAME_INDEX.Cinderella + 1);
+            }
+            else
+            {
+                targetClearUI.gameObject.SetActive(false);
+            }
+
+            //올클리어  & 1회도 실패하지 않고 클리어시 업적 이벤트 예시
             if (GameStageNum == timerList.Length - 1)
             {
                 PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.CINDERELLA_ALL_CLEAR);

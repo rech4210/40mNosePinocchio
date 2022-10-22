@@ -19,8 +19,8 @@ namespace PD
             {
                 if (m_instance == null)
                 {
-                    int[] initValue_StageNum = StackUIManager.Instance? StackUIManager.Instance.StageCount : new int[6] { 10,10,10,10,10,10};
-                    int[] initValue_TargetStage = StackUIManager.Instance? StackUIManager.Instance.targetStage : new int[6] { 5, 5, 5, 5, 5, 5 };
+                    int[] initValue_StageNum = StackUIManager.Instance ? StackUIManager.Instance.StageCount : new int[6] { 10, 10, 10, 10, 10, 10 };
+                    int[] initValue_TargetStage = StackUIManager.Instance ? StackUIManager.Instance.targetStage : new int[6] { 5, 5, 5, 5, 5, 5 };
                     m_instance = new PlayerData(initValue_StageNum, initValue_TargetStage);
                 }
                 return m_instance;
@@ -75,7 +75,8 @@ namespace PD
         public GAME_INDEX Cur_Game_Index { get => cur_Game_Index; set => cur_Game_Index = value; }
         public int CurStageSelectedNum { get => curStageSeletedNum; set => curStageSeletedNum = value; }
 
-
+        public int[] StageCountPerGames => stageCountPerGames;
+        public int[] TargetStage => targetStage;
         #endregion
 
 
@@ -127,9 +128,9 @@ namespace PD
             //게임을 클리어했으므로 UI팝업시키기
             PlayerPrefs.SetInt(index.ToString() + stageNum.ToString(), 1);
             saveData[index][stageNum] = 1;
-            if(stageNum >= targetStage[(int)index])
+            if (stageNum >= targetStage[(int)index])
             {
-                onOpenChapter?.Invoke(index+1);
+                onOpenChapter?.Invoke(index + 1);
             }
 
             Debug.Log($"{PlayerPrefs.GetInt(index.ToString() + stageNum.ToString())} // {saveData[index][stageNum] }");

@@ -15,7 +15,6 @@ public enum SceneIndex
     Jack_And_Beanstalk, //잭과 콩나무
     Tree_Little_Pigs,    //아기 돼지 삼형제
     None
-
 }
 
 public class WSceneManager : MonoBehaviour
@@ -54,6 +53,23 @@ public class WSceneManager : MonoBehaviour
                 optionUI.SetActive(false);
             }
             return optionUI;
+        }
+    }
+
+    [SerializeField] private GameObject clearUI;
+    public GameObject ClearUI
+    {
+        get
+        {
+            return clearUI;
+        }
+    }
+    [SerializeField] private GameObject failUI;
+    public GameObject FailUI
+    {
+        get
+        {
+            return clearUI;
         }
     }
 
