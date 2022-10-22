@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25eea08b8324d454f8e2b56c4739c9c7, type: 3}
+  m_Name: AchieveTitle
+  m_EditorClassIdentifier: 
+  achieveResults:
+  - myIndex: 0
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uD1B1\uC9C8\uC7A5\uC778"
+    achieveDesc: "\uD53C\uB178\uD0A4\uC624 \uC62C\uD074\uB9AC\uC5B4"
+    title: "\uD1B1\uC9C8\uC7A5\uC778"
+    icon: {fileID: 0}
+  - myIndex: 1
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uC720\uB9AC\uACF5\uC608\uC7A5\uC778"
+    achieveDesc: "\uC2E0\uB370\uB810\uB77C \uC62C\uD074\uB9AC\uC5B4"
+    title: "\uC720\uB9AC\uACF5\uC608\uC7A5\uC778"
+    icon: {fileID: 0}
+  - myIndex: 2
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uC0AC\uACFC\uAC10\uBCC4\uC0AC"
+    achieveDesc: "\uBC31\uC124\uACF5\uC8FC \uC62C\uD074\uB9AC\uC5B4"
+    title: "\uC0AC\uACFC\uAC10\uBCC4\uC0AC"
+    icon: {fileID: 0}
+  - myIndex: 3
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uC57D\uC0AC"
+    achieveDesc: "\uC778\uC5B4\uACF5\uC8FC \uC62C\uD074\uB9AC\uC5B4"
+    title: "\uC57D\uC0AC"
+    icon: {fileID: 0}
+  - myIndex: 4
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uC790\uB77C\uB098\uB77C\uB098\uBB34\uB098\uBB34"
+    achieveDesc: "\uC7AD\uACFC \uCF69\uB098\uBB34 \uC62C\uD074\uB9AC\uC5B4"
+    title: "\uC790\uB77C\uB098\uB77C\uB098\uBB34\uB098\uBB34"
+    icon: {fileID: 0}
+  - myIndex: 5
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uAC74\uBB3C\uC8FC"
+    achieveDesc: "\uC544\uAE30\uB3FC\uC9C0\uC0BC\uD615\uC81C \uC62C\uD074\uB9AC\uC5B4"
+    title: "\uAC74\uBB3C\uC8FC"
+    icon: {fileID: 0}
+  - myIndex: 6
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uC5D4\uB4DC\uBA54\uC774\uCEE4"
+    achieveDesc: "\uC2A4\uD1A0\uB9AC \uC5D4\uB529 \uD574\uAE08"
+    title: "\uC5D4\uB4DC\uBA54\uC774\uCEE4"
+    icon: {fileID: 0}
+  - myIndex: 7
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: The End
+    achieveDesc: "\uBAA8\uB4E0 \uC2A4\uD14C\uC774\uC9C0 \uD074\uB9AC\uC5B4"
+    title: The End
+    icon: {fileID: 0}
+  - myIndex: 8
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uD37C\uC990\uC7A5\uC778"
+    achieveDesc: "\uC2E0\uB370\uB810\uB77C \uD50C\uB808\uC774 \uC911 1\uD68C\uB3C4
+      \uC2E4\uD328\uD558\uC9C0 \uC54A\uB294 \uACBD\uC6B0"
+    title: "\uD37C\uC990\uC7A5\uC778"
+    icon: {fileID: 0}
+  - myIndex: 9
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uD1B1\uC9C8\uB9C8\uC2A4\uD130"
+    achieveDesc: "\uD53C\uB178\uD0A4\uC624 \uD50C\uB808\uC774 \uC911 1\uD68C\uB3C4
+      \uC2E4\uD328\uD558\uC9C0 \uC54A\uB294 \uACBD\uC6B0"
+    title: "\uD1B1\uC9C8\uB9C8\uC2A4\uD130"
+    icon: {fileID: 0}
+  - myIndex: 10
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uC0AC\uACFC \uC18C\uBBC8\uB9AC\uC5D0"
+    achieveDesc: "\uBC31\uC124\uACF5\uC8FC \uD50C\uB808\uC774 \uC911 1\uD68C\uB3C4
+      \uD328\uBC30\uD558\uC9C0 \uC54A\uB294 \uACBD\uC6B0"
+    title: "\uC0AC\uACFC \uC18C\uBBC8\uB9AC\uC5D0"
+    icon: {fileID: 0}
+  - myIndex: 11
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uC57D\uC7C1\uC774"
+    achieveDesc: "\uC778\uC5B4\uACF5\uC8FC \uD50C\uB808\uC774 \uC911 1\uD68C\uB3C4
+      \uD328\uBC30\uD558\uC9C0 \uC54A\uB294 \uACBD\uC6B0"
+    title: "\uC57D\uC7C1\uC774"
+    icon: {fileID: 0}
+  - myIndex: 12
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uAC70\uBAA9"
+    achieveDesc: "\uC7AD\uACFC \uCF69\uB098\uBB34 \uD50C\uB808\uC774 \uC911 1\uD68C\uB3C4
+      \uD328\uBC30\uD558\uC9C0 \uC54A\uB294 \uACBD\uC6B0"
+    title: "\uAC70\uBAA9"
+    icon: {fileID: 0}
+  - myIndex: 13
+    cur_achievementConditon: 0
+    target_achievementConditon: 1
+    achieveName: "\uC778\uAC04\uBCBD\uB3CC"
+    achieveDesc: "\uC544\uAE30\uB3FC\uC9C0\uC0BC\uD615\uC81C \uD50C\uB808\uC774 \uC911
+      1\uD68C\uB3C4 \uD328\uBC30\uD558\uC9C0 \uC54A\uB294 \uACBD\uC6B0"
+    title: "\uC778\uAC04\uBCBD\uB3CC"
+    icon: {fileID: 0}
