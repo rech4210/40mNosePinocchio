@@ -36,14 +36,34 @@ public class WSceneManager : MonoBehaviour
                 obj.AddComponent<SoundManager>();
                 DontDestroyOnLoad(comp.gameObject);
                 m_Instacne = comp;
-                
+
             }
             return m_Instacne;
         }
     }
 
     [SerializeField] private GameObject optionUI;
-    public GameObject OptionUI;
+    public GameObject OptionUI
+    {
+        get
+        {
+            if (optionUI == null)
+            {
+                var obj = Resources.Load<GameObject>("OptionCanvas");
+                optionUI = Instantiate(obj, this.transform);
+                optionUI.SetActive(false);
+            }
+            return optionUI;
+        }
+    }
+
+    public void Awake()
+    {
+        if (!this.GetComponent<SoundManager>())
+        {
+            transform.gameObject.AddComponent<SoundManager>();
+        }
+    }
 
     /// <summary>
     /// 씬을 재로드합니다.
@@ -110,12 +130,18 @@ public class WSceneManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        Time.timeScale = OptionUI.activeInHierarchy ? 0 : 1;
+        if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-            if(SceneManager.GetActiveScene().buildIndex != 0)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-
+                bool result = OptionUI.activeInHierarchy ? false : true;
+                OptionUI.SetActive(result);
             }
+        }
+        else
+        {
+            OptionUI.SetActive(false);
         }
     }
 }
