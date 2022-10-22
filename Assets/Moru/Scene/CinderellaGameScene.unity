@@ -1924,7 +1924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &684702298
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5010,6 +5010,7 @@ MonoBehaviour:
   ClearUI: {fileID: 2017646078}
   FailUI: {fileID: 420504512}
   TimerUI: {fileID: 362255799}
+  targetClearUI: {fileID: 0}
   selectedPiece: {fileID: 0}
   isGameOver: 0
   isStopAndGoOtherPage: 0

@@ -102,5 +102,16 @@ public class PlayerDataXref
         PlayerData.SetCutScene(index);
     }
 
+    /// <summary>
+    /// 해당 매개변수의 게임의 다음챕터 오픈까지의 스테이지 넘버 번호를 받아옵니다.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public int GetTargetState_ToOpenNextChapter(GAME_INDEX index)
+    {
+        return (PlayerData.instance.TargetStage[(int)index])-1;
+    }
+
+
     #endregion
 }
