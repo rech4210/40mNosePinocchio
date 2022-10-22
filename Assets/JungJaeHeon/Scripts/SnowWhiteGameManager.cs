@@ -37,7 +37,7 @@ public class SnowWhiteGameManager : MonoBehaviour
     [Tooltip("정답 사과 스프라이트들")]
     private Sprite[] correctAppleSprits;
 
-    private float limitTime;
+    public float limitTime;
 
     private NowGameState nowGameState;
 
@@ -103,11 +103,11 @@ public class SnowWhiteGameManager : MonoBehaviour
 
         limitTime = 120;
 
-        correctObj.transform.position = new Vector3(Random.Range(-8, 9), Random.Range(-4, 5));
+        correctObj.transform.position = new Vector3(Random.Range(-8, 9), Random.Range(-3, 4));
 
         if (correctObj.transform.position.x > 4 || correctObj.transform.position.x < -2)
         {
-            correctObj.transform.position = new Vector3(Random.Range(-2, 5), correctObj.transform.position.y);
+            correctObj.transform.position = new Vector3(Random.Range(-2, 4), correctObj.transform.position.y);
         }
 
         nowGameState = NowGameState.GameReady;
