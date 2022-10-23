@@ -64,7 +64,8 @@ namespace PD
             }
             //첫번째 챕터는 항상 오픈
             PlayerPrefs.SetInt(((GAME_INDEX)0).ToString() + isOpen, 1);
-            instance.openChapter[GAME_INDEX.Snow_White] = 1;
+            PlayerDataXref.instance.OpenChapter((GAME_INDEX)0);
+            //instance.openChapter[GAME_INDEX.Snow_White] = 1;
         }
 
         /// <summary>

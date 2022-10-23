@@ -69,26 +69,26 @@ namespace Moru.UI
 
 
             //테스트셋팅
-            playerData.SaveData[GAME_INDEX.Cinderella][0] = 1;
-            playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][0] = 1;
-            playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][1] = 1;
-            playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][2] = 1;
-            playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][3] = 1;
-            playerData.SaveData[GAME_INDEX.Little_Mermaid][0] = 1;
-            playerData.SaveData[GAME_INDEX.Pinocchio][0] = 1;
-            playerData.SaveData[GAME_INDEX.Pinocchio][5] = 1;
-            playerData.SaveData[GAME_INDEX.Pinocchio][7] = 1;
-            playerData.SaveData[GAME_INDEX.Snow_White][0] = 1;
-            playerData.onOpenChapter?.Invoke(GAME_INDEX.Cinderella);
-            playerData.onOpenChapter?.Invoke(GAME_INDEX.Jack_And_Beanstalk);
-            playerData.onOpenChapter?.Invoke(GAME_INDEX.Little_Mermaid);
-            playerData.onOpenChapter?.Invoke(GAME_INDEX.Pinocchio);
-            playerData.onOpenChapter?.Invoke(GAME_INDEX.Snow_White);
-            playerData.onOpenChapter?.Invoke(GAME_INDEX.Tree_Little_Pigs);
-            playerData.onOpenChapter?.Invoke(GAME_INDEX.Tree_Little_Pigs);
-            PlayerDataXref.instance.ClearChapter(GAME_INDEX.Jack_And_Beanstalk);
-            PlayerDataXref.instance.ClearChapter(GAME_INDEX.Snow_White);
-            PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.CINDERELLA_ALL_CLEAR);
+            //playerData.SaveData[GAME_INDEX.Cinderella][0] = 1;
+            //playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][0] = 1;
+            //playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][1] = 1;
+            //playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][2] = 1;
+            //playerData.SaveData[GAME_INDEX.Jack_And_Beanstalk][3] = 1;
+            //playerData.SaveData[GAME_INDEX.Little_Mermaid][0] = 1;
+            //playerData.SaveData[GAME_INDEX.Pinocchio][0] = 1;
+            //playerData.SaveData[GAME_INDEX.Pinocchio][5] = 1;
+            //playerData.SaveData[GAME_INDEX.Pinocchio][7] = 1;
+            //playerData.SaveData[GAME_INDEX.Snow_White][0] = 1;
+            //playerData.onOpenChapter?.Invoke(GAME_INDEX.Cinderella);
+            //playerData.onOpenChapter?.Invoke(GAME_INDEX.Jack_And_Beanstalk);
+            //playerData.onOpenChapter?.Invoke(GAME_INDEX.Little_Mermaid);
+            //playerData.onOpenChapter?.Invoke(GAME_INDEX.Pinocchio);
+            //playerData.onOpenChapter?.Invoke(GAME_INDEX.Snow_White);
+            //playerData.onOpenChapter?.Invoke(GAME_INDEX.Tree_Little_Pigs);
+            //playerData.onOpenChapter?.Invoke(GAME_INDEX.Tree_Little_Pigs);
+            //PlayerDataXref.instance.ClearChapter(GAME_INDEX.Jack_And_Beanstalk);
+            //PlayerDataXref.instance.ClearChapter(GAME_INDEX.Snow_White);
+            //PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.CINDERELLA_ALL_CLEAR);
 
 
             PlayerData.CheckChapterPoint();     //스테이지 및 챕터 점검
