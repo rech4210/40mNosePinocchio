@@ -9,15 +9,26 @@ public class Timer : MonoBehaviour
 
     public GameObject score_object;
 
-    public float time;
+    public TMP_Text[] countdown_text;
 
     ScoreManager scoremanager;
     private void Start()
     {
         scoremanager =  score_object.GetComponent<ScoreManager>();
+        StartCoroutine(countdown());
+        Time.timeScale = 0;
     }
 
-
+    IEnumerator countdown()
+    {
+        for (int i = 0; i < countdown_text.Length; i++)
+        {
+            countdown_text[i].gameObject.SetActive(true);
+            yield return new WaitForSecondsRealtime(1f);
+            countdown_text[i].gameObject.SetActive(false);
+        }
+        Time.timeScale = 1;
+    }
 
     private void FixedUpdate()
     {

@@ -1,3 +1,4 @@
+using Moru.Cinderella;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -49,11 +50,14 @@ public class ChangeAnimation : MonoBehaviour
     {
         witch_animator.SetBool("Isend", true);
         mermade.sprite = sprite[1];
+        WSceneManager.instance.OpenGameFailUI();
     }
 
     public void happyEnding()
     {
         witch_animator.SetBool("Isgood", true);
         mermade.sprite = sprite[2];
+        WSceneManager.instance.OpenGameClearUI();
+
     }
 }

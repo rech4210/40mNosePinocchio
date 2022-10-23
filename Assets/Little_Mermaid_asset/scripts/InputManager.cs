@@ -10,7 +10,8 @@ public class InputManager : MonoBehaviour
 
     private Dictionary<KeyCode, string> keyValuePairs = new Dictionary<KeyCode, string>(); // 키 저장한 딕셔너리
 
-    public int signNumbers;// 나올 버튼의 개수
+    private int signNumbers;// 나올 버튼의 개수
+    PlayerDataXref playerDataXref;
 
     GameObject makedsprite = null; // 생성 후 버튼 객체
 
@@ -24,12 +25,11 @@ public class InputManager : MonoBehaviour
     ChangeAnimation changeScripts;
     ScoreManager scoreManager;
 
+    Dictionary<GAME_INDEX, int> gameIndex = new Dictionary<GAME_INDEX, int>();
 
     AudioSource audioSource;
     public AudioClip hit_sound;
     public AudioClip miss_sound;
-
-
 
     int adjustPanelPos = 10;
 
@@ -64,10 +64,16 @@ public class InputManager : MonoBehaviour
     {
         AddDictionary(); // 키 설정
         initallize(); // 초기 갯수에 따라 이미지 생성하는 메소드
+        
     }
 
     private void Start()
     {
+        signNumbers = playerDataXref.GetCurrentStage().StageNum;
+        if(signNumbers < 5)
+        {
+            signNumbers = 5;
+        }
         audioSource = GetComponent<AudioSource>();
         extention.GetComponent<RectTransform>().sizeDelta = new Vector2((extention.GetComponent<RectTransform>().rect.width * (signNumbers / 5f) + (adjustPanelPos * signNumbers)), 1900);
         changeScripts = gameObject.GetComponent<ChangeAnimation>(); // changeAnimation 함수를 실행시킬 인스턴스 객체
@@ -130,7 +136,6 @@ public class InputManager : MonoBehaviour
             isKeyDown();
         }
     }
-
 
     void isKeyDown()
     {

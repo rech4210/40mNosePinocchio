@@ -19,12 +19,13 @@ public class ScoreManager : MonoBehaviour
     private int comboValue = 1;
     private int comboCount = 0;
 
+
     public int score{ get{ return _score; } set { _score += value; textChange();} }
     public int comboBonus{ get { return _combo_bonus; } set { _combo_bonus = value; } }
 
     public TMP_Text score_text; // 텍스트 추가하기
     public TMP_Text combo_text;
-    public TMP_Text combo_bonus_text;
+    public TMP_Text purpos_score;
 
     Clear clear;
 
@@ -57,7 +58,8 @@ public class ScoreManager : MonoBehaviour
     {
         score_text.text = score + " score";
         combo_text.text = comboCount + " Combo!";
-        combo_bonus_text.text = comboValue+ " x " + "100 "+ "+ " + comboBonus + " Bonus!";
+        float temp = Mathf.Clamp(clear.require_score - score, 0, 1000000);
+        purpos_score.text =  "Goal: "+temp;
     }
     
     private int countUp()
