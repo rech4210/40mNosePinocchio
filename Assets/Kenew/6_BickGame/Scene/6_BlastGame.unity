@@ -1739,6 +1739,10 @@ MonoBehaviour:
   - "\uCC38\uB098\uBB34\uAC00\uC9C0"
   - "\uC790\uC791\uB098\uBB34\uAC00\uC9C0"
   - "\uC9DA"
+  BGM: {fileID: 8300000, guid: a121fd33ff3d0bf47baed2cc934535ca, type: 3}
+  PuzzleOn: {fileID: 8300000, guid: 48901b6a9ab41e748b22ab1ea2dd8d2b, type: 3}
+  Shake: {fileID: 8300000, guid: 98c69cb5406d36e4f9f534fb1e26453a, type: 3}
+  Click: {fileID: 8300000, guid: 429efb75eef5cb24f9e316ba4bdc7ae9, type: 3}
 --- !u!4 &879617477
 Transform:
   m_ObjectHideFlags: 0

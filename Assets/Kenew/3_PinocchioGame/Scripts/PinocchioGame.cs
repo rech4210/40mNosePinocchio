@@ -57,7 +57,10 @@ public class PinocchioGame : MonoSingleton<PinocchioGame>
 
     private bool isStart = false;
     private float startDelay = 3;
-    
+
+    private static int failCount = 0;
+
+    private bool isGamePlay;
     private void FixedUpdate()
     {
         // if (isStart == false)
@@ -110,36 +113,51 @@ public class PinocchioGame : MonoSingleton<PinocchioGame>
         enemy.OnMove(stageDifficultyDesign[currentStage].tickHitValue);
         SoundManagers.Instance.PlayBGM("6BGM");
         StageInit(currentStage);
+
+        isGamePlay = true;
     }
 
     public StartDelayUI startDelayUI;
 
     private void StageInit(int stageLevel)
     {
-        enemy.StageInit(stageDifficultyDesign[stageLevel - 1]);
+        enemy.StageInit(stageDifficultyDesign[stageLevel]);
         limite_time = 60;
     }
 
     public Text stageText;
     public void StageClear()
     {
-        if (currentStage > 9)
+        if (!isGamePlay) return;
+        WSceneManager.instance.OpenGameClearUI();
+
+        if(currentStage == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Pinocchio))
+        {
+            PlayerDataXref.instance.OpenChapter(GAME_INDEX.Pinocchio + 1);
+        }
+        if (currentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Pinocchio))
         {
             PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.PINOCCHIO_ALL_CLEAR);
+            if(failCount == 0)
+            {
+                PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.SAWING_MASTER);
+            }
         }
         else
         {
-            currentStage++;
-            stageText.text = currentStage + " STAGE";
-            limite_time = 60;
-            PlayerDataXref.instance.OpenChapter(GAME_INDEX.Pinocchio + 1);
-            StageInit(currentStage);
-            SoundManagers.Instance.PlaySFX("StageClear");
+            //currentStage++;
+            //stageText.text = currentStage + " STAGE";
+            //limite_time = 60;
+            //PlayerDataXref.instance.OpenChapter(GAME_INDEX.Pinocchio + 1);
+            //StageInit(currentStage);
+            //SoundManagers.Instance.PlaySFX("StageClear");
         }
+        isGamePlay = false;
     }
 
     public void StageFailed()
     {
-        
+        failCount++;
+        WSceneManager.instance.OpenGameClearUI();
     }
 }

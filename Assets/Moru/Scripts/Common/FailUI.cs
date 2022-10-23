@@ -13,8 +13,22 @@ public class FailUI : MonoBehaviour
         Btn_Main.onClick.AddListener(
             () => WSceneManager.instance.MoveStageSeletedPage()
             );
+        Btn_Main.onClick.AddListener(
+            () =>
+            {
+                this.gameObject.SetActive(false);
+            }
+            );
+
         Btn_Retry.onClick.AddListener(
             () => WSceneManager.instance.ReLoad_ThisScene()
             );
+        Btn_Retry.onClick.AddListener(
+            () =>
+            {
+                this.gameObject.SetActive(false);
+            }
+            );
     }
 }
+

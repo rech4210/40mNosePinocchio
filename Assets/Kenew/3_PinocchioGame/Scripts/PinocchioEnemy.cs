@@ -61,7 +61,7 @@ public class PinocchioEnemy : MonoBehaviour
             if(hit.transform.CompareTag("DeathLine"))
             {
                 Debug.Log("GAME OVER");
-                //PinocchioGame.Instance.possibleClick = false;
+                PinocchioGame.Instance.StageFailed();
             }
             if(hit.transform.CompareTag("ClearLine"))
             {

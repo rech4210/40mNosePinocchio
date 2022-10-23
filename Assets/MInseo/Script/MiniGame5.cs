@@ -13,7 +13,7 @@ public class MiniGame5 : MonoBehaviour
     private GameObject paper_Img;
     [SerializeField]
     private Text timerText;
-    private static int failcnt;
+    private static int failcnt = 0;
     public Button btn1, btn2;
     public Text NumberText;
     enum State
@@ -52,6 +52,10 @@ public class MiniGame5 : MonoBehaviour
     int[] arr = new int[10] { 5, 6, 7, 6, 7, 8, 7, 8, 9, 10 };
     void Start()
     {
+        //현재 스테이지 정보 초기화
+        currentStage = PlayerDataXref.instance.GetCurrentStage().StageNum;
+
+
         SoundManager.PlayBGM(bgm_Clip);
         // List 초기화
         cup = new List<GameObject>();
@@ -116,7 +120,10 @@ public class MiniGame5 : MonoBehaviour
         numberofCup = currentStage / 4 + 3;
 
         swapTime = 0f; // 시간 계산
-        delaySwap = 3f / arr[currentStage - 1]; // 딜레이 시간
+        delaySwap = 3f / arr[currentStage 
+            //Moru 수정
+            //- 1
+            ]; // 딜레이 시간
 
         ans[startball] = 1; // 콩이 있는 컵 활성화
         swapCount = 0; // 섞는 횟수 초기화
@@ -282,7 +289,10 @@ public class MiniGame5 : MonoBehaviour
                     {
                         if (isMix)
                         {
-                            if (swapCount == arr[currentStage - 1])
+                            if (swapCount == arr[currentStage 
+                                //MORU 수정
+                                //- 1
+                                ])
                             {
                                 choice = true;
                             }
@@ -315,7 +325,8 @@ public class MiniGame5 : MonoBehaviour
                         if (Input.GetMouseButtonDown(0))
                         {
                             nextGame = true;
-                            currentStage++;
+                            //Moru
+                            //currentStage++;
 
                         }
                         // 다음 스테이지가 없을 시 비활성화
@@ -400,7 +411,8 @@ public class MiniGame5 : MonoBehaviour
     {
         //PlayerDataXref.instance.ClearGame(GAME_INDEX.Jack_And_Beanstalk, currentStage);
         //ui_Clear.SetActive(true);
-
+        PlayerDataXref.instance.ClearGame(GAME_INDEX.Jack_And_Beanstalk, currentStage);
+        WSceneManager.instance.OpenGameClearUI();
         if (currentStage == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Jack_And_Beanstalk))
         {
             //paper_Img.SetActive(true);
@@ -422,6 +434,7 @@ public class MiniGame5 : MonoBehaviour
     private void SetGameOver()
     {
         //ui_Fail.SetActive(true);
+        WSceneManager.instance.OpenGameFailUI();
         failcnt++;
     }
 

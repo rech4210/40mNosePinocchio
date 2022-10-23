@@ -53,7 +53,6 @@ namespace Moru.UI
         {
             SetUp(PlayerData.GetStageClearDataPerGame(PlayerData.instance.Cur_Game_Index), PlayerData.instance.Cur_Game_Index);
         }
-
         public void SetUp(bool[] stageArr, GAME_INDEX index)
         {
             cur_Index = index;
@@ -63,15 +62,30 @@ namespace Moru.UI
             {
                 //이런식의 참조...극혐하지만 너무 귀찮다.
                 var comp = contents.GetChild(i).GetComponent<Button>();
-                comp.onClick.RemoveAllListeners();
-                comp.onClick.AddListener(
-                    () =>
-                    {
-                        PlayerData.instance.SetStage?.Invoke(index, i);
-                        WSceneManager.instance.MoveScene((SceneIndex)index+1);
-                    }
+                //comp.onClick.RemoveAllListeners();
+                //comp.onClick.AddListener(
+                //    () => PlayerData.instance.CurStageSelectedNum = i);
+                //Old
+                //comp.onClick.AddListener(
+                //    () =>
+                //    {
+                //        PlayerData.instance.Cur_Game_Index = index;
+                //        WSceneManager.instance.MoveScene((SceneIndex)index + 1);
+                //        Debug.Log($" 플레이어가 선택한 게임 / 스테이지 : {index} / {i}, ");
+                //    }
 
-                    );
+                //    );
+                //New
+                if(comp.gameObject.TryGetComponent<SeleteStageBtn>(out var addComp))
+                {
+                    addComp.Init(i, index);
+                }
+                else
+                {
+                    comp.gameObject.AddComponent<SeleteStageBtn>().Init(i, index);
+                }
+
+
                 comp.transform.GetChild(1).GetComponent<Text>().text = $"스테이지 {i + 1}";
                 if (i < stageArr.Length)
                 {
@@ -137,6 +151,28 @@ namespace Moru.UI
             //ExplainBtn.onClick.AddListener(
             //    () => ExplainBtn.GetComponent<PopNPush>().Push_comp.GetComponent<GameExplainPopUp>().Init(ExplainSprite)
             //    );
+        }
+
+        public class SeleteStageBtn : MonoBehaviour
+        {
+            public int count;
+            public GAME_INDEX index;
+            public Button myButton;
+
+            public void Init(int count, GAME_INDEX index)
+            {
+                this.count = count;
+                this.index = index;
+                myButton = GetComponent<Button>();
+                myButton.onClick.AddListener(
+                    () =>
+                    {
+                        PlayerData.instance.CurStageSelectedNum = count;
+                        PlayerData.instance.Cur_Game_Index = index;
+                        WSceneManager.instance.MoveScene((SceneIndex)index + 1);
+                    }
+                    );
+            }
         }
     }
 }
