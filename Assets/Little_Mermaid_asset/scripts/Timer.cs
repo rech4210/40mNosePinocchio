@@ -12,11 +12,14 @@ public class Timer : MonoBehaviour
     public TMP_Text[] countdown_text;
 
     ScoreManager scoremanager;
+
+    bool ison;
     private void Start()
     {
-        scoremanager =  score_object.GetComponent<ScoreManager>();
+        ison = false;
+        scoremanager = score_object.GetComponent<ScoreManager>();
         StartCoroutine(countdown());
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
     }
 
     IEnumerator countdown()
@@ -27,21 +30,24 @@ public class Timer : MonoBehaviour
             yield return new WaitForSecondsRealtime(1f);
             countdown_text[i].gameObject.SetActive(false);
         }
-        Time.timeScale = 1;
+        ison = true;
+        //Time.timeScale = 1;
     }
 
     private void FixedUpdate()
     {
-        limite_time -= Time.deltaTime;
-        text_timer.text = Mathf.Round(limite_time).ToString();
-
-        if(limite_time <= 0f)
+        if (ison)
+        {
+            limite_time -= Time.fixedDeltaTime;
+            text_timer.text = Mathf.Round(limite_time).ToString();
+        }
+        if (limite_time <= 0f)
         {
             scoremanager.CheckEnding();
             StartCoroutine(wait());
         }
     }
-    
+
 
     IEnumerator wait()
     {

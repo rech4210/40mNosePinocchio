@@ -64,18 +64,21 @@ public class InputManager : MonoBehaviour
 
     void Awake()
     {
-        AddDictionary(); // 키 설정
-        initallize(); // 초기 갯수에 따라 이미지 생성하는 메소드
+
         
     }
 
     private void Start()
     {
-        signNumbers = playerDataXref.GetCurrentStage().StageNum;
-        if(signNumbers < 5)
+        signNumbers = PlayerDataXref.instance.GetCurrentStage().StageNum;
+        Debug.Log($"{signNumbers} {this.gameObject.name}");
+
+        if (signNumbers < 5)
         {
             signNumbers = 5;
         }
+        AddDictionary(); // 키 설정
+        initallize(); // 초기 갯수에 따라 이미지 생성하는 메소드
         audioSource = GetComponent<AudioSource>();
         extention.GetComponent<RectTransform>().sizeDelta = new Vector2((extention.GetComponent<RectTransform>().rect.width * (signNumbers / 5f) + (adjustPanelPos * signNumbers)), 1900);
         changeScripts = gameObject.GetComponent<ChangeAnimation>(); // changeAnimation 함수를 실행시킬 인스턴스 객체
