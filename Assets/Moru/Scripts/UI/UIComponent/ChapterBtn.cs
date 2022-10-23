@@ -17,6 +17,10 @@ namespace Moru.UI
         private void Awake()
         {
             PlayerData.instance.onOpenChapter += UpdateChapterButton;
+            var bt = GetComponent<Button>();
+            bt.onClick.AddListener(
+                () => PlayerData.instance.Cur_Game_Index = myindex
+                );
         }
 
 
@@ -30,18 +34,24 @@ namespace Moru.UI
 
         public void UpdateChapterButton(GAME_INDEX myIndex)
         {
-            chapterName.text = 
-               // myIndex.ToString();
+            chapterName.text =
+                    // myIndex.ToString();
                     "";
             if (!PlayerData.IsOpenChapter(myIndex))
             {
-                btn_Image.enabled = false;
-                chapterName.enabled = false;
+                if (btn_Image != null && chapterName != null)
+                {
+                    btn_Image.enabled = false;
+                    chapterName.enabled = false;
+                }
             }
             else
             {
-                btn_Image.enabled = true;
-                chapterName.enabled = true;
+                if (btn_Image != null && chapterName != null)
+                {
+                    btn_Image.enabled = true;
+                    chapterName.enabled = true;
+                }
             }
         }
     }

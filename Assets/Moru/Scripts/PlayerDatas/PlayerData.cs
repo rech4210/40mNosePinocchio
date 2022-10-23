@@ -269,6 +269,10 @@ namespace PD
                 }
             }
             float retVal = clearCount / stageCount;
+            if(retVal >= 1)
+            {
+                PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.ALL_CLEAR);
+            }
             return retVal;
         }
         #endregion

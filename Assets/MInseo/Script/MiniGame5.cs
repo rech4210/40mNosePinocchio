@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class MiniGame5 : MonoBehaviour
 {
     [SerializeField]
+    private Text startText;
+    [SerializeField]
     private AudioClip click_Clip, mix_Clip, success_Clip, fail_Clip, bgm_Clip;
     [SerializeField]
     private GameObject paper_Img;
     [SerializeField]
     private Text timerText;
-    private static int failcnt;
+    private static int failcnt = 0;
     public Button btn1, btn2;
     public Text NumberText;
     enum State
@@ -43,13 +45,17 @@ public class MiniGame5 : MonoBehaviour
     int first, second, swap, swapCount, numberofCup;
     float delaySwap, swapTime;
     float interval_X;
-    bool isMix, choice, input_bean, nextGame, gameState, overTime, gameClear;
-    float timeCount, delayTime = 2f, time;
+    bool isMix, choice, input_bean, nextGame, gameState, overTime, gameClear, ready;
+    float timeCount, delayTime = 5f, time;
     public bool GetChoice() => choice;
 
     int[] arr = new int[10] { 5, 6, 7, 6, 7, 8, 7, 8, 9, 10 };
     void Start()
     {
+        //현재 스테이지 정보 초기화
+        currentStage = PlayerDataXref.instance.GetCurrentStage().StageNum;
+
+
         SoundManager.PlayBGM(bgm_Clip);
         // List 초기화
         cup = new List<GameObject>();
@@ -61,13 +67,14 @@ public class MiniGame5 : MonoBehaviour
 
         numberofCup = currentStage / 4 + 3;
 
-        startball = Random.Range(0, numberofCup); // 콩은 항상 중간으로\
-        input_bean = true; // 수정 필요
+        startball = Random.Range(0, numberofCup);
+        input_bean = true;
         choice = false;
         overTime = false;
 
+        ready = true;
         Stage_Update();
-
+        StartCoroutine(StartTextAnim());
     }
 
     void Stage_Update() // 수정 필요
@@ -76,6 +83,7 @@ public class MiniGame5 : MonoBehaviour
         bean_Sprouts = Instantiate(pf_bean_Sprouts);
         open_cup = Instantiate(pf_OpenCup);
 
+        bean.SetActive(false);
         bean_Sprouts.SetActive(false);
         open_cup.SetActive(false);
         //ui_Clear.SetActive(false);
@@ -112,7 +120,10 @@ public class MiniGame5 : MonoBehaviour
         numberofCup = currentStage / 4 + 3;
 
         swapTime = 0f; // 시간 계산
-        delaySwap = 3f / arr[currentStage - 1]; // 딜레이 시간
+        delaySwap = 3f / arr[currentStage 
+            //Moru 수정
+            //- 1
+            ]; // 딜레이 시간
 
         ans[startball] = 1; // 콩이 있는 컵 활성화
         swapCount = 0; // 섞는 횟수 초기화
@@ -179,190 +190,180 @@ public class MiniGame5 : MonoBehaviour
 
     void Update()
     {
-        if (input_bean)
+        if (!ready)
         {
-            bean.transform.position = Vector2.MoveTowards(bean.transform.position, new Vector2(startball * interval_X, -3.0f), 3 * Time.deltaTime);
-            if (Vector2.Distance(bean.transform.position, new Vector2(startball * interval_X, -3.0f)) < 0.001f)
+            if (input_bean)
             {
-                Init_Game();
-            }
-        }
-        else // start
-        {
-            if (gameState)
-            {
-                if (choice)
+                bean.SetActive(true);
+                bean.transform.position = Vector2.MoveTowards(bean.transform.position, new Vector2(startball * interval_X, -3.0f), 3 * Time.deltaTime);
+                if (Vector2.Distance(bean.transform.position, new Vector2(startball * interval_X, -3.0f)) < 0.001f)
                 {
-                    if (Input.GetMouseButtonDown(0))
+                    Init_Game();
+                }
+            }
+            else // start
+            {
+                if (gameState)
+                {
+                    if (choice)
                     {
-                        mousePtr = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                        choice_Cup = Physics2D.Raycast(mousePtr, transform.forward);
-                        if (choice_Cup)
+                        if (Input.GetMouseButtonDown(0))
                         {
-                            SoundManager.PlaySFX(click_Clip);
-                            //sd.Click(true);
-                            int index = (int)choice_Cup.transform.position.x / (int)interval_X;
+                            mousePtr = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                            choice_Cup = Physics2D.Raycast(mousePtr, transform.forward);
+                            if (choice_Cup)
+                            {
+                                SoundManager.PlaySFX(click_Clip);
+                                //sd.Click(true);
+                                int index = (int)choice_Cup.transform.position.x / (int)interval_X;
 
-                            // 프리팹 비활성화
-                            cup[index].SetActive(false);
+                                // 프리팹 비활성화
+                                cup[index].SetActive(false);
+                                Character_Active((int)State.ING, false);
+
+                                open_cup.SetActive(true);
+                                open_cup.transform.position = new Vector2(choice_Cup.transform.position.x, -2.2f);
+
+                                if (ans[index] == 1) // 수정 필요
+                                {
+                                    bean.transform.position = new Vector2(choice_Cup.transform.position.x, -3.0f);
+
+                                    // 프리팹 활성화
+                                    bean.SetActive(true);
+                                    Character_Active((int)State.WIN, true);
+
+                                    gameClear = true;
+                                    SoundManager.PlaySFX(success_Clip);
+                                }
+                                else
+                                {
+                                    bean_Sprouts.transform.position = new Vector2(choice_Cup.transform.position.x, -3.0f);
+
+                                    // 프리팹 활성화
+                                    bean_Sprouts.SetActive(true);
+                                    Character_Active((int)State.LOSE, true);
+
+                                    gameClear = false;
+                                    SoundManager.PlaySFX(fail_Clip);
+                                }
+
+                                time = 0f;
+                                choice = false;
+                                gameState = false;
+                            }
+                        }
+                        if (overTime)
+                        {
+                            for (int i = 0; i < numberofCup; i++)
+                            {
+                                if (ans[i] == 1)
+                                {
+                                    cup[i].SetActive(false);
+                                    open_cup.SetActive(true);
+                                    open_cup.transform.position = new Vector2(cup[i].transform.position.x, -2.2f);
+                                    Debug.Log(cup[i].transform.position.x);
+                                    bean.transform.position = new Vector2(cup[i].transform.position.x, -3.0f);
+                                }
+                            }
+
+                            bean.SetActive(true);
                             Character_Active((int)State.ING, false);
+                            Character_Active((int)State.LOSE, true);
 
-                            open_cup.SetActive(true);
-                            open_cup.transform.position = new Vector2(choice_Cup.transform.position.x, -2.2f);
-
-                            if (ans[index] == 1) // 수정 필요
-                            {
-                                bean.transform.position = new Vector2(choice_Cup.transform.position.x, -3.0f);
-
-                                // 프리팹 활성화
-                                bean.SetActive(true);
-                                Character_Active((int)State.WIN, true);
-
-                                gameClear = true;
-                                SoundManager.PlaySFX(success_Clip);
-                                //sd.Success(true);
-                            }
-                            else
-                            {
-                                bean_Sprouts.transform.position = new Vector2(choice_Cup.transform.position.x, -3.0f);
-
-                                // 프리팹 활성화
-                                bean_Sprouts.SetActive(true);
-                                Character_Active((int)State.LOSE, true);
-
-                                gameClear = false;
-                                SoundManager.PlaySFX(fail_Clip);
-                                //sd.Fail(true);
-                            }
-
-                            time = 0f;
+                            overTime = false;
                             choice = false;
                             gameState = false;
-                        }
-                    }
-                    if (overTime)
-                    {
-                        for (int i = 0; i < numberofCup; i++)
-                        {
-                            if (ans[i] == 1)
-                            {
-                                cup[i].SetActive(false);
-                                open_cup.SetActive(true);
-                                open_cup.transform.position = new Vector2(cup[i].transform.position.x, -2.2f);
-                                Debug.Log(cup[i].transform.position.x);
-                                bean.transform.position = new Vector2(cup[i].transform.position.x, -3.0f);
-                            }
-                        }
+                            gameClear = false;
 
-                        bean.SetActive(true);
-                        Character_Active((int)State.ING, false);
-                        Character_Active((int)State.LOSE, true);
-
-                        overTime = false;
-                        choice = false;
-                        gameState = false;
-                        gameClear = false;
-
-                        time = 0f;
-                        SoundManager.PlaySFX(fail_Clip);
-                        //sd.Fail(true);
-                    }
-                    time += Time.deltaTime;
-                    timerText.text = $"00:{(delayTime - time).ToString("F0")}";
-                    if (delayTime - time < 0f)
-                    {
-                        overTime = true;
-                    }
-                }
-                else
-                {
-                    if (isMix)
-                    {
-                        if (swapCount == arr[currentStage - 1])
-                        {
-                            choice = true;
+                            time = 0f;
+                            SoundManager.PlaySFX(fail_Clip);
                         }
-                        else
+                        time += Time.deltaTime;
+                        timerText.text = $"남은 시간 : {(delayTime - time).ToString("F0")}";
+                        if (delayTime - time < 0f)
                         {
-                            if (swapTime > delaySwap)
-                            {
-                                //sd.Mix(true);
-                                SoundManager.PlaySFX(mix_Clip);
-                                Swap_Numbers();
-                                first_V = cup[first].transform.position;
-                                second_V = cup[second].transform.position;
-                                swapCount++;
-                            }
+                            overTime = true;
                         }
                     }
                     else
                     {
-                        Mix_Cup();
-                        swapTime = 0f;
+                        if (isMix)
+                        {
+                            if (swapCount == arr[currentStage 
+                                //MORU 수정
+                                //- 1
+                                ])
+                            {
+                                choice = true;
+                            }
+                            else
+                            {
+                                if (swapTime > delaySwap)
+                                {
+                                    SoundManager.PlaySFX(mix_Clip);
+                                    Swap_Numbers();
+                                    first_V = cup[first].transform.position;
+                                    second_V = cup[second].transform.position;
+                                    swapCount++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Mix_Cup();
+                            swapTime = 0f;
+                        }
+                    }
+                }
+                else
+                {
+                    // 성공과 실패 여부
+                    if (gameClear) // 게임 클리어
+                    {
+                        SetGameWin();
+                        // 다음 스테이지 버튼 활성화
+
+                        nextGame = true;
+                        // currentStage++;
+                        // 다음 스테이지가 없을 시 비활성화
+                        // 특정 스테이지에서 도감 얻기
+                        // 업적 달성
+                    }
+                    else // 게임 오버
+                    {
+                        // 기존 생각한 방식은 게임 오버가 되었을 때 활성화 된 버튼(재시작, 나가기)에 따라 게임이 진행 or 종료됨
+                        SetGameOver();
+                        // 재시도 버튼 활성화
+                        nextGame = true;
+                    }
+
+                    if (nextGame)
+                    {
+                        nextGame = false;
+                        gameState = true;
+                        input_bean = true;
+
+                        numberofCup = currentStage / 4 + 3;
+                        startball = Random.Range(0, numberofCup);
+
+                        for (int i = 0; i < 3; i++)
+                        {
+                            Character_Active(i, false);
+                        }
+
+                        Character_Active(0, true);
+                        bean_Sprouts.SetActive(false);
+                        bean.SetActive(true);
+                        open_cup.SetActive(false);
+
+                        CupActive();
+                        bean.transform.position = new Vector3(startball * interval_X, 0f);
+                        Init_Ready();
                     }
                 }
             }
-            else
-            {
-                // 성공과 실패 여부
-                if (gameClear) // 성공
-                {
-                    SetGameWin();
-                    // 다음 스테이지 버튼 활성화
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        nextGame = true;
-                        currentStage++;
-
-                    }
-                    // 다음 스테이지가 없을 시 비활성화
-                    // 특정 스테이지에서 도감 얻기
-                    // 업적 달성
-                }
-                else // 실패
-                {
-                    SetGameOver();
-                    // 재시도 버튼 활성화
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        nextGame = true;
-                    }
-                }
-                // 나가기 버튼 활성화 (공통)
-                if (nextGame)
-                {
-                    // sd.Success(false);
-                    // sd.Fail(false);
-
-                    nextGame = false;
-                    gameState = true;
-                    input_bean = true;
-
-                    numberofCup = currentStage / 4 + 3;
-                    startball = Random.Range(0, numberofCup);
-
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Character_Active(i, false);
-                    }
-
-                    Character_Active(0, true);
-                    bean_Sprouts.SetActive(false);
-                    bean.SetActive(true);
-                    open_cup.SetActive(false);
-
-                    CupActive();
-                    bean.transform.position = new Vector3(startball * interval_X, 0f);
-                    Init_Ready();
-                }
-                else // end
-                {
-
-                }
-            }
+            swapTime += Time.deltaTime;
         }
-        //NumberText.text = "섞을 남은 횟수 : " + (arr[currentStage] - swapCount + 1);
-        swapTime += Time.deltaTime;
     }
 
     void Character_Active(int st, bool sw)
@@ -403,9 +404,16 @@ public class MiniGame5 : MonoBehaviour
     {
         //PlayerDataXref.instance.ClearGame(GAME_INDEX.Jack_And_Beanstalk, currentStage);
         //ui_Clear.SetActive(true);
-        if (currentStage == 4)
+        PlayerDataXref.instance.ClearGame(GAME_INDEX.Jack_And_Beanstalk, currentStage);
+        WSceneManager.instance.OpenGameClearUI();
+        if (currentStage == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Jack_And_Beanstalk))
         {
-            paper_Img.SetActive(true);
+            //paper_Img.SetActive(true);
+            PlayerDataXref.instance.OpenChapter(GAME_INDEX.Jack_And_Beanstalk + 1);
+        }
+        else
+        {
+            //
         }
         if (arr.Length == currentStage)
         {
@@ -419,48 +427,41 @@ public class MiniGame5 : MonoBehaviour
     private void SetGameOver()
     {
         //ui_Fail.SetActive(true);
+        WSceneManager.instance.OpenGameFailUI();
         failcnt++;
     }
-}
 
-//[System.Serializable]
-// public class Sound
-// {
-//     [SerializeField]
-//     private AudioSource click_Source, unClick_Source, mix_Source, success_Source, fail_Source;
-//     public void Click(bool turnOn)
-//     {
-//         if (turnOn)
-//             click_Source.Play();
-//         else
-//             click_Source.Stop();
-//     }
-//     public void Mix(bool turnOn)
-//     {
-//         if (turnOn)
-//             mix_Source.Play();
-//         else
-//             mix_Source.Stop();
-//     }
-//     public void unClick(bool turnOn)
-//     {
-//         if (turnOn)
-//             unClick_Source.Play();
-//         else
-//             unClick_Source.Stop();
-//     }
-//     public void Success(bool turnOn)
-//     {
-//         if (turnOn)
-//             success_Source.Play();
-//         else
-//             success_Source.Stop();
-//     }
-//     public void Fail(bool turnOn)
-//     {
-//         if (turnOn)
-//             fail_Source.Play();
-//         else
-//             fail_Source.Stop();
-//     }
-// }
+    private IEnumerator StartTextAnim()
+    {
+        WaitForSecondsRealtime textAnimDelay = new WaitForSecondsRealtime(0.5f);
+        
+        var startTextComponent = startText.GetComponent<Text>();
+
+        startTextComponent.fontSize = 120;
+
+        startText.text = "준비..";
+        yield return textAnimDelay;
+
+        for (int nowRepetitionIndex = 3; nowRepetitionIndex >= 1; nowRepetitionIndex--)
+        {
+            startTextComponent.fontSize = 300;
+
+            startText.text = $"{nowRepetitionIndex}";
+
+            while (startTextComponent.fontSize > 2)
+            {
+                startTextComponent.fontSize -= 1;
+                yield return null;
+            }
+        }
+
+        startTextComponent.fontSize = 120;
+        startText.text = "시작!";
+        yield return textAnimDelay;
+
+        startText.text = "";
+        ready = false;
+
+        yield return null;
+    }
+}

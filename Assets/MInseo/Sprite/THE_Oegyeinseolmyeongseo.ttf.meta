@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 7dde20e7fb21e7f4eb86fa06d55c873b
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - THEAlien
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 5977473766fee8f42a30199c618a735a, type: 3}
+  - {fileID: 12800000, guid: 120675e5db3c3d14e963be88ac1ba53a, type: 3}
+  - {fileID: 12800000, guid: dc3b3b1188d70994bb134da492c1eb9f, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

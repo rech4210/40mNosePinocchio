@@ -57,7 +57,20 @@ public class PinocchioGame : MonoSingleton<PinocchioGame>
 
     private bool isStart = false;
     private float startDelay = 3;
-    
+
+    private static int failCount = 0;
+
+    private bool isGamePlay;
+
+    public AudioClip BGM;
+    private void Update()
+    {
+        limite_time -= Time.deltaTime;
+        if (limite_time <= 0f)
+        {
+            StageFailed();
+        }
+    }
     private void FixedUpdate()
     {
         // if (isStart == false)
@@ -74,14 +87,11 @@ public class PinocchioGame : MonoSingleton<PinocchioGame>
         //     }
         //     return;
         // }
-        limite_time -= Time.deltaTime;
+        
         remainText.text = Mathf.Round(limite_time).ToString();
         remainText.color = limite_time <= 20 ? EmergencyColor : NormalColor;
         
-        if(limite_time <= 0f)
-        {
-            StageFailed();
-        }
+        
     }
     
     private void Start()
@@ -100,6 +110,7 @@ public class PinocchioGame : MonoSingleton<PinocchioGame>
         stageDifficultyDesign.Add(new StageDifficulty(12, 170));
 
         computerInfo = new PinocchioComputerInfo(1, 0.1f);
+        currentStage = PlayerDataXref.instance.GetCurrentStage().StageNum;
         
         enemy = FindObjectOfType<PinocchioEnemy>();
         player = FindObjectOfType<PinocchioPlayer>();
@@ -107,36 +118,55 @@ public class PinocchioGame : MonoSingleton<PinocchioGame>
         // StartCoroutine(startDelayUI.StartDelay(3));
         player.GetPower = 30;
         enemy.OnMove(stageDifficultyDesign[currentStage].tickHitValue);
-        SoundManagers.Instance.PlayBGM("6BGM");
+        SoundManager.PlayBGM(BGM);
         StageInit(currentStage);
+
+        isGamePlay = true;
     }
 
     public StartDelayUI startDelayUI;
 
     private void StageInit(int stageLevel)
     {
-        enemy.StageInit(stageDifficultyDesign[stageLevel - 1]);
+        enemy.StageInit(stageDifficultyDesign[stageLevel]);
         limite_time = 60;
     }
 
     public Text stageText;
     public void StageClear()
     {
-        if (currentStage > 9)
+        if (!isGamePlay) return;
+        PlayerDataXref.instance.ClearGame(GAME_INDEX.Pinocchio, currentStage);
+        WSceneManager.instance.OpenGameClearUI();
+
+        if(currentStage == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Pinocchio))
         {
-            
+            PlayerDataXref.instance.OpenChapter(GAME_INDEX.Pinocchio + 1);
+        }
+        if (currentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Pinocchio)-1)
+        {
+            PlayerDataXref.instance.ClearChapter(GAME_INDEX.Pinocchio);
+            PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.PINOCCHIO_ALL_CLEAR);
+            if(failCount == 0)
+            {
+                PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.SAWING_MASTER);
+            }
         }
         else
         {
-            currentStage++;
-            stageText.text = currentStage + " STAGE";
-            StageInit(currentStage);
-            SoundManagers.Instance.PlaySFX("StageClear");
+            //currentStage++;
+            //stageText.text = currentStage + " STAGE";
+            //limite_time = 60;
+            //PlayerDataXref.instance.OpenChapter(GAME_INDEX.Pinocchio + 1);
+            //StageInit(currentStage);
+            //SoundManagers.Instance.PlaySFX("StageClear");
         }
+        isGamePlay = false;
     }
 
     public void StageFailed()
     {
-        
+        failCount++;
+        WSceneManager.instance.OpenGameFailUI();
     }
 }

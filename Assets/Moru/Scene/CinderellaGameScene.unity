@@ -4873,7 +4873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2966e4b34b904cb4b9fa012a2ea8e39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTest: 1
+  isTest: 0
   GameStageNum: 3
   Atype:
   - {fileID: -456677571, guid: 53c72cb606e58c049b3ffad071bc0af4, type: 3}
@@ -4983,14 +4983,14 @@ MonoBehaviour:
   timerList:
   - 20
   - 15
-  - 45
+  - 35
+  - 28
+  - 20
+  - 50
+  - 40
   - 30
-  - 23
-  - 75
-  - 60
-  - 45
-  - 85
-  - 55
+  - 50
+  - 40
   xSize: 5
   ySize: 3.1
   PuzzelPivot: {fileID: 296820911}

@@ -18,7 +18,6 @@ namespace Moru.UI
         [BoxGroup("뒷면"), LabelText("업적 이미지"), SerializeField] private Image achieveImg;
         [BoxGroup("뒷면"), LabelText("업적 내용"), SerializeField] private Text achieveDesc;
         [BoxGroup("뒷면"), LabelText("업적 받기버튼"), SerializeField] private Button btn_GetReward;
-        [BoxGroup("뒷면"), LabelText("업적 받기 텍스트"), SerializeField] private Text isGetReward;
 
 
 
@@ -44,7 +43,7 @@ namespace Moru.UI
             {
                 //originBtn.interactable = true;
                 //업적을 먹었냐 안먹었냐 체크
-                if (PlayerData.instance.IsGetReward[result.MyIndex] > 0)
+                if (PlayerData.instance.IsGetReward[result.MyIndex] == 0)
                 {
                     //안먹은건 파티클로 추가표과를 주던가.
                     //팝업창 열기
@@ -56,13 +55,11 @@ namespace Moru.UI
                         }
                         );
                     btn_GetReward.interactable = true;
-                    isGetReward.text = "보상 받기";
                 }
                 //이미 먹은건 먹었다고 표시해야지
                 else
                 {
                     btn_GetReward.interactable = false;
-                    isGetReward.text = "이미 받은 보상입니다.";
                 }
             }
             //달성 못함
@@ -110,7 +107,6 @@ namespace Moru.UI
             if (index == myResult.MyIndex)
             {
                 btn_GetReward.interactable = false;
-                isGetReward.text = "이미 받은 보상입니다.";
             }
         }
     }

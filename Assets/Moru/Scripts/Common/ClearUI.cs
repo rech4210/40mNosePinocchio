@@ -13,8 +13,22 @@ public class ClearUI : MonoBehaviour
         Btn_Main.onClick.AddListener(
             () => WSceneManager.instance.MoveStageSeletedPage()
             );
+        Btn_Main.onClick.AddListener(
+    () =>
+    {
+        this.gameObject.SetActive(false);
+    }
+    );
+
+
         Btn_Next.onClick.AddListener(
             () => WSceneManager.instance.ReLoad_ThisScene_WtihStageUp()
             );
+        Btn_Next.onClick.AddListener(
+        () =>
+        {
+            this.gameObject.SetActive(false);
+        }
+        );
     }
 }

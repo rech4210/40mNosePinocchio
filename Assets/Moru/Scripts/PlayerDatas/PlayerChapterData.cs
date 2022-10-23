@@ -151,6 +151,8 @@ namespace PD
         {
             PlayerPrefs.SetInt(index.ToString() + isOpen, 1);
             instance.openChapter[index] = 1;
+
+
         }
         private void OnClearChapter(GAME_INDEX index)
         {

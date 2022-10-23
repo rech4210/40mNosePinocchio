@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor.EditorTools;
+#endif
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
@@ -167,8 +169,7 @@ public class InputManager : MonoBehaviour
             nowState = State.success; // 성공
             scoreManager.scoreDel(); // 성공시 스코어 점수 증가 델리게이트 실행
 
-            audioSource.clip = hit_sound;
-            audioSource.Play();
+            SoundManager.PlaySFX(hit_sound);
 
             Destroy(temp_sprite.gameObject); // 첫번째 노드 삭제안됨 수정
             makeSprite(); // 생성
@@ -180,8 +181,7 @@ public class InputManager : MonoBehaviour
         {
             scoreManager.failDel();
 
-            audioSource.clip = miss_sound;
-            audioSource.Play();
+            SoundManager.PlaySFX(miss_sound);
             nowState = State.fail; // 실패
         }
     }

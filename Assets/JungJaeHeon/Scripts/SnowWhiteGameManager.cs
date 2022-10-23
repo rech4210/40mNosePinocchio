@@ -39,11 +39,19 @@ public class SnowWhiteGameManager : MonoBehaviour
 
     public float limitTime;
 
+    private int FailCount = 0;
+    private int CurrentStage;
+
     private NowGameState nowGameState;
+
+    public AudioClip BGMs;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        CurrentStage = PlayerDataXref.instance.GetCurrentStage().StageNum;
+        SoundManager.PlayBGM(BGMs);
         StartSetting();
     }
 
@@ -72,6 +80,8 @@ public class SnowWhiteGameManager : MonoBehaviour
 
                 timerText.text = $"남은 시간 00 : 00";
                 startText.text = "실패...";
+                FailCount++;
+                WSceneManager.instance.OpenGameFailUI();
             }
         }
     }
@@ -91,6 +101,35 @@ public class SnowWhiteGameManager : MonoBehaviour
                 startTextComponent.fontSize = 120;
 
                 startText.text = "클리어!";
+                //Moru
+                PlayerDataXref.instance.ClearGame(GAME_INDEX.Snow_White, CurrentStage);
+                WSceneManager.instance.OpenGameClearUI();
+
+
+                //다음챕터을 엽니다. 다른분들도 이렇게 해주시면 되요
+                if (CurrentStage == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Snow_White))
+                {
+                    //targetClearUI.gameObject.SetActive(true);
+                    PlayerDataXref.instance.OpenChapter(GAME_INDEX.Snow_White + 1);
+                }
+                else
+                {
+                    //targetClearUI.gameObject.SetActive(false);
+                }
+
+                //올클리어  & 1회도 실패하지 않고 클리어시 업적 이벤트 예시
+                if (CurrentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Snow_White) - 1)
+                {
+                    PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.SNOW_WHITE_ALL_CLEAR);
+                    PlayerDataXref.instance.ClearChapter(GAME_INDEX.Snow_White);
+                    if (FailCount == 0)
+                    {
+                        PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.APPLE_SOMMELIER);
+                    }
+                }
+
+
+
             }
         }
     }
@@ -101,7 +140,7 @@ public class SnowWhiteGameManager : MonoBehaviour
         correctObj.GetComponent<SpriteRenderer>().sprite = correctAppleSprits[randSpritsIndex];
         correctAppleImage.sprite = displayCorrectAppleSprits[randSpritsIndex];
 
-        limitTime = 120;
+        limitTime = 30;
 
         correctObj.transform.position = new Vector3(Random.Range(-8, 9), Random.Range(-3, 4));
 
@@ -117,7 +156,7 @@ public class SnowWhiteGameManager : MonoBehaviour
 
     private IEnumerator StartTextAnim()
     {
-        WaitForSeconds textAnimDelay = new WaitForSeconds(2);
+        WaitForSecondsRealtime textAnimDelay = new WaitForSecondsRealtime(0.5f);
         var startTextComponent = startText.GetComponent<Text>();
         
         startTextComponent.fontSize = 120;

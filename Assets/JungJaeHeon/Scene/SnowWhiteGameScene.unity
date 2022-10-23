@@ -867,6 +867,7 @@ MonoBehaviour:
   - {fileID: -644801848, guid: f2d18adeff9ea2b46937b7fbbd950b6a, type: 3}
   - {fileID: 1324298372, guid: f2d18adeff9ea2b46937b7fbbd950b6a, type: 3}
   limitTime: 0
+  BGMs: {fileID: 0}
 --- !u!4 &136432844
 Transform:
   m_ObjectHideFlags: 0
@@ -5309,7 +5310,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uB0A8\uC740 \uC2DC\uAC04 02 : 00"
+  m_Text: "\uB0A8\uC740 \uC2DC\uAC04 00 : 30"
 --- !u!222 &1545544484
 CanvasRenderer:
   m_ObjectHideFlags: 0

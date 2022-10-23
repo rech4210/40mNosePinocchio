@@ -10,6 +10,8 @@ using Random = UnityEngine.Random;
 
 public class BlastGame : MonoBehaviour
 {
+    public static int failCount = 0;
+
     private int findBlock = 100;
     public int SuffleScore = 999999;
     public int DisturbScore = 999999;
@@ -21,7 +23,7 @@ public class BlastGame : MonoBehaviour
     public List<Sprite> blockList = new List<Sprite>();
     public Vector2 BlockDistacne = new Vector2(1, 1);
     public Vector2 BlockSize = new Vector2(1, 1);
-    
+
     public static BlastGame blastManager;
     private GameObject[,] blockArray;
     private bool[,] visitCheck;
@@ -38,15 +40,6 @@ public class BlastGame : MonoBehaviour
     private void Awake()
     {
         blastManager = this;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            InitGame(currentStage);
-            StageClear();
-        }
     }
 
     public void StarHelp()
@@ -70,7 +63,7 @@ public class BlastGame : MonoBehaviour
             // Debug.Log("클릭한 블록 수 : " + blocks.Count);
             return;
         }
- 
+
         KeyValuePair<int, int> data = PopBlock(blocks);
 
         score += data.Value * 15 - 35;
@@ -88,7 +81,7 @@ public class BlastGame : MonoBehaviour
             StartCoroutine(disturbCo());
             disturbed = true;
         }
-        
+
         if (!AllLinkedBlocksFind())
         {
             // 현재 스테이지 새로고침
@@ -120,12 +113,12 @@ public class BlastGame : MonoBehaviour
 
         DisturbObj1.SetActive(false);
         DisturbObj2.SetActive(false);
-        
+
     }
     private KeyValuePair<int, int> PopBlock(List<GameObject> list)
     {
-        SoundManagers.Instance.PlaySFX("BlockPop");
-        
+        SoundManagers.Instance.PlayBGM("BlockPop");
+
         int count = 0;
         int color = -1;
         Vector2Int pos;
@@ -139,11 +132,11 @@ public class BlastGame : MonoBehaviour
             Destroy(obj);
             blockArray[pos.x, pos.y] = null;
         }
-        
+
         FillBlank();
         return new KeyValuePair<int, int>(color, count);
     }
-    
+
     void FillBlank()
     {
         GameObject obj;
@@ -185,11 +178,11 @@ public class BlastGame : MonoBehaviour
             }
         }
     }
-    
+
     void BoardSuffle()
     {
         SoundManagers.Instance.PlaySFX("");
-        
+
         int a, b;
         Vector2 PosTemp;
         GameObject objTemp;
@@ -247,10 +240,10 @@ public class BlastGame : MonoBehaviour
 
         List<GameObject> list = new List<GameObject>();
         Vector2Int startPos = startBlock.GetComponent<BlastBlock>().pos;
-        
+
         for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < height; j++) 
+            for (int j = 0; j < height; j++)
                 visitCheck[i, j] = false;
         }
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
@@ -274,12 +267,12 @@ public class BlastGame : MonoBehaviour
                 }
             }
         }
-        
-        foreach(var li in list)
+
+        foreach (var li in list)
         {
             Debug.Log(li.GetComponent<BlastBlock>().color);
         }
-        
+
         return list;
     }
 
@@ -348,25 +341,25 @@ public class BlastGame : MonoBehaviour
 
         return false;
     }
-    
+
     public float limite_time = 60;
     public Text remainText;
     public Color EmergencyColor = new Color(255, 0, 0, 255);
     public Color NormalColor = new Color(58, 58, 58, 255);
-    
+
     private void FixedUpdate()
     {
         limite_time -= Time.deltaTime;
         remainText.text = Mathf.Round(limite_time).ToString();
         remainText.color = limite_time <= 20 ? EmergencyColor : NormalColor;
-        
-        if(limite_time <= 0f)
+
+        if (limite_time <= 0f)
         {
             StageFailed();
             StartCoroutine(wait());
         }
     }
-    
+
 
     private IEnumerator wait()
     {
@@ -378,13 +371,15 @@ public class BlastGame : MonoBehaviour
 
     public void StageFailed()
     {
-        Debug.Log("게임오버");
+        failCount++;
+        WSceneManager.instance.OpenGameFailUI();
     }
-    
+
     public void InitGame(int stageLevel)
     {
+        SoundManager.PlaySFX(Shake);
         CameraController.Instance.OnShake(2.5f, 2.5f, false, true);
-        
+
         if (blockArray != null)
         {
             for (int i = 0; i < width; i++)
@@ -396,17 +391,17 @@ public class BlastGame : MonoBehaviour
                         Destroy(blockArray[i, j].gameObject);
                     }
                 }
-            } 
+            }
         }
 
         suffled = false;
         blockArray = new GameObject[width, height];
         visitCheck = new bool[width, height];
-        
+
         int colorIndex;
 
         Vector2Int size = new Vector2Int(width - 1, 2);
-        
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -423,8 +418,6 @@ public class BlastGame : MonoBehaviour
             }
         }
 
-        SoundManagers.Instance.PlaySFX("ReRoll");
-        
         if (!AllLinkedBlocksFind())
         {
             // 현재 스테이지 새로고침
@@ -436,7 +429,6 @@ public class BlastGame : MonoBehaviour
             {
                 RequireItemInit();
                 RequireItemListUIUpdate();
-                Debug.Log("인잇");
 
                 isRequireInit = true;
             }
@@ -449,17 +441,28 @@ public class BlastGame : MonoBehaviour
     {
         isRequireInit = false;
 
-        if (currentStage > 6)
+        PlayerDataXref.instance.ClearGame(GAME_INDEX.Tree_Little_Pigs, currentStage);
+        WSceneManager.instance.OpenGameClearUI();
+
+        if (currentStage == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Tree_Little_Pigs))
         {
-            Time.timeScale = 0;
+            PlayerDataXref.instance.OpenChapter(GAME_INDEX.Tree_Little_Pigs + 1);
         }
         else
         {
-            currentStage++;
-            stageText.text = currentStage + " STAGE";
-            limite_time = 60;
-            InitGame(currentStage);
+
         }
+        if(currentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Tree_Little_Pigs)-1)
+        {
+            PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.TREE_LITTLE_PIGS_ALL_CLEAR);
+            PlayerDataXref.instance.ClearChapter(GAME_INDEX.Tree_Little_Pigs);
+            if (failCount == 0)
+            {
+                PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.HUMAN_BRICK);
+            }
+        }
+        //Moru
+        //stageText.text = currentStage + " STAGE";
     }
 
     private List<RequireBlock> requireItems = new List<RequireBlock>();
@@ -475,7 +478,7 @@ public class BlastGame : MonoBehaviour
             var blockInfo = new RequireBlock();
             blockInfo.blockID = blockID;
             blockInfo.blockNum = blockNum;
-            
+
             requireItems.Add(blockInfo);
             Debug.Log(blockInfo.blockID + ", " + blockInfo.blockNum);
         }
@@ -487,11 +490,10 @@ public class BlastGame : MonoBehaviour
     public String[] itemNames;
 
     private List<GameObject> requireListObjs = new List<GameObject>();
-    
-    // 필요한 아이템 리스트 UI 업데이트s
+
+    // 필요한 아이템 리스트 UI 업데이트
     private void RequireItemListUIUpdate()
     {
-        Debug.Log("UI업데이트");
         if (requireListObjs.Count > 0)
         {
             foreach (var requireListObj in requireListObjs)
@@ -499,24 +501,30 @@ public class BlastGame : MonoBehaviour
                 Destroy(requireListObj);
             }
         }
-        
+
         requireListObjs.Clear();
-        
+
         for (int i = 0; i < requireItems.Count; i++)
         {
             requireListObjs.Add(Instantiate(requireItemBaseObj, requireListParent));
-            
+
             requireListObjs[i].transform.GetChild(0).GetComponent<Image>().sprite = blockList[requireItems[i].blockID];
             requireListObjs[i].transform.GetChild(1).GetComponent<Text>().text = itemNames[requireItems[i].blockID] + " x " + requireItems[i].blockNum;
         }
     }
 
     public List<StageDifficultyBlast> stageDifficultyBlastDesign;
-    
+
+    [SerializeField] private AudioClip BGM;
+    [SerializeField] private AudioClip PuzzleOn;
+    [SerializeField] private AudioClip Shake;
+    [SerializeField] private AudioClip Click;
+
     private void Start()
     {
-        stageDifficultyBlastDesign = new List<StageDifficultyBlast>();
         // 난이도 조절
+        stageDifficultyBlastDesign = new List<StageDifficultyBlast>();
+
         stageDifficultyBlastDesign.Add(new StageDifficultyBlast(10, 15, 1, 60));
         stageDifficultyBlastDesign.Add(new StageDifficultyBlast(20, 30, 1, 55));
         stageDifficultyBlastDesign.Add(new StageDifficultyBlast(20, 25, 2, 50));
@@ -526,8 +534,12 @@ public class BlastGame : MonoBehaviour
         stageDifficultyBlastDesign.Add(new StageDifficultyBlast(20, 25, 4, 40));
         stageDifficultyBlastDesign.Add(new StageDifficultyBlast(25, 30, 4, 40));
 
+        currentStage = PlayerDataXref.instance.GetCurrentStage().StageNum;
+
         stageText.text = currentStage + " STAGE";
-        
+
+        SoundManager.PlayBGM(BGM);
+
         InitGame(currentStage);
     }
 
@@ -553,7 +565,7 @@ public class BlastGame : MonoBehaviour
         {
             StageClear();
         }
-        
+
         RequireItemListUIUpdate();
     }
 }

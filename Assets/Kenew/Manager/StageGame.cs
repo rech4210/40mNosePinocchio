@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public enum StageFailedReason { TimeOut, EnemyPush }
