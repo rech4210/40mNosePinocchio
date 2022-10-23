@@ -15,7 +15,7 @@ public class PinocchioEnemy : MonoBehaviour
     private float pushSkillRandom_MinTime = 3f;
     private float pushSkillRandom_MaxTime = 6f;
     
-    readonly private float FORECE_SET_OFFSET = 0.1f;
+    public float FORECE_SET_OFFSET = 0.1f;
 
     public Transform startPos;
     public Transform deathBoxCollPos;
@@ -31,14 +31,18 @@ public class PinocchioEnemy : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
     }
-    
-    private void Update()
+    private void FixedUpdate()
     {
         if (isMove)
         {
             Debug.Log(moveSpeed + "움직임");
             rigidbody.AddForce((Vector2.left * this.moveSpeed) * FORECE_SET_OFFSET, ForceMode2D.Force);
         }
+    }
+
+    private void Update()
+    {
+
 
         var hits = Physics2D.BoxCastAll(deathBoxCollPos.position, deathBoxSize, 0, Vector2.up);
         foreach (var hit in hits)
@@ -119,9 +123,11 @@ public class PinocchioEnemy : MonoBehaviour
         isMove = false;
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawCube(deathBoxCollPos.position, deathBoxSize);
     }
+#endif
 }

@@ -19,7 +19,7 @@ namespace Moru.UI
         }
         [SerializeField] private bool isPopAndPush;
         [SerializeField] private StackUIComponent push_comp;
-        public StackUIComponent Push_comp => push_comp;
+        public StackUIComponent Push_comp { get => push_comp; set => push_comp = value; }
 
         void Start()
         {

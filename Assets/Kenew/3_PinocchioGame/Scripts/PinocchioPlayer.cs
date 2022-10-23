@@ -9,7 +9,8 @@ public class PinocchioPlayer : MonoBehaviour
     
     private int getPower;
     public int GetPower { set; get; }
-    
+    public AudioClip Space;
+    public AudioClip Space2;
     
     public ParticleSystem particleSystem;
 
@@ -26,8 +27,10 @@ public class PinocchioPlayer : MonoBehaviour
             {
                 pinocchioEnemy.AddForcePower(100);
                 particleSystem.Play();
-                
-                SoundManagers.Instance.PlaySFX("Space");
+
+                float value = UnityEngine.Random.Range(0f, 1f);
+                var output = value > 0.5f ? Space : Space2;
+                SoundManager.PlaySFX(output);
             }
         }
     }

@@ -121,6 +121,7 @@ public class SnowWhiteGameManager : MonoBehaviour
                 if (CurrentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Snow_White) - 1)
                 {
                     PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.SNOW_WHITE_ALL_CLEAR);
+                    PlayerDataXref.instance.ClearChapter(GAME_INDEX.Snow_White);
                     if (FailCount == 0)
                     {
                         PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.APPLE_SOMMELIER);
@@ -139,7 +140,7 @@ public class SnowWhiteGameManager : MonoBehaviour
         correctObj.GetComponent<SpriteRenderer>().sprite = correctAppleSprits[randSpritsIndex];
         correctAppleImage.sprite = displayCorrectAppleSprits[randSpritsIndex];
 
-        limitTime = 120;
+        limitTime = 30;
 
         correctObj.transform.position = new Vector3(Random.Range(-8, 9), Random.Range(-3, 4));
 
@@ -155,7 +156,7 @@ public class SnowWhiteGameManager : MonoBehaviour
 
     private IEnumerator StartTextAnim()
     {
-        WaitForSeconds textAnimDelay = new WaitForSeconds(2);
+        WaitForSecondsRealtime textAnimDelay = new WaitForSecondsRealtime(0.5f);
         var startTextComponent = startText.GetComponent<Text>();
         
         startTextComponent.fontSize = 120;

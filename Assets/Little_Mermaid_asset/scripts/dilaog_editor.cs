@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(dialog))]
 public class dilaog_editor : Editor
 {
@@ -120,3 +120,4 @@ public class dilaog_editor : Editor
         }
     }
 }
+#endif

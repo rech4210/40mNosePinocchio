@@ -20,7 +20,7 @@ public class PlayerDataXref
         }
     }
     private PlayerData pl;
-    
+
 
     #endregion
 
@@ -52,6 +52,12 @@ public class PlayerDataXref
     /// <param name="index"></param>
     public void OpenChapter(GAME_INDEX index)
     {
+        if (index == GAME_INDEX.None)
+        {   
+            //업적
+            SetAchieveSuccess(ACHEIVE_INDEX.END_MAKER);
+            return;
+        }
         PlayerData.instance.onOpenChapter?.Invoke(index);
     }
 
@@ -109,7 +115,7 @@ public class PlayerDataXref
     /// <returns></returns>
     public int GetTargetState_ToOpenNextChapter(GAME_INDEX index)
     {
-        return (PlayerData.instance.TargetStage[(int)index])-1;
+        return (PlayerData.instance.TargetStage[(int)index]) - 1;
     }
 
     /// <summary>

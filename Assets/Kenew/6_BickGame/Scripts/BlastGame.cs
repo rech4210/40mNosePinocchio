@@ -452,10 +452,11 @@ public class BlastGame : MonoBehaviour
         {
 
         }
-        if(currentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Tree_Little_Pigs))
+        if(currentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Tree_Little_Pigs)-1)
         {
             PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.TREE_LITTLE_PIGS_ALL_CLEAR);
-            if(failCount == 0)
+            PlayerDataXref.instance.ClearChapter(GAME_INDEX.Tree_Little_Pigs);
+            if (failCount == 0)
             {
                 PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.HUMAN_BRICK);
             }

@@ -322,18 +322,9 @@ public class MiniGame5 : MonoBehaviour
                     {
                         SetGameWin();
                         // 다음 스테이지 버튼 활성화
-<<<<<<< HEAD
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            nextGame = true;
-                            //Moru
-                            //currentStage++;
 
-                        }
-=======
                         nextGame = true;
                         // currentStage++;
->>>>>>> 6652b0b6139ffa4b2ca6504ffe218a3875f17285
                         // 다음 스테이지가 없을 시 비활성화
                         // 특정 스테이지에서 도감 얻기
                         // 업적 달성
@@ -442,7 +433,8 @@ public class MiniGame5 : MonoBehaviour
 
     private IEnumerator StartTextAnim()
     {
-        WaitForSeconds textAnimDelay = new WaitForSeconds(2);
+        WaitForSecondsRealtime textAnimDelay = new WaitForSecondsRealtime(0.5f);
+        
         var startTextComponent = startText.GetComponent<Text>();
 
         startTextComponent.fontSize = 120;

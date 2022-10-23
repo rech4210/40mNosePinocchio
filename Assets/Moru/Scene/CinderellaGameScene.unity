@@ -4983,14 +4983,14 @@ MonoBehaviour:
   timerList:
   - 20
   - 15
-  - 45
+  - 35
+  - 28
+  - 20
+  - 50
+  - 40
   - 30
-  - 23
-  - 75
-  - 60
-  - 45
-  - 85
-  - 55
+  - 50
+  - 40
   xSize: 5
   ySize: 3.1
   PuzzelPivot: {fileID: 296820911}

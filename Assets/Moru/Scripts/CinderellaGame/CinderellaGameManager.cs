@@ -143,7 +143,7 @@ namespace Moru.Cinderella
         // Update is called once per frame
         void Update()
         {
-            if (Time.timeScale == 0) return;
+            if (Time.timeScale == 0 || isGameOver) return;
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -235,6 +235,7 @@ namespace Moru.Cinderella
             if (GameStageNum == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Cinderella)- 1)
             {
                 PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.CINDERELLA_ALL_CLEAR);
+                PlayerDataXref.instance.ClearChapter(GAME_INDEX.Cinderella);
                 if (failCount == 0)
                 {
                     PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.PUZZLE_MASTER);
@@ -254,7 +255,8 @@ namespace Moru.Cinderella
 
         private IEnumerator StartTextAnim()
         {
-            WaitForSeconds textAnimDelay = new WaitForSeconds(2);
+            WaitForSecondsRealtime textAnimDelay = new WaitForSecondsRealtime(0.5f);
+            
             var startTextComponent = startText.GetComponent<Text>();
 
             startTextComponent.fontSize = 120;

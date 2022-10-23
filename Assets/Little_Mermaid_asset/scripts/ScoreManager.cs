@@ -8,6 +8,7 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
 
+    public AudioClip BGM;
     public delegate int scoreDelegate();
     public delegate void failDelegate();
 
@@ -37,13 +38,15 @@ public class ScoreManager : MonoBehaviour
     {
 
         clear = gameObject.GetComponent<Clear>();
-        
+        clear.currentStage = PlayerDataXref.instance.GetCurrentStage().StageNum;
+
         score_text.text = score + "score";
 
         scoreDel += countUp;
         scoreDel += comboSystem;
 
         failDel += fail;
+        SoundManager.PlayBGM(BGM);
     }
 
     void fail()
