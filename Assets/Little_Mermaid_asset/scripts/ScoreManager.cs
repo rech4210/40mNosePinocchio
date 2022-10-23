@@ -28,6 +28,8 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text combo_text;
     public TMP_Text purpos_score;
 
+    private int stagenum;
+
     Clear clear;
 
     public void CheckEnding()
@@ -39,7 +41,7 @@ public class ScoreManager : MonoBehaviour
     {
 
         clear = gameObject.GetComponent<Clear>();
-        clear.currentStage = PlayerDataXref.instance.GetCurrentStage().StageNum;
+        stagenum = PlayerDataXref.instance.GetCurrentStage().StageNum;
 
         score_text.text = score + "score";
 

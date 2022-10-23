@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 554753460}
   - component: {fileID: 554753459}
   - component: {fileID: 554753462}
+  - component: {fileID: 554753463}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -376,6 +377,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36d53bedfa97e84f8aab33865cbf53f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &554753463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554753457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086a0a12fae676f45bcecedb4ecaf967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerfImage: {fileID: 1345419182}
 --- !u!1 &1345419180
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,14 +401,13 @@ GameObject:
   - component: {fileID: 1345419181}
   - component: {fileID: 1345419183}
   - component: {fileID: 1345419182}
-  - component: {fileID: 1345419184}
   m_Layer: 5
   m_Name: lerf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1345419181
 RectTransform:
   m_ObjectHideFlags: 0
@@ -453,18 +466,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1345419180}
   m_CullTransparentMesh: 1
---- !u!114 &1345419184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1345419180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 086a0a12fae676f45bcecedb4ecaf967, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1502714429
 GameObject:
   m_ObjectHideFlags: 0

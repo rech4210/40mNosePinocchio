@@ -29,7 +29,6 @@ public class lerf : MonoBehaviour
     {
         while(lerfImage.color.a != 1)
         {
-            lerfvector += new Vector4(0, 0, 0, 0.01f);
             lerfImage.color = lerfvector;
             yield return new WaitForSeconds(0.03f);
         }
