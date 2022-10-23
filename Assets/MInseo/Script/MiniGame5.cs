@@ -322,6 +322,7 @@ public class MiniGame5 : MonoBehaviour
                     {
                         SetGameWin();
                         // 다음 스테이지 버튼 활성화
+<<<<<<< HEAD
                         if (Input.GetMouseButtonDown(0))
                         {
                             nextGame = true;
@@ -329,6 +330,10 @@ public class MiniGame5 : MonoBehaviour
                             //currentStage++;
 
                         }
+=======
+                        nextGame = true;
+                        // currentStage++;
+>>>>>>> 6652b0b6139ffa4b2ca6504ffe218a3875f17285
                         // 다음 스테이지가 없을 시 비활성화
                         // 특정 스테이지에서 도감 얻기
                         // 업적 달성
@@ -338,10 +343,7 @@ public class MiniGame5 : MonoBehaviour
                         // 기존 생각한 방식은 게임 오버가 되었을 때 활성화 된 버튼(재시작, 나가기)에 따라 게임이 진행 or 종료됨
                         SetGameOver();
                         // 재시도 버튼 활성화
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            nextGame = true;
-                        }
+                        nextGame = true;
                     }
 
                     if (nextGame)
