@@ -7185,7 +7185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d13ee3d25e3d9ce44bf94458b82893a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FORECE_SET_OFFSET: 1.5
+  FORECE_SET_OFFSET: 0.9
   startPos: {fileID: 259490015}
   deathBoxCollPos: {fileID: 1875325280}
   deathBoxSize: {x: 0.12, y: 1.24}
