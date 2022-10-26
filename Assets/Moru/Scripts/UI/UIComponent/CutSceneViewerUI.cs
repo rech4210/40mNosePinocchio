@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 namespace Moru.UI
 {
-    public class CutSceneViewerUI : MonoBehaviour
+    /// <summary>
+    /// 나중엔 스토리 보는 모드로 변경될 예정
+    /// </summary>
+    public class CutSceneViewerUI : StackUIComponent
     {
         [SerializeField] Transform contents;
         [SerializeField] GameObject origin_Prefap;

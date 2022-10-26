@@ -41,6 +41,9 @@ namespace Moru.UI
             }
         }
 
+
+        
+
         public delegate void StackUI_Event(StackUIComponent stackUI);
         public event StackUI_Event pop_n_Push_Event;
 
@@ -62,10 +65,10 @@ namespace Moru.UI
             start_UIComponent?.Show();
 
             //플레이어 데이터 로드
-            playerData = PlayerData.instance;
-            PlayerData.Load_GameData();             //플레이어의 각 챕터별 스테이지 정보 리드
-            PlayerData.Load_PlayerAchieve();        //플레이어의 업적 정보 리드
-            PlayerData.Load_ChapterData();           //플레이어의 챕터정보 리드
+            playerData = PlayerDataXref.pl;
+            //PlayerData.Load_GameData();             //플레이어의 각 챕터별 스테이지 정보 리드
+            //PlayerData.Load_PlayerAchieve();        //플레이어의 업적 정보 리드
+            //PlayerData.Load_ChapterData();           //플레이어의 챕터정보 리드
 
 
             //테스트셋팅
@@ -91,17 +94,7 @@ namespace Moru.UI
             //PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.CINDERELLA_ALL_CLEAR);
 
 
-            PlayerData.CheckChapterPoint();     //스테이지 및 챕터 점검
-
-
-            //급한대로 이렇게
-            var objs = FindObjectsOfType<ChapterBtn>(true);
-            foreach (var comp in objs)
-            {
-                comp.UpdateChapterButton(comp.MyIndex);
-            }
-
-            
+            //PlayerData.CheckChapterPoint();     //스테이지 및 챕터 점검
         }
 
         void Start()
@@ -139,9 +132,9 @@ namespace Moru.UI
         {
             var instance = StackUIManager.Instance;
             if (target == null) return;
-            if (instance.ui_Stack.Peek() != instance.start_UIComponent)
+            if (instance.ui_Stack.Peek() != instance.chapterPage)
             {
-                while (instance.ui_Stack.Peek() == instance.start_UIComponent)
+                while (instance.ui_Stack.Peek() != instance.chapterPage)
                 {
                     instance.ui_Stack.Pop().Hide();
                 }

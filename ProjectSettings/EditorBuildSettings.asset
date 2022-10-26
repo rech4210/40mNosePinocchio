@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/Moru/Scene/MainUI Debug.unity
     guid: 4541dc88644740d46937a6129b48f43b
   - enabled: 1
-    path: Assets/Kenew/3_PinocchioGame/Scene/3_Pinokio.unity
-    guid: 11d02fbb2efd04e4b9808a4bd4ed610b
+    path: Assets/Moru/Scene/Moru_Pinocchio.unity
+    guid: 2ceb1f2c47ac67a489a533dfb3203cb7
   - enabled: 1
-    path: Assets/JungJaeHeon/Scene/SnowWhiteGameScene.unity
-    guid: 43b3c99ff8fdc6d4a9951cdf1c0d606c
+    path: Assets/Moru/Scene/Moru_SnowWhiteGameScene.unity
+    guid: 148768f78eafaec4bba956fd6080c90a
   - enabled: 1
     path: Assets/Little_Mermaid_asset/Scenes/Little_Mermaid.unity
     guid: efa7c69525e9adb47b47343b155d30c7
@@ -21,8 +21,8 @@ EditorBuildSettings:
     path: Assets/Moru/Scene/CinderellaGameScene.unity
     guid: add9da27778c8f94ab80b1c8ceaab093
   - enabled: 1
-    path: Assets/MInseo/Scene/Game5.unity
-    guid: b1d6c37438e24f447b4c9c2d477695ea
+    path: Assets/Moru/Scene/Moru_JackAndStempGameScene.unity
+    guid: 5f08c2f576a332e4da134428656c9ff5
   - enabled: 1
     path: Assets/Kenew/6_BickGame/Scene/6_BlastGame.unity
     guid: 474487b24214366438ff9284944e89f4

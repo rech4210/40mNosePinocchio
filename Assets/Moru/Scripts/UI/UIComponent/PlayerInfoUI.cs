@@ -16,24 +16,30 @@ namespace Moru.UI
         void Start()
         {
             UpdatePlayerInfo();
-            PlayerData.instance.onPlayerTitleChange += UpdatePlayerInfo;
+            PlayerDataXref.pl.onPlayerTitleChange += UpdatePlayerInfo;
+        }
+
+        private void OnDestroy()
+        {
+            PlayerDataXref.pl.onPlayerTitleChange -= UpdatePlayerInfo;
         }
 
         private void UpdatePlayerInfo()
         {
+            var player_clearRate = PlayerDataXref.pl.WholeClearRate;
             if (titleText != null)
             {
-                titleText.text = PlayerData.instance.PlayerTitle;
+                titleText.text = PlayerDataXref.pl.PlayerTitle;
             }
             if (clearRate != null)
             {
-                clearRate.text = (PlayerData.instance.WholeClearRate * 100).ToString("F0") + " %";
+                clearRate.text = (player_clearRate * 100).ToString("F0") + " %";
             }
             if (fillAmount != null)
             {
-                fillAmount.fillAmount = PlayerData.instance.WholeClearRate;
+                fillAmount.fillAmount = player_clearRate;
             }
-            fillValue = PlayerData.instance.WholeClearRate;
+            fillValue = player_clearRate;
         }
 
     }

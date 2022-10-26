@@ -255,36 +255,44 @@ namespace Moru.Cinderella
 
         private IEnumerator StartTextAnim()
         {
-            WaitForSecondsRealtime textAnimDelay = new WaitForSecondsRealtime(0.5f);
-            
+            float waitTime = 2;
+            float cur_T = 0;
             var startTextComponent = startText.GetComponent<Text>();
-
             startTextComponent.fontSize = 120;
-
             startText.text = "준비..";
-            yield return textAnimDelay;
 
-            for (int nowRepetitionIndex = 3; nowRepetitionIndex >= 1; nowRepetitionIndex--)
+            WaitForSecondsRealtime textAnimDelay = new WaitForSecondsRealtime(0.5f);
+            while (cur_T < waitTime)
+            {
+                cur_T += Time.deltaTime;
+                yield return null;
+            }
+            cur_T = 0;
+            for (int i = 3; i > 0; i--)
             {
                 startTextComponent.fontSize = 300;
-
-                startText.text = $"{nowRepetitionIndex}";
-
-                while (startTextComponent.fontSize > 2)
+                startTextComponent.text = i.ToString();
+                while (cur_T < 1)
                 {
-                    startTextComponent.fontSize -= 1;
+                    startTextComponent.fontSize = (int)Mathf.Lerp(300, 0, cur_T);
+                    cur_T += Time.deltaTime;
                     yield return null;
                 }
+                cur_T = 0;
             }
-
-            startTextComponent.fontSize = 120;
+            startTextComponent.fontSize = 300;
             startText.text = "시작!";
-            yield return textAnimDelay;
-
-            startText.text = "";
-            isGameOver = false;
-
-            yield return null;
+            var cur_Color = startText.color;
+            isGameOver = true;
+            while (cur_T < 2)
+            {
+                cur_Color.a = Mathf.Lerp(1, 0, cur_T * 0.5f);
+                startText.color = cur_Color;
+                startTextComponent.fontSize = (int)Mathf.Lerp(300, 0, cur_T * 0.5f);
+                cur_T += Time.deltaTime;
+                yield return null;
+            }
+            startText.gameObject.SetActive(false);
         }
 
     }
@@ -334,9 +342,9 @@ namespace Moru.Cinderella
 
         void UpdateTimer(float _cur, float _max)
         {
-            float m = _cur / 60;
-            float s = _cur % 60;
-            text.text = $"{m.ToString("F0")}:{s.ToString("F0")}";
+            int m = (int)(_cur / 60);
+            int s = (int)(_cur % 60);
+            text.text = $"{m.ToString("D2")}:{s.ToString("D2")}";
         }
     }
 

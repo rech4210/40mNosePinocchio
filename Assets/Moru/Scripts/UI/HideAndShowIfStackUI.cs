@@ -43,7 +43,8 @@ namespace Moru.UI
             {
                 if (comp == cur_Comp)
                 {
-                    this.gameObject.SetActive(false);
+                    bool actived = cur_Comp.gameObject.activeInHierarchy ? false : true;
+                    this.gameObject.SetActive(actived);
                     break;
                 }
             }
@@ -68,7 +69,8 @@ namespace Moru.UI
             {
                 if (comp == cur_Comp)
                 {
-                    this.gameObject.SetActive(true);
+                    bool actived = cur_Comp.gameObject.activeInHierarchy ? true : false;
+                    this.gameObject.SetActive(actived);
                     break;
                 }
             }

@@ -28,7 +28,7 @@ namespace Moru.UI
 
         private void Start()
         {
-            myChapterStory = PlayerData.instance.ChapterStorySO._ChapterStroy[(int)myIndex];
+            myChapterStory = PlayerDataXref.pl.ChapterStorySO._ChapterStroy[(int)myIndex];
             chapterName.text = myChapterStory.ChapterName;
             chapterDesc.text = myChapterStory.ChapterDesc;
             chapterImg.sprite = myChapterStory.BackGround;
@@ -37,7 +37,7 @@ namespace Moru.UI
 
             var btn = GetComponent<Button>();
             btn.onClick.AddListener(OnClick);
-            if (PlayerData.IsClearChapter(myIndex))
+            if (PlayerDataXref.pl.IsClearChapter(myIndex))
             {
                 btn.interactable = true;
                 chapterDesc.enabled = false;

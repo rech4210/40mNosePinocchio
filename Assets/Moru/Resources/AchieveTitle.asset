@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   achieveResults:
   - myIndex: 0
+    display_type: 1
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uD1B1\uC9C8\uC7A5\uC778"
@@ -21,6 +22,7 @@ MonoBehaviour:
     title: "\uD1B1\uC9C8\uC7A5\uC778"
     icon: {fileID: 0}
   - myIndex: 1
+    display_type: 1
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uC720\uB9AC\uACF5\uC608\uC7A5\uC778"
@@ -28,6 +30,7 @@ MonoBehaviour:
     title: "\uC720\uB9AC\uACF5\uC608\uC7A5\uC778"
     icon: {fileID: 0}
   - myIndex: 2
+    display_type: 1
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uC0AC\uACFC\uAC10\uBCC4\uC0AC"
@@ -35,6 +38,7 @@ MonoBehaviour:
     title: "\uC0AC\uACFC\uAC10\uBCC4\uC0AC"
     icon: {fileID: 0}
   - myIndex: 3
+    display_type: 2
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uC57D\uC0AC"
@@ -42,6 +46,7 @@ MonoBehaviour:
     title: "\uC57D\uC0AC"
     icon: {fileID: 0}
   - myIndex: 4
+    display_type: 2
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uC790\uB77C\uB098\uB77C\uB098\uBB34\uB098\uBB34"
@@ -49,6 +54,7 @@ MonoBehaviour:
     title: "\uC790\uB77C\uB098\uB77C\uB098\uBB34\uB098\uBB34"
     icon: {fileID: 0}
   - myIndex: 5
+    display_type: 2
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uAC74\uBB3C\uC8FC"
@@ -56,6 +62,7 @@ MonoBehaviour:
     title: "\uAC74\uBB3C\uC8FC"
     icon: {fileID: 0}
   - myIndex: 6
+    display_type: 0
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uC5D4\uB4DC\uBA54\uC774\uCEE4"
@@ -63,6 +70,7 @@ MonoBehaviour:
     title: "\uC5D4\uB4DC\uBA54\uC774\uCEE4"
     icon: {fileID: 0}
   - myIndex: 7
+    display_type: 0
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: The End
@@ -70,6 +78,7 @@ MonoBehaviour:
     title: The End
     icon: {fileID: 0}
   - myIndex: 8
+    display_type: 0
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uD37C\uC990\uC7A5\uC778"
@@ -78,6 +87,7 @@ MonoBehaviour:
     title: "\uD37C\uC990\uC7A5\uC778"
     icon: {fileID: 0}
   - myIndex: 9
+    display_type: 0
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uD1B1\uC9C8\uB9C8\uC2A4\uD130"
@@ -86,6 +96,7 @@ MonoBehaviour:
     title: "\uD1B1\uC9C8\uB9C8\uC2A4\uD130"
     icon: {fileID: 0}
   - myIndex: 10
+    display_type: 0
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uC0AC\uACFC \uC18C\uBBC8\uB9AC\uC5D0"
@@ -94,6 +105,7 @@ MonoBehaviour:
     title: "\uC0AC\uACFC \uC18C\uBBC8\uB9AC\uC5D0"
     icon: {fileID: 0}
   - myIndex: 11
+    display_type: 0
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uC57D\uC7C1\uC774"
@@ -102,6 +114,7 @@ MonoBehaviour:
     title: "\uC57D\uC7C1\uC774"
     icon: {fileID: 0}
   - myIndex: 12
+    display_type: 0
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uAC70\uBAA9"
@@ -110,6 +123,7 @@ MonoBehaviour:
     title: "\uAC70\uBAA9"
     icon: {fileID: 0}
   - myIndex: 13
+    display_type: 0
     cur_achievementConditon: 0
     target_achievementConditon: 1
     achieveName: "\uC778\uAC04\uBCBD\uB3CC"
