@@ -7,123 +7,75 @@ using PD;
 
 namespace Moru.UI
 {
-    public class LevelSelectUI : MonoBehaviour
+    public class LevelSelectUI : StackUIComponent
     {
+        [SerializeField, LabelText("선택한 게임")] Text cur_SelectedGame;
+        [SerializeField, LabelText("클리어율")] Image clearRate;
+        [SerializeField, LabelText("클리어율")] Text clearRate_Text;
+
         [SerializeField, LabelText("왼쪽 버튼")] Button LeftBtn;
         [SerializeField, LabelText("오른쪽 버튼")] Button RightBtn;
         [SerializeField, LabelText("설명 버튼")] Button ExplainBtn;
         [SerializeField, LabelText("콘텐츠")] Transform contents;
-        GAME_INDEX cur_Index;
+        [SerializeField]Button[] buttons;
+        GAME_INDEX cur_Index => PlayerDataXref.pl.Cur_Game_Index;
         int maxStageInt;
 
-        //string isFail, isSuccess;
-        //Animator anim;
 
-        //void AA()
-        //{
-        //    anim.SetBool(isFail, true);
-        //}
+        private void Start()
+        {            //버튼리스트 참조
+            buttons = new Button[contents.childCount];
+            for (int i = 0; i < contents.childCount; i++)
+            {
+                buttons[i] = contents.GetChild(i).GetComponent<Button>();
+            }
 
 
-        // Start is called before the first frame update
-        void Awake()
-        {
-
-            PlayerData.instance.onSelectStage += SetUp;
+            PlayerDataXref.pl.del_StageSetUp += SetUp;
             LeftBtn.onClick.AddListener
                 (
                     () =>
                     {
-                        SetUp(PlayerData.GetStageClearDataPerGame(cur_Index - 1), cur_Index - 1);
-                        PlayerData.instance.Cur_Game_Index--;
+                        PlayerDataXref.pl.Cur_Game_Index--;
+                        SetUp(cur_Index);
                     }
                 );
             RightBtn.onClick.AddListener
                 (
                     () =>
                     {
-                        SetUp(PlayerData.GetStageClearDataPerGame(cur_Index + 1), cur_Index + 1);
-                        PlayerData.instance.Cur_Game_Index++;
+                        PlayerDataXref.pl.Cur_Game_Index++;
+                        SetUp(cur_Index);
                     }
                 );
-
-
+            SetUp(cur_Index);
         }
-        private void Start()
+
+        private void OnDestroy()
         {
-            SetUp(PlayerData.GetStageClearDataPerGame(PlayerData.instance.Cur_Game_Index), PlayerData.instance.Cur_Game_Index);
+            PlayerDataXref.pl.del_StageSetUp -= SetUp;
         }
-        public void SetUp(bool[] stageArr, GAME_INDEX index)
+        private void SetUp(GAME_INDEX index)
         {
-            cur_Index = index;
-            bool isinit = false;
+            var rate = PlayerDataXref.pl.GetGameIndexClearRate(index);
+            clearRate.fillAmount = rate;
+            clearRate_Text.text = (rate * 100).ToString("F0") + "%";
+            //게임이름 업데이트
+            cur_SelectedGame.text = PlayerDataXref.pl.ChapterStorySO._ChapterStroy[(int)index].ChapterName;
+            //현재 선택한 게임의 최대스테이지 받아오기
+
             //스테이지 리스트 업데이트
-            for (int i = 0; i < contents.childCount; i++)
+            for (int i = 0; i < buttons.Length; i++)
             {
-                //이런식의 참조...극혐하지만 너무 귀찮다.
-                var comp = contents.GetChild(i).GetComponent<Button>();
-                //comp.onClick.RemoveAllListeners();
-                //comp.onClick.AddListener(
-                //    () => PlayerData.instance.CurStageSelectedNum = i);
-                //Old
-                //comp.onClick.AddListener(
-                //    () =>
-                //    {
-                //        PlayerData.instance.Cur_Game_Index = index;
-                //        WSceneManager.instance.MoveScene((SceneIndex)index + 1);
-                //        Debug.Log($" 플레이어가 선택한 게임 / 스테이지 : {index} / {i}, ");
-                //    }
-
-                //    );
-                //New
-                if(comp.gameObject.TryGetComponent<SeleteStageBtn>(out var addComp))
+                var comp = buttons[i];
+                if(i >= PlayerDataXref.pl.GetStageLength(index))
+                    { buttons[i].gameObject.SetActive(false); continue; }
+                else { buttons[i].gameObject.SetActive(true); }
+                if(comp.gameObject.TryGetComponent<SelectedStageBtn>(out var addComp))
                 {
-                    addComp.Init(i, index);
-                }
-                else
-                {
-                    comp.gameObject.AddComponent<SeleteStageBtn>().Init(i, index);
-                }
-
-
-                comp.transform.GetChild(1).GetComponent<Text>().text = $"스테이지 {i + 1}";
-                if (i < stageArr.Length)
-                {
-
-                    contents.GetChild(i).gameObject.SetActive(true);
-                    //완전히 클리어한 스테이지
-                    if (stageArr[i])
-                    {
-                        comp.interactable = true;
-                        comp.transform.GetChild(0).gameObject.SetActive(false);
-                        comp.transform.GetChild(2).gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        if (!isinit)
-                        {
-                            maxStageInt = i;
-                            isinit = true;
-                        }
-                        //도전할 수 있는 스테이지
-                        if (comp == contents.GetChild(maxStageInt).GetComponent<Button>())
-                        {
-                            comp.interactable = true;
-                            comp.transform.GetChild(0).gameObject.SetActive(false);
-                            comp.transform.GetChild(2).gameObject.SetActive(false);
-                        }
-                        //도전불가능한 스테이지
-                        else
-                        {
-                            comp.interactable = false;
-                            comp.transform.GetChild(0).gameObject.SetActive(true);
-                            comp.transform.GetChild(2).gameObject.SetActive(false);
-                        }
-                    }
-                }
-                else
-                {
-                    contents.GetChild(i).gameObject.SetActive(false);
+                    bool isOpen = PlayerDataXref.pl.GetGameStageOpen(index, i);
+                    bool isClear = PlayerDataXref.pl.GetGameStageClear(index, i);
+                    addComp.SetUp(i, index, isClear, isOpen);
                 }
             }
 
@@ -132,46 +84,17 @@ namespace Moru.UI
             {
 
                 LeftBtn.interactable = false;
-                RightBtn.interactable = PlayerData.IsOpenChapter((GAME_INDEX)index + 1) ? true : false;
+                RightBtn.interactable = PlayerDataXref.pl.IsChapterOpen((GAME_INDEX)index + 1) ? true : false;
             }
             else if (index + 1 == GAME_INDEX.None)
             {
-                LeftBtn.interactable = PlayerData.IsOpenChapter((GAME_INDEX)index - 1) ? true : false;
+                LeftBtn.interactable = PlayerDataXref.pl.IsChapterOpen((GAME_INDEX)index - 1) ? true : false;
                 RightBtn.interactable = false;
             }
             else
             {
-                LeftBtn.interactable = PlayerData.IsOpenChapter((GAME_INDEX)index - 1) ? true : false;
-                RightBtn.interactable = PlayerData.IsOpenChapter((GAME_INDEX)index + 1) ? true : false;
-            }
-
-            //게임설명창 팝업 이미지 업데이트
-            var ExplainSprite = PlayerData.instance.ChapterStorySO._ChapterStroy[(int)cur_Index].ExplainSprite;
-            ExplainBtn.GetComponent<PopNPush>().Push_comp.GetComponent<GameExplainPopUp>().Init(ExplainSprite);
-            //ExplainBtn.onClick.AddListener(
-            //    () => ExplainBtn.GetComponent<PopNPush>().Push_comp.GetComponent<GameExplainPopUp>().Init(ExplainSprite)
-            //    );
-        }
-
-        public class SeleteStageBtn : MonoBehaviour
-        {
-            public int count;
-            public GAME_INDEX index;
-            public Button myButton;
-
-            public void Init(int count, GAME_INDEX index)
-            {
-                this.count = count;
-                this.index = index;
-                myButton = GetComponent<Button>();
-                myButton.onClick.AddListener(
-                    () =>
-                    {
-                        PlayerData.instance.CurStageSelectedNum = count;
-                        PlayerData.instance.Cur_Game_Index = index;
-                        WSceneManager.instance.MoveScene((SceneIndex)index + 1);
-                    }
-                    );
+                LeftBtn.interactable = PlayerDataXref.pl.IsChapterOpen((GAME_INDEX)index - 1) ? true : false;
+                RightBtn.interactable = PlayerDataXref.pl.IsChapterOpen((GAME_INDEX)index + 1) ? true : false;
             }
         }
     }

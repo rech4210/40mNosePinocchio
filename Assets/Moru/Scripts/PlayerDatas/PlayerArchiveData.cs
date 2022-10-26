@@ -17,159 +17,122 @@ namespace PD
         #endregion
 
         #region Field
-        [SerializeField] private AchieveAndTitle achieveAndTitle;
-        [ShowInInspector] private Dictionary<ACHEIVE_INDEX, int> isAchievement;
-        [ShowInInspector] private Dictionary<ACHEIVE_INDEX, AchieveResult> cur_AchievementValue;
-        [ShowInInspector] private Dictionary<ACHEIVE_INDEX, int> isGetReward;
+        private AchieveAndTitle achieveSo;
         #endregion
 
         #region Events
         public delegate void OnClearAchieve(ACHEIVE_INDEX index);
-        public static OnClearAchieve onClearAchieve;
-        public static OnClearAchieve onGetReward;
+        public  OnClearAchieve del_ClearAchieve;
+        public  OnClearAchieve del_GetReward;
 
-        public delegate void OnUpdateAchieve(ACHEIVE_INDEX index, int value);
-        public static OnUpdateAchieve onUpdateAchieve;
-
-
-
+        public delegate void OnUpdateAchieve(ACHEIVE_INDEX index, int value, int maxValue);
+        public OnUpdateAchieve del_UpdateAchieveStage;
         #endregion
 
         #region Properties
-        public Dictionary<ACHEIVE_INDEX, int> IsAchievement { get => isAchievement; }
-        public Dictionary<ACHEIVE_INDEX, AchieveResult> Cur_AchievementValue { get => cur_AchievementValue; }
-        public Dictionary<ACHEIVE_INDEX, int> IsGetReward { get => isGetReward; }
+        public AchieveAndTitle AchieveSo => achieveSo;
         #endregion
 
 
         #region Methods
-
         /// <summary>
-        /// 플레이어 업적정보를 불러옵니다.
+        /// 업적의 최대밸류값을 플레이어데이터에 초기화합니다.
         /// </summary>
-        public static void Load_PlayerAchieve()
+        private void SetInitializeAchieve()
         {
-            var instance = PlayerData.instance;
-            instance.achieveAndTitle = Resources.Load<AchieveAndTitle>("AchieveTitle");
-            var resultList = instance.achieveAndTitle.AchieveResults;
-            for (int i = 0; i < resultList.Count; i++)
+            for (int i = 0; i < achieveSo.AchieveResults.Count; i++)
             {
-                //isAchievement 체크
-                if (!PlayerPrefs.HasKey(
-                    resultList[i].MyIndex.ToString() + isAchieve)
-                    )
-                {
-                    PlayerPrefs.SetInt(
-                        resultList[i].MyIndex.ToString() + isAchieve, 0
-                        );
-                    if (instance.isAchievement.ContainsKey(resultList[i].MyIndex))
-                    {
-                        instance.isAchievement[resultList[i].MyIndex] = 0;
-                    }
-                    else
-                    {
-                        instance.isAchievement.Add(resultList[i].MyIndex, 0);
-                    }
-                }
-                else
-                {
-                    int value2 = PlayerPrefs.GetInt(
-                        resultList[i].MyIndex.ToString() + isAchieve
-                        );
-                    if (instance.isAchievement.ContainsKey(resultList[i].MyIndex))
-                    {
-                        instance.isAchievement[resultList[i].MyIndex] = value2;
-                    }
-                    else
-                    {
-                        instance.isAchievement.Add(resultList[i].MyIndex, value2);
-                    }
-                }
-
-                //현재 밸류 체크
-                if (instance.cur_AchievementValue.ContainsKey(resultList[i].MyIndex))
-                {
-                    instance.cur_AchievementValue[resultList[i].MyIndex] = resultList[i];
-                }
-                else
-                {
-                    instance.cur_AchievementValue.Add(resultList[i].MyIndex, resultList[i]);
-                }
-                var resultList_Value = resultList[i].Cur_AchievementCondition;
-                resultList_Value = PlayerPrefs.GetInt(resultList[i].MyIndex.ToString() + curValue, 0);
-                //업적들의 밸류 업데이트
-
-
-                //보상 받음 체크
-                int value = PlayerPrefs.GetInt(resultList[i].MyIndex.ToString() + isReward, 0);
-                if (instance.isGetReward.ContainsKey(resultList[i].MyIndex))
-                {
-                    instance.isGetReward[resultList[i].MyIndex] = value;
-                }
-                else
-                {
-                    instance.isGetReward.Add(resultList[i].MyIndex, value);
-                }
+                string maxkey = ((ACHEIVE_INDEX)i).ToString() + maxValue;
+                var results = achieveSo.AchieveResults[i];
+                SetSaveDataValue(maxkey, results.Target_AchievementCondition);
             }
         }
 
+
         /// <summary>
-        /// 업적의 밸류를 업데이트시켜주는 콜백메서드
+        /// 해당 업적의 현재 밸류와 타겟밸류를 받아옵니다.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public (int curValue, int maxValue) GetAchievePerpose(ACHEIVE_INDEX index)
+        {
+            string key_CurVal = index.ToString() + curValue;
+            int _curValue = GetSaveDataValue(key_CurVal);
+
+            string key_MaxVal = index.ToString() + maxValue;
+            int _maxValue = GetSaveDataValue(key_MaxVal);
+
+            return (_curValue, _maxValue);
+        }
+
+        /// <summary>
+        /// 현재 업적의 밸류값을 업데이트합니다. isRecover = 덮어띄울지, 더할지를 결정합니다. (기본값 : 더하기)
         /// </summary>
         /// <param name="index"></param>
         /// <param name="value"></param>
-        private void onUpdateAchieveCallBack(ACHEIVE_INDEX index, int value)
+        /// <param name="isRecover"></param>
+        public void SetAchievePerposeValue(ACHEIVE_INDEX index, int value, bool isRecover = false)
         {
-            AchieveResult result = cur_AchievementValue[index];
-            result.Cur_AchievementCondition += value;
-            cur_AchievementValue[index] = result;
-            var comp = cur_AchievementValue[index];
-            var curValue = comp.Cur_AchievementCondition;
-
-            PlayerPrefs.SetInt(index.ToString() + curValue, comp.Cur_AchievementCondition);
-
-            if (comp.Cur_AchievementCondition >= comp.Target_AchievementCondition)
+            string key = index.ToString() + curValue;
+            int _curValue = isRecover ? value : (GetSaveDataValue(key) + value);
+            SetSaveDataValue(key, _curValue);
+            
+            string _maxkey = index.ToString() + maxValue;
+            int _maxValue = GetSaveDataValue(_maxkey);
+            if(_curValue >= _maxValue)
             {
-                result.Cur_AchievementCondition = result.Target_AchievementCondition;
-                cur_AchievementValue[index] = result;
-                PlayerPrefs.SetInt(index.ToString() + curValue, result.Cur_AchievementCondition);
-                onClearAchieve?.Invoke(index);
+                SetSuccess_Achieve(index);
             }
             else
             {
-                //업적 진행정도 띄우기
+                del_UpdateAchieveStage?.Invoke(index, _curValue, _maxValue);
             }
-
-            Debug.Log($"업적 진행도 : 딕셔너리 = {result.Cur_AchievementCondition} / {result.Target_AchievementCondition}" +
-                $"\n플레이어 프랩스 = {PlayerPrefs.GetInt(index.ToString() + curValue)}");
-        }
-
-        private void onClearAchieveCallBack(ACHEIVE_INDEX index)
-        {
-            isAchievement[index] = 1;
-            PlayerPrefs.SetInt(index.ToString() + isAchieve, 1);
-            //업적을 달성했습니다 팝업띄우기
-            if (PopUpUI != null)
-            {
-                var obj = MonoBehaviour.Instantiate(PopUpUI);
-                obj.GetComponent<AchievePopUp>().SetViewer(cur_AchievementValue[index]);
-            }
-            //
-
-            Debug.Log($"업적 달성현황 : {cur_AchievementValue[index].AchieveName} 업적을 클리어해 {cur_AchievementValue[index].Title} 칭호를 획득했다!" +
-                $"\n딕셔너리 = {isAchievement[index]}" +
-        $"\n플레이어 프랩스 = {PlayerPrefs.GetInt(index.ToString() + isAchieve)}");
         }
 
         /// <summary>
-        /// 보상을 받음처리합니다.
+        /// 업적을 달성했는지 여부를 불린으로 받아옵니다.
         /// </summary>
         /// <param name="index"></param>
-        public void OnGetReward(ACHEIVE_INDEX index)
+        /// <returns></returns>
+        public bool GetIsSuccess_Achieve(ACHEIVE_INDEX index)
         {
-            PlayerPrefs.SetInt(index.ToString() + isReward, 1);
-            instance.isGetReward[index] = 1;
-            onGetReward?.Invoke(index);
+            string key = index.ToString() + isAchieve;
+            int value = GetSaveDataValue(key);
+            return value > 0 ? true : false;
+        }
+
+        /// <summary>
+        /// 업적을 달성하도록 처리합니다.
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetSuccess_Achieve(ACHEIVE_INDEX index)
+        {
+            string key = index.ToString() + isAchieve;
+            SetSaveDataValue(key, 1);
+            del_ClearAchieve?.Invoke(index);
+        }
+
+        /// <summary>
+        /// 업적에 대한 보상을 받았는지 여부를 받아옵니다.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool GetIsReward_Achieve(ACHEIVE_INDEX index)
+        {
+            string key = index.ToString() + isReward;
+            int value = GetSaveDataValue(key);
+            return value > 0 ? true : false;
+        }
+
+        /// <summary>
+        /// 업적에 대한 보상을 받도록 처리합니다.
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetReward_Achieve(ACHEIVE_INDEX index)
+        {
+            string key = index.ToString() + isReward;
+            SetSaveDataValue(key, 1);
+            del_GetReward?.Invoke(index);
         }
         #endregion
     }

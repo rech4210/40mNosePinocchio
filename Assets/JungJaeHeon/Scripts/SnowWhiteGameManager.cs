@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
+using DG.Tweening;
 
 public enum NowGameState
 {
@@ -13,9 +15,15 @@ public enum NowGameState
 
 public class SnowWhiteGameManager : MonoBehaviour
 {
+    private static int FailCount = 0;
+
     [SerializeField]
     [Tooltip("시작 텍스트")]
     private Text startText;
+
+    [SerializeField]
+    [Tooltip("시작 캔버스 가리개")]
+    private Canvas startCanvas;
 
     [SerializeField]
     [Tooltip("제한 시간 텍스트")]
@@ -29,17 +37,19 @@ public class SnowWhiteGameManager : MonoBehaviour
     [Tooltip("정답 사과 표시 이미지")]
     private Image correctAppleImage;
 
-    [SerializeField]
-    [Tooltip("정답 사과 표시 스프라이트들")]
-    private Sprite[] displayCorrectAppleSprits;
+    [SerializeField] Transform wrongApplesParent;
+
+    [SerializeField, LabelText("사과 스프라이트")] List<Sprite> apples;
+
+    [SerializeField, BoxGroup("난이도 조절용"), LabelText("제한시간 리스트")] 
+    private float[] limits_List = new float[15];
+    [SerializeField, BoxGroup("난이도 조절용"), LabelText("잘못된 스프라이트 수")]
+    private int[] wrong_ObjectsCount = new int[15];
 
     [SerializeField]
-    [Tooltip("정답 사과 스프라이트들")]
-    private Sprite[] correctAppleSprits;
+    private float cur_limitTime;
 
-    public float limitTime;
-
-    private int FailCount = 0;
+    
     private int CurrentStage;
 
     private NowGameState nowGameState;
@@ -51,7 +61,11 @@ public class SnowWhiteGameManager : MonoBehaviour
     void Start()
     {
         CurrentStage = PlayerDataXref.instance.GetCurrentStage().StageNum;
+        nowGameState = NowGameState.GameReady;
         SoundManager.PlayBGM(BGMs);
+        //제한시간 업데이트
+        cur_limitTime = limits_List[CurrentStage];
+        timerText.text = $"남은 시간 {((int)cur_limitTime / 60):D2} : {((int)cur_limitTime % 60):D2}";
         StartSetting();
     }
 
@@ -66,20 +80,17 @@ public class SnowWhiteGameManager : MonoBehaviour
     {
         if (nowGameState == NowGameState.Gaming)
         {
-            limitTime -= Time.deltaTime;
-            timerText.text = $"남은 시간 {((int)limitTime / 60):D2} : {((int)limitTime % 60):D2}";
-            if (limitTime <= 0)
+            cur_limitTime -= Time.deltaTime;
+            timerText.text = $"남은 시간 {((int)cur_limitTime / 60):D2} : {((int)cur_limitTime % 60):D2}";
+            if (cur_limitTime <= 0)
             {
-                var startTextComponent = startText.GetComponent<Text>();
 
-                limitTime = 0;
+                cur_limitTime = 0;
 
                 nowGameState = NowGameState.GameEnd;
 
-                startTextComponent.fontSize = 120;
 
                 timerText.text = $"남은 시간 00 : 00";
-                startText.text = "실패...";
                 FailCount++;
                 WSceneManager.instance.OpenGameFailUI();
             }
@@ -95,38 +106,35 @@ public class SnowWhiteGameManager : MonoBehaviour
 
             if (hit.collider != null && hit.collider.CompareTag("CorrectApple"))
             {
-                var startTextComponent = startText.GetComponent<Text>();
                 nowGameState = NowGameState.GameEnd;
 
-                startTextComponent.fontSize = 120;
-
-                startText.text = "클리어!";
                 //Moru
                 PlayerDataXref.instance.ClearGame(GAME_INDEX.Snow_White, CurrentStage);
                 WSceneManager.instance.OpenGameClearUI();
 
 
-                //다음챕터을 엽니다. 다른분들도 이렇게 해주시면 되요
-                if (CurrentStage == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Snow_White))
-                {
-                    //targetClearUI.gameObject.SetActive(true);
-                    PlayerDataXref.instance.OpenChapter(GAME_INDEX.Snow_White + 1);
-                }
-                else
-                {
-                    //targetClearUI.gameObject.SetActive(false);
-                }
+                //더이상 필요하지 않습니다.
+                ////다음챕터을 엽니다. 다른분들도 이렇게 해주시면 되요
+                //if (CurrentStage == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Snow_White))
+                //{
+                //    //targetClearUI.gameObject.SetActive(true);
+                //    PlayerDataXref.instance.OpenChapter(GAME_INDEX.Snow_White + 1);
+                //}
+                //else
+                //{
+                //    //targetClearUI.gameObject.SetActive(false);
+                //}
 
-                //올클리어  & 1회도 실패하지 않고 클리어시 업적 이벤트 예시
-                if (CurrentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Snow_White) - 1)
-                {
-                    PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.SNOW_WHITE_ALL_CLEAR);
-                    PlayerDataXref.instance.ClearChapter(GAME_INDEX.Snow_White);
-                    if (FailCount == 0)
-                    {
-                        PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.APPLE_SOMMELIER);
-                    }
-                }
+                ////올클리어  & 1회도 실패하지 않고 클리어시 업적 이벤트 예시
+                //if (CurrentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Snow_White) - 1)
+                //{
+                //    PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.SNOW_WHITE_ALL_CLEAR);
+                //    PlayerDataXref.instance.ClearChapter(GAME_INDEX.Snow_White);
+                //    if (FailCount == 0)
+                //    {
+                //        PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.APPLE_SOMMELIER);
+                //    }
+                //}
 
 
 
@@ -136,54 +144,134 @@ public class SnowWhiteGameManager : MonoBehaviour
 
     private void StartSetting()
     {
-        int randSpritsIndex = Random.Range(0, correctAppleSprits.Length);
-        correctObj.GetComponent<SpriteRenderer>().sprite = correctAppleSprits[randSpritsIndex];
-        correctAppleImage.sprite = displayCorrectAppleSprits[randSpritsIndex];
+        int randSpritsIndex = Random.Range(0, apples.Count);
+        var targetSprite = apples[randSpritsIndex];
 
-        limitTime = 30;
+        correctAppleImage.sprite = targetSprite;
+        apples.Remove(targetSprite);
 
-        correctObj.transform.position = new Vector3(Random.Range(-8, 9), Random.Range(-3, 4));
+        int target_intanceCount = wrong_ObjectsCount[CurrentStage];
+        target_intanceCount++; //실제 생성숫자는 더 적을 것임
+        int correct_Obj_Index = Random.Range(0, target_intanceCount);
 
-        if (correctObj.transform.position.x > 4 || correctObj.transform.position.x < -2)
+        float minX = -7.5f; //X 최소좌표
+        float maxX = 7.5f;  //x 최대좌표
+
+        float minY = -3.5f; //y최소좌표
+        float maxY = 3.5f;  //y최대좌표
+
+        float Xlength = maxX - minX;        //x의 길이
+        float Ylength = maxY - minY;        //y의 길이
+
+        float XYArea = Xlength * Ylength;   //해당구역의 넓이
+        float elementXYArea = XYArea / target_intanceCount; //각 객체의 넓이
+
+        float xElementPosSqr = (Xlength / Ylength) * elementXYArea;
+        float xElementLength = Mathf.Sqrt(xElementPosSqr);
+
+        float yElementLength = elementXYArea / xElementLength;
+
+        Debug.Log($"X:Y의 길이 : {Xlength}:{Ylength} \n" +
+            $"넓이 : 각요소 넓이 : {XYArea} : {elementXYArea}\n" +
+            $"X제곱 : {xElementPosSqr}\n" +
+            $"X':Y'의 길이 : {xElementLength} : {yElementLength}");
+
+        float curXPos = minX;
+        float curYPos = minY;
+
+        List<GameObject> Apples_GameObject = new List<GameObject>();
+        for(float x = minX; x < maxX; x+= xElementLength)
         {
-            correctObj.transform.position = new Vector3(Random.Range(-2, 4), correctObj.transform.position.y);
+            for(float y= minY; y < maxY; y+= yElementLength)
+            {
+                float randomXoffset = Random.Range(-xElementLength*0.3f, xElementLength*0.3f);
+                float randomYoffset = Random.Range(-yElementLength * 0.3f, yElementLength * 0.3f);
+
+                float targetxPos = x + (xElementLength / 2)+randomXoffset;
+                float targetyPos = y + (yElementLength / 2)+randomYoffset;
+
+                float randomScaleOffset = Random.Range(0.7f, 1.05f);
+                if(targetxPos < maxX && targetyPos < maxY)
+                {
+                    if((targetxPos < -3.5f) && (targetyPos > 2.5f))
+                    {
+
+                    }
+                    else
+                    {
+                        var obj = new GameObject($"디버깅 위치테스트 {x} {y}");
+                        obj.transform.SetParent(wrongApplesParent);
+                        int spriteIndex = Random.Range(0, apples.Count);
+                        obj.AddComponent<SpriteRenderer>().sprite = apples[spriteIndex];
+                        obj.transform.localScale = new Vector3(0.5f, 0.5f)* randomScaleOffset;
+                        obj.transform.position = new Vector3(targetxPos, targetyPos, 0);
+                        Apples_GameObject.Add(obj);
+                    }
+                }
+            }
         }
 
-        nowGameState = NowGameState.GameReady;
+        //Old
+        //correctObj.transform.position = new Vector3(Random.Range(-8, 9), Random.Range(-3, 4));
+
+        //if (correctObj.transform.position.x > 4 || correctObj.transform.position.x < -2)
+        //{
+        //    correctObj.transform.position = new Vector3(Random.Range(-2, 4), correctObj.transform.position.y);
+        //}
+
+        //new
+        int correctIndex = Random.Range(0,Apples_GameObject.Count);
+        var correct_obj = Apples_GameObject[correctIndex];
+        correct_obj.GetComponent<SpriteRenderer>().sprite = targetSprite;
+        correct_obj.GetComponent<SpriteRenderer>().sortingOrder = 10;
+        correct_obj.tag = "CorrectApple";
+        var collider = correct_obj.AddComponent<CircleCollider2D>();
+        
+
 
         StartCoroutine(StartTextAnim());
     }
 
     private IEnumerator StartTextAnim()
     {
-        WaitForSecondsRealtime textAnimDelay = new WaitForSecondsRealtime(0.5f);
+        float waitTime = 2;
+        float cur_T = 0;
         var startTextComponent = startText.GetComponent<Text>();
-        
         startTextComponent.fontSize = 120;
-
         startText.text = "준비..";
-        yield return textAnimDelay;
 
-        for (int nowRepetitionIndex = 3; nowRepetitionIndex >= 1; nowRepetitionIndex--)
+        WaitForSecondsRealtime textAnimDelay = new WaitForSecondsRealtime(0.5f);
+        while (cur_T < waitTime)
+        {
+            cur_T += Time.deltaTime;
+            yield return null;
+        }
+        cur_T = 0;
+        for (int i = 3; i > 0; i--)
         {
             startTextComponent.fontSize = 300;
-
-            startText.text = $"{nowRepetitionIndex}";
-
-            while (startTextComponent.fontSize > 2)
+            startTextComponent.text = i.ToString();
+            while (cur_T < 1)
             {
-                startTextComponent.fontSize -= 1;
+                startTextComponent.fontSize = (int)Mathf.Lerp(300, 0, cur_T);
+                cur_T += Time.deltaTime;
                 yield return null;
             }
+            cur_T = 0;
         }
-
-        startTextComponent.fontSize = 120;
+        startTextComponent.fontSize = 300;
         startText.text = "시작!";
-        yield return textAnimDelay;
-
-        startText.text = "";
+        var cur_Color = startText.color;
         nowGameState = NowGameState.Gaming;
-
-        yield return null;
+        startCanvas.sortingOrder = -100;
+        while (cur_T < 2)
+        {
+            cur_Color.a = Mathf.Lerp(1, 0, cur_T * 0.5f);
+            startText.color = cur_Color;
+            startTextComponent.fontSize = (int)Mathf.Lerp(300, 0, cur_T * 0.5f);
+            cur_T += Time.deltaTime;
+            yield return null;
+        }
+        startText.gameObject.SetActive(false);
     }
 }

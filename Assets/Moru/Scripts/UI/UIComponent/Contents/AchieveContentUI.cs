@@ -20,53 +20,81 @@ namespace Moru.UI
         [BoxGroup("뒷면"), LabelText("업적 받기버튼"), SerializeField] private Button btn_GetReward;
 
 
+        [BoxGroup("뒷면"), LabelText("업적 현재정보 프로그레스"), SerializeField] private Image clearRate;
+        [BoxGroup("뒷면"), LabelText("업적 현재정보 프로그레스 배경"), SerializeField] private Image progressbar_bg;
+        [BoxGroup("뒷면"), LabelText("업적 현재정보 텍스트"), SerializeField] private Text clearRate_Text;
+
 
         private AchieveResult myResult;
+
+        private void Start()
+        {
+            originBtn = GetComponent<Button>();
+            onClick += AchieveContentUI_onClick;
+            originBtn.onClick.AddListener(OnClick);
+        }
 
         public void Init(AchieveResult result, StackUIComponent targetComp)
         {
             isOpen = false;
-            onClick += AchieveContentUI_onClick;
-            originBtn = GetComponent<Button>();
             myResult = result;
             achieveName.text = result.AchieveName;
             achieveImg.sprite = result.Icon;
             achieveDesc.text = result.AchieveDesc;
             achieveImg.gameObject.SetActive(false);
 
-
-            originBtn.onClick.AddListener(OnClick);
-            PlayerData.onGetReward += GetReward;
-
-            //업적달성함 여부 파악
-            if (PlayerData.instance.IsAchievement[result.MyIndex] > 0)
-            {
-                //originBtn.interactable = true;
-                //업적을 먹었냐 안먹었냐 체크
-                if (PlayerData.instance.IsGetReward[result.MyIndex] == 0)
+            bool rewardbtn_Interact =
+                PlayerDataXref.pl.GetIsSuccess_Achieve(result.MyIndex) &&       //업적은 달성했는지
+                !PlayerDataXref.pl.GetIsReward_Achieve(result.MyIndex);         //보상은 안받았는지
+            btn_GetReward.interactable = rewardbtn_Interact;
+            btn_GetReward.onClick.AddListener(
+                () =>
                 {
-                    //안먹은건 파티클로 추가표과를 주던가.
-                    //팝업창 열기
-                    btn_GetReward.onClick.AddListener(
-                        () =>
-                        {
-                            targetComp.Show();
-                            PlayerData.instance.OnGetReward(result.MyIndex);
-                        }
-                        );
-                    btn_GetReward.interactable = true;
+                    targetComp.Show();
+                    PlayerDataXref.pl.SetReward_Achieve(result.MyIndex);
                 }
-                //이미 먹은건 먹었다고 표시해야지
-                else
-                {
-                    btn_GetReward.interactable = false;
-                }
-            }
-            //달성 못함
-            else
+                );
+
+
+            var perpose = PlayerDataXref.pl.GetAchievePerpose(result.MyIndex);
+            switch (result.Display_type)
             {
-                //originBtn.interactable = false;
+                case AchieveResult.DISPLAY_TYPE.INT:
+                    clearRate.enabled = true;
+                    progressbar_bg.enabled = true;
+                    clearRate_Text.enabled = true;
+                    clearRate.fillAmount = (float)perpose.curValue / (float)perpose.maxValue;
+                    clearRate_Text.text = $"{perpose.curValue } / {perpose.maxValue}";
+                    break;
+                case AchieveResult.DISPLAY_TYPE.NORMAL:
+                    clearRate.enabled = false; progressbar_bg.enabled = false;
+                    clearRate_Text.enabled = true;
+                    string text = PlayerDataXref.pl.GetIsSuccess_Achieve(result.MyIndex) ? "달성" : "미달성";
+                    clearRate_Text.text = $"{text}";
+                    break;
+                case AchieveResult.DISPLAY_TYPE.PERCENT:
+                    clearRate.enabled = true;
+                    progressbar_bg.enabled = true;
+                    clearRate_Text.enabled = true;
+                    float rate = (float)perpose.curValue / (float)perpose.maxValue;
+                    clearRate.fillAmount = rate;
+                    clearRate_Text.text = $"{(rate * 100).ToString("F0")} %";
+                    break;
+                case AchieveResult.DISPLAY_TYPE.NONE:
+                    clearRate.enabled = false;
+                    progressbar_bg.enabled = false;
+                    clearRate_Text.enabled = false;
+                    break;
+                default:
+                    clearRate.enabled = false;
+                    progressbar_bg.enabled = false;
+                    clearRate_Text.enabled = false;
+                    break;
             }
+
+            clearRate_Text.text = !rewardbtn_Interact ? clearRate_Text.text : "이미 받은 보상";
+            clearRate.enabled = !rewardbtn_Interact ? clearRate.enabled : false;
+            progressbar_bg.enabled = !rewardbtn_Interact ? progressbar_bg.enabled : false;
         }
 
         private void AchieveContentUI_onClick(AchieveContentUI btn)
@@ -102,12 +130,9 @@ namespace Moru.UI
             achieveImg.gameObject.SetActive(false);
         }
 
-        private void GetReward(ACHEIVE_INDEX index)
+        private void GetReward()
         {
-            if (index == myResult.MyIndex)
-            {
-                btn_GetReward.interactable = false;
-            }
+
         }
     }
 }

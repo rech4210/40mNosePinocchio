@@ -6,6 +6,7 @@ using DG.Tweening;
 
 namespace Moru.UI
 {
+
     public class AchievePopUp : MonoBehaviour
     {
         public float openTime = 1f;

@@ -36,25 +36,25 @@ public class Clear : MonoBehaviour
 
             PlayerDataXref.instance.ClearGame(GAME_INDEX.Little_Mermaid, currentStage);
             WSceneManager.instance.OpenGameClearUI();
-            //다음챕터을 엽니다. 다른분들도 이렇게 해주시면 되요
-            if (currentStage == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Little_Mermaid))
-            {
-                PlayerDataXref.instance.OpenChapter(GAME_INDEX.Cinderella + 1);
-            }
-            else
-            {
-            }
+            ////다음챕터을 엽니다. 다른분들도 이렇게 해주시면 되요
+            //if (currentStage == PlayerDataXref.instance.GetTargetState_ToOpenNextChapter(GAME_INDEX.Little_Mermaid))
+            //{
+            //    PlayerDataXref.instance.OpenChapter(GAME_INDEX.Cinderella + 1);
+            //}
+            //else
+            //{
+            //}
 
-            //올클리어  & 1회도 실패하지 않고 클리어시 업적 이벤트 예시
-            if (currentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Little_Mermaid) - 1)
-            {
-                PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.LITTLE_MERMAID_ALL_CLEAR);
-                PlayerDataXref.instance.ClearChapter(GAME_INDEX.Little_Mermaid);
-                if (failCount == 0)
-                {
-                    PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.DRUG_KING);
-                }
-            }
+            ////올클리어  & 1회도 실패하지 않고 클리어시 업적 이벤트 예시
+            //if (currentStage == PlayerDataXref.instance.GetMaxStageNumber(GAME_INDEX.Little_Mermaid) - 1)
+            //{
+            //    PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.LITTLE_MERMAID_ALL_CLEAR);
+            //    PlayerDataXref.instance.ClearChapter(GAME_INDEX.Little_Mermaid);
+            //    if (failCount == 0)
+            //    {
+            //        PlayerDataXref.instance.SetAchieveSuccess(ACHEIVE_INDEX.DRUG_KING);
+            //    }
+            //}
         }
         else
         {

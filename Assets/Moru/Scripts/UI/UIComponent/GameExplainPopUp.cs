@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 namespace Moru.UI
 {
-    public class GameExplainPopUp : MonoBehaviour
+    public class GameExplainPopUp : StackUIComponent
     {
         [SerializeField] Image image;
 
-        public void Init(Sprite sprite)
+        public override void Show()
         {
-            image.sprite = sprite;
+            base.Show();
+            var index = PlayerDataXref.pl.Cur_Game_Index;
+            image.sprite = PlayerDataXref.pl.ChapterStorySO._ChapterStroy[(int)index].ExplainSprite;
         }
     }
 }

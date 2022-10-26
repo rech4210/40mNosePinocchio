@@ -151,7 +151,7 @@ public class WSceneManager : MonoBehaviour
             () =>
             {
                 StackUIManager.GoToTargetUIComponent(StackUIManager.LobbyPage);
-                var boolsArr = PlayerData.GetStageClearDataPerGame(PlayerData.instance.Cur_Game_Index);
+                var boolsArr = PlayerDataXref.pl.GetStageClearDataPerGame(PlayerData.instance.Cur_Game_Index);
                 Debug.Log($"실행여부 확인");
                 //StackUIManager.LobbyPage.GetComponent<LevelSelectUI>().SetUp(boolsArr, PlayerData.instance.Cur_Game_Index);
             }

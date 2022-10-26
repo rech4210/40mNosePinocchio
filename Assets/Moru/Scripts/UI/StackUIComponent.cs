@@ -11,7 +11,7 @@ namespace Moru.UI
         /// <summary>
         /// 해당 컴포넌트를 가진 오브젝트를 SetActive(true)대신 Show()를 실행시켜주어야 합니다.
         /// </summary>
-        public void Show()
+        public virtual void Show()
         {
             //게임오브젝트를 활성화시킵니다.
             this.gameObject.SetActive(true);
@@ -22,7 +22,7 @@ namespace Moru.UI
         /// <summary>
         /// 해당 컴포넌트를 가진 오브젝트를 SetActive(false)대신 Hide()를 실행시켜주어야 합니다.
         /// </summary>
-        public void Hide()
+        public virtual void Hide()
         {
             this.gameObject.SetActive(false);
         }

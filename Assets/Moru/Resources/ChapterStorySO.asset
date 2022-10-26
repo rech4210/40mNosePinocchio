@@ -34,8 +34,8 @@ MonoBehaviour:
     backGround: {fileID: 21300000, guid: 3dffa881cba293743ae32ebe9ce8676f, type: 3}
     explainSprite: {fileID: 21300000, guid: 81b2229e0edfee34292f9fadc2d80d65, type: 3}
   - myIndex: 4
-    chapterName: "\uC7AD\uACFC \uCF69\uB098\uBB3C \uC774\uC57C\uAE30"
-    chapterDesc: "\uC7AD\uACFC \uCF69\uB098\uBB34\uC784\u314B\u314B"
+    chapterName: "\uC7AD\uACFC \uCF69\uB098\uBB34 \uC774\uC57C\uAE30"
+    chapterDesc: "\uC7AD\uACFC \uCF69\uB098\uBB3C\uC784 \u314B\u314B"
     backGround: {fileID: 21300000, guid: 2d995fb19e1bc9b49b9e865fcf5eb41a, type: 3}
     explainSprite: {fileID: 21300000, guid: 9edbfa294cead814982cd9bcf7b6d3ff, type: 3}
   - myIndex: 5

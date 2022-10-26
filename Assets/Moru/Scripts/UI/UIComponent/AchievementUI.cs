@@ -5,19 +5,25 @@ using PD;
 
 namespace Moru.UI
 {
-    public class AchievementUI : MonoBehaviour
+    public class AchievementUI : StackUIComponent
     {
         [SerializeField] Transform contents;
         [SerializeField] GameObject prefaps;
-        [SerializeField] StackUIComponent popUpUI;
+        [SerializeField] StackUIComponent PopUpUI;
 
         private void Start()
         {
             for (int i = 0; i < (int)ACHEIVE_INDEX.NONE; i++)
             {
                 var obj = Instantiate(prefaps, contents);
-                obj.GetComponent<AchieveContentUI>().Init(PlayerData.instance.Cur_AchievementValue[(ACHEIVE_INDEX)i], popUpUI);
+                obj.GetComponent<AchieveContentUI>().
+                    Init(
+                    PlayerDataXref.pl.AchieveSo.AchieveResults[i]
+                    , PopUpUI
+                    );
             }
         }
+
+
     }
 }

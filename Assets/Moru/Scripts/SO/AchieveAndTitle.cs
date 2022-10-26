@@ -38,8 +38,16 @@ public class AchieveAndTitle : ScriptableObject
 [System.Serializable]
 public struct AchieveResult
 {
+    public enum DISPLAY_TYPE
+    {
+        NORMAL,
+        PERCENT,
+        INT,
+        NONE
+    }
 
     [SerializeField, ReadOnly, LabelText("업적 인덱스")] private ACHEIVE_INDEX myIndex;
+    [SerializeField, LabelText("업적 디스플레이 타입")] private DISPLAY_TYPE display_type;
     [SerializeField, LabelText("현재 업적수치")] private int cur_achievementConditon;
     [SerializeField, LabelText("목표 업적수치")] private int target_achievementConditon;
     [SerializeField, LabelText("업적 이름")] private string achieveName;
@@ -49,6 +57,7 @@ public struct AchieveResult
     public AchieveResult(ACHEIVE_INDEX index)
     {
         myIndex = index;
+        display_type = DISPLAY_TYPE.NONE;
         cur_achievementConditon = 0;
         target_achievementConditon = 0;
         achieveName = "";
@@ -65,6 +74,7 @@ public struct AchieveResult
     }
 
     public ACHEIVE_INDEX MyIndex => myIndex;
+    public DISPLAY_TYPE Display_type => display_type;
     public int Cur_AchievementCondition { get => cur_achievementConditon; set => cur_achievementConditon = value; }
     public int Target_AchievementCondition { get => target_achievementConditon; set => target_achievementConditon = value; }
     public string AchieveName { get => achieveName; }

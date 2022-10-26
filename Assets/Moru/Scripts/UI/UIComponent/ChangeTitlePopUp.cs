@@ -6,7 +6,7 @@ using PD;
 
 namespace Moru.UI
 {
-    public class ChangeTitlePopUp : MonoBehaviour
+    public class ChangeTitlePopUp : StackUIComponent
     {
         [SerializeField] Text text;
         [SerializeField] Button AcceptBtn;
@@ -17,9 +17,8 @@ namespace Moru.UI
             AcceptBtn.onClick.RemoveAllListeners();
             AcceptBtn.onClick.AddListener(
                 () =>
-                PlayerData.instance.PlayerTitle = result.Title
+                PlayerDataXref.pl.PlayerTitle = result.Title
                 );
-
         }
 
     }
